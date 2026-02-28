@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@plugin "daisyui" ;
+@plugin "daisyui/theme" {
+  name: "dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: "dark";
+  --color-base-100: oklch(20% 0 0);
+  --color-base-200: oklch(26% 0 0);
+  --color-base-300: oklch(37% 0 0);
+  --color-base-content: oklch(96% 0.001 286.375);
+  --color-primary: oklch(58% 0.233 277.117);
+  --color-primary-content: oklch(100% 0 0);
+  --color-secondary: oklch(86% 0.022 252.894);
+  --color-secondary-content: oklch(21% 0.034 264.665);
+  --color-accent: oklch(85% 0.138 181.071);
+  --color-accent-content: oklch(21% 0.034 264.665);
+  --color-neutral: oklch(44% 0.03 256.802);
+  --color-neutral-content: oklch(98% 0.001 106.423);
+  --color-info: oklch(58% 0.158 241.966);
+  --color-info-content: oklch(98% 0.019 200.873);
+  --color-success: oklch(59% 0.145 163.225);
+  --color-success-content: oklch(98% 0.018 155.826);
+  --color-warning: oklch(85% 0.199 91.936);
+  --color-warning-content: oklch(21% 0.034 264.665);
+  --color-error: oklch(71% 0.194 13.428);
+  --color-error-content: oklch(97% 0.014 343.198);
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1.5px;
+  --depth: 0;
+  --noise: 0;
+}
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(96% 0.003 264.542);
+  --color-base-200: oklch(92% 0.006 264.531);
+  --color-base-300: oklch(87% 0.01 258.338);
+  --color-base-content: oklch(21% 0.006 56.043);
+  --color-primary: oklch(58% 0.233 277.117);
+  --color-primary-content: oklch(100% 0 0);
+  --color-secondary: oklch(70% 0.022 261.325);
+  --color-secondary-content: oklch(21% 0.034 264.665);
+  --color-accent: oklch(85% 0.138 181.071);
+  --color-accent-content: oklch(21% 0.034 264.665);
+  --color-neutral: oklch(44% 0.043 257.281);
+  --color-neutral-content: oklch(98% 0.001 106.423);
+  --color-info: oklch(68% 0.169 237.323);
+  --color-info-content: oklch(98% 0.019 200.873);
+  --color-success: oklch(59% 0.145 163.225);
+  --color-success-content: oklch(98% 0.018 155.826);
+  --color-warning: oklch(85% 0.199 91.936);
+  --color-warning-content: oklch(21% 0.034 264.665);
+  --color-error: oklch(71% 0.194 13.428);
+  --color-error-content: oklch(97% 0.014 343.198);
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1.5px;
+  --depth: 0;
+  --noise: 0;
+}
+
+/*字體大小*/
+.f-05 {
+  font-size: 0.5em;
+}
+
+.f-07 {
+  font-size: 0.75em;
+}
+
+.f-09 {
+  font-size: 0.9em;
+}
+
+.f-10 {
+  font-size: 1em;
+}
+
+.f-12 {
+  font-size: 1.25em;
+}
+
+.f-15 {
+  font-size: 1.5em;
+}
+
+.f-20 {
+  font-size: 2em;
+}
+
+
+/* 圖標大小 */
+.i-05 {
+  height: 0.5em;
+  width: 0.5em;
+}
+
+.i-07 {
+  height: 0.75em;
+  width: 0.75em;
+}
+
+.i-10 {
+  height: 1em;
+  width: 1em;
+}
+
+.i-11 {
+  height: 1.1em;
+  width: 1.1em;
+}
+
+.i-12 {
+  height: 1.25em;
+  width: 1.25em;
+}
+
+.i-15 {
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.i-20 {
+  height: 2em;
+  width: 2em;
+}

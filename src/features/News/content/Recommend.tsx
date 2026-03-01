@@ -1,4 +1,4 @@
-import {MEDIA_IP, WEB_API} from "@/utils/config.ts";
+import {MEDIA_IP, WEB_API} from "@/lib/config.ts";
 import {useCacheApi} from "@/hooks";
 import {Link} from "react-router";
 import {FaFile} from "react-icons/fa6";

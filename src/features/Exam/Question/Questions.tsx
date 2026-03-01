@@ -2,7 +2,7 @@ import {AnswerData, ExamSelectData, QuestionsData} from "@/types/exam-types.ts";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {showToast} from "@/utils/handleToast.ts";
 import {useAxios} from "@/hooks";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import SelectResultCard from "@/features/Exam/Question/SelectResultCard.tsx";
 
 /**

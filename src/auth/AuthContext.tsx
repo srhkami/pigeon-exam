@@ -6,7 +6,7 @@ import {type TypeAuthContext} from "@/types/auth-types.ts";
 import {useAxios} from "@/hooks";
 import {clearTokens, loadTokens} from "@/auth/handleUser.ts";
 import {Button} from "@/component";
-import {USER_API} from "@/utils/config.ts";
+import {USER_API} from "@/lib/config.ts";
 
 type Props = {
   children: ReactNode,

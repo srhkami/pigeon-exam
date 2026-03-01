@@ -1,7 +1,7 @@
 import {ReactNode, useEffect, useState} from 'react';
 import {Link, useNavigate, useParams} from "react-router";
 import axios from "axios";
-import {MEDIA_IP, WEB_API} from "@/utils/config.ts";
+import {MEDIA_IP, WEB_API} from "@/lib/config.ts";
 import {IoArrowBackOutline, IoShareSocial} from "react-icons/io5";
 import {FaArrowRightToBracket} from "react-icons/fa6";
 import {IoMdDownload} from "react-icons/io";
@@ -11,8 +11,8 @@ import {BottomBar, BottomButton, BottomMainButton} from '@/component';
 import CountdownTimer from "./tools/CountdownTimer.tsx";
 import ShowFile from "./tools/ShowFile.tsx";
 import {FileDetailData} from "@/types/happywork-types.ts";
-import {copyText} from "@/utils/copyText.tsx";
-import {handleError} from "@/utils/errorReport.tsx";
+import {copy} from "@/func/copy.tsx";
+import {errorLogger} from "@/func";
 
 type Props = {
   readonly code: 'f' | 'l',
@@ -45,7 +45,7 @@ export default function FilePreview({code}: Props): ReactNode {
       }
     )
       .then(res => setData(res.data))
-      .catch(err => handleError(err, '檔案預覽錯誤'))
+      .catch(err => errorLogger(err, '檔案預覽錯誤'))
   }, [url]);
 
   const onCopy = () => {
@@ -56,7 +56,7 @@ export default function FilePreview({code}: Props): ReactNode {
     // 組合文字
     const textToCopy = `${currentUrl}\n${customText}`;
     // 複製到剪貼簿
-    copyText(textToCopy);
+    copy(textToCopy);
   }
 
   return (

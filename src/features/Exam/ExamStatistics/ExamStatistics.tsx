@@ -1,6 +1,6 @@
 import {useToastApi} from "@/hooks";
 import {ExamLogData} from "@/types/exam-types.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import {HtmlTitle} from "@/layout";
 import {Col, Row} from "@/component";
 import PageHeader from "@/layout/PageHeader.tsx";

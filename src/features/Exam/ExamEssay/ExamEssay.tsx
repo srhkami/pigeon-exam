@@ -1,6 +1,6 @@
 import {useDataBrowser} from "@/hooks";
 import {ExamEssayData} from "@/types/exam-types.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import {HtmlTitle} from "@/layout";
 import {DataBrowser, DataBrowserTitle} from "@/component";
 import ModalEssayFilter from "@/features/Exam/ExamEssay/tools/ModalEssayFilter.tsx";

@@ -1,6 +1,6 @@
 import {Link} from "react-router";
 import {useCacheApi} from "@/hooks";
-import {MEDIA_IP, WEB_API} from "@/utils/config.ts";
+import {MEDIA_IP, WEB_API} from "@/lib/config.ts";
 import {type Notice} from "@/types/media-types.ts";
 
 export default function Announcement(){

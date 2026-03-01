@@ -2,14 +2,14 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import axios from "axios";
 import {useNavigate, useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
-import {WEB_API} from "@/utils/config.ts";
+import {WEB_API} from "@/lib/config.ts";
 import {showToast} from "@/utils/handleToast.ts";
 import {HtmlTitle} from "@/layout";
 import {Button, Col, FormInputCol, Row} from "@/component";
 import {FaCircleCheck} from "react-icons/fa6";
 import ModalLine from "@/features/Feedback/ModalLine.tsx";
-import {handleError} from "@/utils/errorReport.tsx";
 import {useAuth} from "@/hooks";
+import {errorLogger} from "@/func";
 
 type FormValues = {
   name: string,
@@ -88,7 +88,7 @@ export default function FeedbackWeb() {
     )
 
       .then(() => navi('/'))
-      .catch(err => handleError(err, '網站回報送出錯誤'))
+      .catch(err => errorLogger(err, '網站回報送出錯誤'))
   }
 
   return (

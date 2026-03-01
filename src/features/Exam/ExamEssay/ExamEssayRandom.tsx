@@ -3,7 +3,7 @@ import {Button, Collapse, CollapseContent, CollapseTitle} from "@/component";
 import {FaArrowRight} from "react-icons/fa";
 import {useAxios, useCacheApi} from "@/hooks";
 import {showToast} from "@/utils/handleToast.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import {ExamEssayData} from "@/types/exam-types.ts";
 import {HtmlTitle} from "@/layout";
 import ExamEssayHeader from "@/features/Exam/ExamEssay/tools/ExamEssayHeader.tsx";

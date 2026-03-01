@@ -1,6 +1,6 @@
 import {IoPersonAddSharp} from "react-icons/io5";
 import {Button, Col, Modal, ModalBody, ModalTitle} from "@/component";
-import {MEDIA_IP} from "@/utils/config.ts";
+import {MEDIA_IP} from "@/lib/config.ts";
 import {useModal} from "@/hooks";
 
 export default function ModalLine() {

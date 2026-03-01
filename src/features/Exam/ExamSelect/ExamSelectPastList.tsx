@@ -4,7 +4,7 @@ import {useNavigate, useSearchParams} from "react-router";
 import {Button} from "@/component";
 import {useAxios} from "@/hooks";
 import {showToast} from "@/utils/handleToast.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 
 type Props = {
   readonly data: Array<ExamPastData>  | null,

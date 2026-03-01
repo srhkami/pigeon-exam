@@ -3,7 +3,7 @@ import {useAxios} from "@/hooks";
 import {useEffect, useState} from "react";
 import {ExamPaperData} from "@/types/exam-types.ts";
 import {showToast} from "@/utils/handleToast.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import {HtmlTitle} from "@/layout";
 import {Alert, Button, Col, DetailRow, Row} from "@/component";
 import {IoWarningOutline} from "react-icons/io5";

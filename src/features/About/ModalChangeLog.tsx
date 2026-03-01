@@ -1,5 +1,5 @@
 import {Button, Collapse, CollapseContent, CollapseTitle, Modal, ModalBody, ModalHeader} from "@/component";
-import {CHANGE_LOGS} from "@/utils/logs.ts";
+import {CHANGE_LOGS} from "@/lib/logs.ts";
 import BadgeLog from "@/features/About/BadgeLog.tsx";
 import {useModal} from "@/hooks";
 

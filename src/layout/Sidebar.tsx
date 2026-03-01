@@ -1,5 +1,5 @@
 import {ReactNode, useState} from "react";
-import {AllPages, HappyPages} from "../routes/pages.ts";
+import {AllPages, HappyPages} from "../lib/pages.ts";
 import {SidebarLink, SidebarMenu,} from "@/component";
 import {twMerge} from "tailwind-merge";
 import clsx from "clsx";

@@ -3,7 +3,7 @@ import {RiExternalLinkLine} from "react-icons/ri";
 import {useAxios, useModal} from "@/hooks";
 import {useState} from "react";
 import {showToast} from "@/utils/handleToast.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 
 type Props = {
   readonly articleLink: Array<[string, string]>,

@@ -3,10 +3,9 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {showToast} from "@/utils/handleToast.ts";
 import {handleLogin} from "@/auth/handleUser.ts";
 import {UserLoginForm} from "@/types/user-types.ts";
-import {showFormError} from "@/utils/handleFormErrors.ts";
-import {handleError} from "@/utils/errorReport.tsx";
 import toast from "react-hot-toast";
 import {useAuth} from "@/hooks";
+import {errorLogger, showFormError} from "@/func";
 
 export default function PasswordForm() {
 
@@ -26,7 +25,7 @@ export default function PasswordForm() {
         } else if (status === 500) {
           toast.error('伺服器臨時維護中，請稍後再試');
         } else {
-          handleError(err, '未知登入錯誤')
+          errorLogger(err, '未知登入錯誤')
         }
       })
   }

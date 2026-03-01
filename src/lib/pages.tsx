@@ -1,4 +1,21 @@
-import {MEDIA_IP} from "@/utils/config.ts";
+import {MEDIA_IP} from "@/lib/config.ts";
+import {ReactNode} from "react";
+
+type Page = {
+  code: string,
+  label: string,
+  icon: string,
+  url: string,
+  content: ReactNode,
+}
+
+type PageList = {
+
+  pages: Page[]
+}
+
+export const studentPages:
+
 
 export class Page {
   code: string;
@@ -14,39 +31,6 @@ export class Page {
   }
 }
 
-/* 開心上班頁面 */
-export const HappyPages = {
-  happywork: new Page(
-    'happywork',
-    '開心上班資料庫',
-    'dove.png',
-    '/happywork/view/0',
-  ),
-  officialDocument: new Page(
-    'officialDocument',
-    '公文依據',
-    'rules-book.png',
-    '/happywork/view/1',
-  ),
-  website: new Page(
-    'website',
-    '實用連結',
-    'cloud_link.png',
-    '/happywork/view/28',
-  ),
-  handle: new Page(
-    'handle',
-    '現場處理',
-    'minecraft_sword.png',
-    '/happywork/view/312',
-  ),
-  caseDocument: new Page(
-    'caseDocument',
-    '辦案文檔',
-    'documents.png',
-    '/happywork/view/4',
-  )
-}
 
 /* 警政相關頁面*/
 export const PolicePages = {
@@ -55,24 +39,6 @@ export const PolicePages = {
     '交通鴿手',
     'TrafficPigeon_Logo192.png',
     'https://traffic.pigeonhand.tw',
-  ),
-  enforcement: new Page(
-    'enforcement',
-    '警察執法初探',
-    'police.png',
-    '/enf',
-  ),
-  policelaw: new Page(
-    'policelaw',
-    '警察法規',
-    'law.png',
-    '/policelaw',
-  ),
-  sop: new Page(
-    'sop',
-    '作業程序',
-    'backlog.png',
-    '/sop',
   ),
 }
 

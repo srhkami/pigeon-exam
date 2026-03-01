@@ -1,5 +1,5 @@
 import PDFViewer from "./PDFViewer.tsx";
-import {MEDIA_IP} from "@/utils/config.ts";
+import {MEDIA_IP} from "@/lib/config.ts";
 
 type Props = {
   readonly fileName: string,

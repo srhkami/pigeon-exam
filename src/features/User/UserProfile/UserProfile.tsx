@@ -1,15 +1,15 @@
 import {DetailRow} from "@/component";
 import {useAxios} from "@/hooks";
 import {useEffect, useState} from "react";
-import {USER_API} from "@/utils/config.ts";
+import {USER_API} from "@/lib/config.ts";
 import {showToast} from "@/utils/handleToast.ts";
 import BadgeAccredit from "./BadgeAccredit.tsx";
 import ModalChangePassword from "./ModalChangePassword.tsx";
 import {UserDetailData} from "@/types/user-types.ts";
-import {handleError} from "@/utils/errorReport.tsx";
 import {HtmlTitle} from "@/layout";
 import PageHeader from "@/layout/PageHeader.tsx";
 import AuthShow from "@/auth/AuthShow.tsx";
+import {errorLogger} from "@/func";
 
 export default function UserProfile() {
 
@@ -28,7 +28,7 @@ export default function UserProfile() {
   useEffect(() => {
     showToast(requestData, {baseText: '載入'})
       .then(data => setUser(data))
-      .catch(err =>handleError(err,'載入會員詳情錯誤'))
+      .catch(err =>errorLogger(err,'載入會員詳情錯誤'))
   }, []);
 
   return (

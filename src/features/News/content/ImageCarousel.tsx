@@ -3,7 +3,7 @@ import {useKeenSlider} from "keen-slider/react";
 import {HiOutlineChevronLeft, HiOutlineChevronRight} from "react-icons/hi";
 import {Button} from "@/component";
 import {Link} from "react-router";
-import {WEB_API} from "@/utils/config.ts";
+import {WEB_API} from "@/lib/config.ts";
 import {CarouselImage} from "@/types/media-types.ts";
 import {useCacheApi} from "@/hooks";
 

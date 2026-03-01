@@ -2,7 +2,7 @@ import {MdError} from "react-icons/md";
 import {Button} from "@/component";
 import {showToast} from "@/utils/handleToast.ts";
 import axios from "axios";
-import {WEB_API} from "@/utils/config.ts";
+import {WEB_API} from "@/lib/config.ts";
 import toast from "react-hot-toast";
 import {useAuth} from "@/hooks";
 

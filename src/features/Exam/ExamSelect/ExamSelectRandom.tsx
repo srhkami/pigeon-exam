@@ -4,7 +4,7 @@ import {FaArrowRight} from "react-icons/fa";
 import {useAxios, useCacheApi} from "@/hooks";
 import {showToast} from "@/utils/handleToast.ts";
 import {Link, useNavigate} from "react-router";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import SelectSingle from "@/features/Exam/ExamSelect/tools/SelectSingle.tsx";
 import {HtmlTitle} from "@/layout";
 import ExamSelectHeader from "@/features/Exam/ExamSelect/tools/ExamSelectHeader.tsx";

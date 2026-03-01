@@ -1,7 +1,7 @@
 import {HtmlTitle, IndexPage} from "@/layout";
 import ModalChangeLog from "@/features/About/ModalChangeLog.tsx";
 import ModalLine from "@/features/Feedback/ModalLine.tsx";
-import {APP_VER, UPDATE_AT} from "@/utils/logs.ts";
+import {APP_VER, UPDATE_AT} from "@/lib/logs.ts";
 import ModalManagers from "@/features/About/ModalManagers.tsx";
 import AccordionHowInstall from "@/features/About/AccordionHowInstall.tsx";
 import PageHeader from "@/layout/PageHeader.tsx";

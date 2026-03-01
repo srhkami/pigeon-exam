@@ -3,13 +3,13 @@ import {FaSearch} from "react-icons/fa";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {useAxios, useModal} from "@/hooks";
 import {ApiKeywordForm} from "@/types/api-types.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import {showToast} from "@/utils/handleToast.ts";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {FileDetailData, HappyworkSearchResultData, HappyFileLink} from "@/types/happywork-types.ts";
+import {FileDetailData, HappyFileLink, HappyworkSearchResultData} from "@/types/happywork-types.ts";
 import {FaCirclePlus, FaDeleteLeft} from "react-icons/fa6";
 import toast from "react-hot-toast";
-import {handleError} from "@/utils/errorReport.tsx";
+import {errorLogger} from "@/func";
 
 type Props = {
   readonly setList: Dispatch<SetStateAction<Array<HappyFileLink>>>,
@@ -43,7 +43,7 @@ export default function ModalSelectFile({setList, small = false,}: Props) {
       }), {baseText: '搜尋'}
     )
       .then(res => setData(res.data.files))
-      .catch(err => handleError(err, '開心上班搜尋錯誤'))
+      .catch(err => errorLogger(err, '開心上班搜尋錯誤'))
   }
 
   const dataList = data.map(file => {

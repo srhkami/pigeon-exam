@@ -1,7 +1,7 @@
 import {ExamEssayAnswerData} from "@/types/exam-types.ts";
 import {useAxios} from "@/hooks";
 import {useState} from "react";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import {Button} from "@/component";
 import {BiLike, BiSolidLike} from "react-icons/bi";
 

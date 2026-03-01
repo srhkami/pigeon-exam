@@ -1,5 +1,5 @@
 import {Link} from "react-router";
-import {Page} from "@/routes/pages.ts";
+import {Page} from "@/lib/pages.ts";
 
 type Props = {
   readonly page: Page, // 頁面物件

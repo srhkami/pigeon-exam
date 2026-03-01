@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {ExamResultData} from "@/types/exam-types.ts";
 import {showToast} from "@/utils/handleToast.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import {HtmlTitle} from "@/layout";
 import {DetailRow} from "@/component";
 import PageHeader from "@/layout/PageHeader.tsx";

@@ -6,7 +6,7 @@ import FileLinkEdit from "@/features/Exam/tools/FileLink/FileLinkEdit.tsx";
 import {ExamMemoForm} from "@/types/exam-types.ts";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {showToast} from "@/utils/handleToast.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import {HappyFileLink} from "@/types/enforcement-types.ts";
 import {JSONContent} from "@tiptap/react";
 import {FaPlusCircle, FaSave} from "react-icons/fa";

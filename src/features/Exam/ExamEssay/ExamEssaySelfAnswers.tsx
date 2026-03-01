@@ -1,7 +1,7 @@
 import {DataBrowser, DataBrowserTitle} from "@/component";
 import {useDataBrowser} from "@/hooks";
 import {ExamEssayAnswerData} from "@/types/exam-types.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import ExamEssaySelfAnswerCard from "@/features/Exam/ExamEssay/ExamEssaySelfAnswerCard.tsx";
 import {HtmlTitle} from "@/layout";
 import ExamEssayHeader from "@/features/Exam/ExamEssay/tools/ExamEssayHeader.tsx";

@@ -1,5 +1,5 @@
 import {Col, Row} from "@/component";
-import {APP_VER, UPDATE_AT} from "@/utils/logs.ts";
+import {APP_VER, UPDATE_AT} from "@/lib/logs.ts";
 
 export default function Footer(){
   return(

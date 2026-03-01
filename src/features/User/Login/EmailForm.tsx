@@ -5,10 +5,9 @@ import {useState} from "react";
 import BtnEmailCode from "./BtnEmailCode.tsx";
 import {handleEmailLogin} from "@/auth/handleUser.ts";
 import {EmailLoginForm} from "@/types/user-types.ts";
-import {showFormError} from "@/utils/handleFormErrors.ts";
 import toast from "react-hot-toast";
-import {handleError} from "@/utils/errorReport.tsx";
 import {useAuth} from "@/hooks";
+import {errorLogger, showFormError} from "@/func";
 
 export default function EmailForm() {
 
@@ -33,7 +32,7 @@ export default function EmailForm() {
         } else if (status === 500) {
           toast.error('伺服器臨時維護中，請稍後再試');
         } else {
-          handleError(err, '未知登入錯誤')
+          errorLogger(err, '未知登入錯誤')
         }
       })
   }

@@ -3,7 +3,7 @@ import {Button} from "@/component";
 import {useState} from "react";
 import {FaArrowRight, FaCheckCircle} from "react-icons/fa";
 import {showToast} from "@/utils/handleToast.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import {useAxios} from "@/hooks";
 import SelectResultCard from "@/features/Exam/Question/SelectResultCard.tsx";
 

@@ -2,7 +2,7 @@ import {Button, Modal, ModalBody, ModalHeader, ModalTitle, RichTextShow} from "@
 import {useModal, useToastApi} from "@/hooks";
 import {ExamEssayAnswerData, ExamEssayData} from "@/types/exam-types.ts";
 import {ApiResData} from "@/types/api-types.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import {FaCircleUser} from "react-icons/fa6";
 import LikeButton from "./LikeButton.tsx";
 

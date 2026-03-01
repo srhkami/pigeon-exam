@@ -1,5 +1,5 @@
 import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig} from 'axios'
-import {USER_API} from "@/utils/config.ts";
+import {USER_API} from "@/lib/config.ts";
 import toast from "react-hot-toast";
 import {clearTokens, loadTokens, saveTokens, setAccess} from "@/auth/handleUser.ts";
 

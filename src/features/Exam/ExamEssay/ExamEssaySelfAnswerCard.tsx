@@ -7,7 +7,7 @@ import {Dispatch, SetStateAction, useState} from "react";
 import {JSONContent} from "@tiptap/react";
 import {showToast} from "@/utils/handleToast.ts";
 import {useAxios} from "@/hooks";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import toast from "react-hot-toast";
 import {BiSolidLike} from "react-icons/bi";
 

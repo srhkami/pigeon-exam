@@ -2,7 +2,7 @@ import {useCacheApi} from "@/hooks";
 import {ExamPastData} from "@/types/exam-types.ts";
 import {DataBrowserTitle} from "@/component";
 import ExamSelectPastList from "@/features/Exam/ExamSelect/ExamSelectPastList.tsx";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import ModalFilter from "@/component/DataBrowser/ModalFilter.tsx";
 import {HtmlTitle} from "@/layout";
 import ExamSelectHeader from "@/features/Exam/ExamSelect/tools/ExamSelectHeader.tsx";

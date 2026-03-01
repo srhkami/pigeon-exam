@@ -1,6 +1,6 @@
 import {useDataBrowser} from "@/hooks";
 import {ExamResultData} from "@/types/exam-types.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import {HtmlTitle} from "@/layout";
 import {DataBrowser, DataBrowserTitle} from "@/component";
 import {FilterConfig} from "@/types/api-types.ts";

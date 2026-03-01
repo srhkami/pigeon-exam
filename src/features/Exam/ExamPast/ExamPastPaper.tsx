@@ -6,7 +6,7 @@ import {useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import {ExamResultData} from "@/types/exam-types.ts";
 import {showToast} from "@/utils/handleToast.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import Questions from "@/features/Exam/Question/Questions.tsx";
 
 /* 考古題單純顯示題目及解答的組件 */

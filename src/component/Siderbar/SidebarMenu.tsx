@@ -1,7 +1,7 @@
-import {Page} from "@/routes/pages.ts";
+import {Page} from "@/lib/pages.ts";
 import {useEffect, useRef, useState} from "react";
 import {Link} from "react-router";
-import {MEDIA_IP} from "@/utils/config.ts";
+import {MEDIA_IP} from "@/lib/config.ts";
 
 type Props = {
   readonly title: string, // 選單標題

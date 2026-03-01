@@ -6,7 +6,7 @@ import {PoliceLawData} from "@/types/policelaw-types.ts";
 import {FaSearch} from "react-icons/fa";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {ApiKeywordForm, ApiResData} from "@/types/api-types.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import {showToast} from "@/utils/handleToast.ts";
 import Articles from "@/features/Exam/tools/ArticleLink/Articles.tsx";
 

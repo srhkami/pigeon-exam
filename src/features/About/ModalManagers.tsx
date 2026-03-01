@@ -1,6 +1,6 @@
 import {useState} from "react";
 import axios from "axios";
-import {USER_API} from "@/utils/config.ts";
+import {USER_API} from "@/lib/config.ts";
 import {ManagerInfoData} from "@/types/user-types.ts";
 import {Button, Modal, ModalBody, ModalHeader, ModalTitle} from "@/component";
 import {useModal} from "@/hooks";

@@ -3,9 +3,9 @@ import {Link} from "react-router";
 import {showToast} from "@/utils/handleToast.ts";
 import {handleLogout} from "@/auth/handleUser.ts";
 import BadgeAccredit from "./BadgeAccredit.tsx";
-import {handleError} from "@/utils/errorReport.tsx";
 import AuthShow from "@/auth/AuthShow.tsx";
 import {useAuth} from "@/hooks";
+import {errorLogger} from "@/func";
 
 export default function MenuUser() {
 
@@ -15,7 +15,7 @@ export default function MenuUser() {
     showToast(
       handleLogout()
     )
-      .catch((err) => handleError(err, '登出錯誤'))
+      .catch((err) => errorLogger(err, '登出錯誤'))
       .finally(() => onReload())
   }
 

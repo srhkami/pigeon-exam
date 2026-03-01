@@ -1,8 +1,8 @@
 import {HtmlTitle, IndexPage} from "@/layout";
 import {Link} from "react-router";
 import toast from "react-hot-toast";
-import {MEDIA_IP, POLICE_API} from "@/utils/config.ts";
-import {AllPages} from "@/routes/pages.ts";
+import {MEDIA_IP, POLICE_API} from "@/lib/config.ts";
+import {AllPages} from "@/lib/pages.ts";
 import {Collapse, CollapseContent, CollapseTitle} from "@/component";
 import {useCacheApi} from "@/hooks";
 

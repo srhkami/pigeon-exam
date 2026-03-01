@@ -1,5 +1,5 @@
 import axios from "axios";
-import {USER_API} from "@/utils/config.ts";
+import {USER_API} from "@/lib/config.ts";
 import {EmailLoginForm, UserLoginForm, UserSignUpNormalForm} from "@/types/user-types.ts";
 
 // Token的類別

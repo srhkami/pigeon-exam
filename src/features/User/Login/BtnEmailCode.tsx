@@ -2,9 +2,9 @@ import {Dispatch, ReactNode, SetStateAction, useEffect, useState} from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import {showToast} from "@/utils/handleToast.ts";
-import {USER_API} from "@/utils/config.ts";
+import {USER_API} from "@/lib/config.ts";
 import {Button} from "@/component";
-import {handleError} from "@/utils/errorReport.tsx";
+import {errorLogger} from "@/func";
 
 type TimerProps = {
   readonly initialTime: number,
@@ -59,7 +59,7 @@ export default function BtnEmailCode({email, setIsUser, size = null}: Props): Re
         setIsDisable(true);
       })
       .catch(err => {
-          handleError(err, '取得驗證碼錯誤')
+          errorLogger(err, '取得驗證碼錯誤')
           setIsDisable(false);
           setIsUser(null);
         }

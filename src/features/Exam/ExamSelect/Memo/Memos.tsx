@@ -1,6 +1,6 @@
 import {useToastApi} from "@/hooks";
 import {ExamMemoData} from "@/types/exam-types.ts";
-import {POLICE_API} from "@/utils/config.ts";
+import {POLICE_API} from "@/lib/config.ts";
 import ArticleLink from "@/features/Exam/tools/ArticleLink/ArticleLink.tsx";
 import FileLink from "@/features/Exam/tools/FileLink/FileLink.tsx";
 import {Collapse, CollapseContent, CollapseTitle, RichTextShow} from "@/component";

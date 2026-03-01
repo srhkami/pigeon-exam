@@ -2,7 +2,7 @@ import {useAxios} from "@/hooks";
 import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {ExamResultData} from "@/types/exam-types.ts";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
 import {HtmlTitle} from "@/layout";
 import {DetailRow} from "@/component";
@@ -25,7 +25,7 @@ export default function ExamResult() {
         })
         setData(res.data);
       }
-      , {baseText: '載入', error: (err) => err.response.data.detail}
+      , {label: '載入', error: (err) => err.response.data.detail}
     ).catch(() => navi('/exam'))
   }, []);
 

@@ -4,7 +4,7 @@ import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {useAxios, useModal} from "@/hooks";
 import {ApiKeywordForm} from "@/types/api-types.ts";
 import {POLICE_API} from "@/lib/config.ts";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {FileDetailData, HappyFileLink, HappyworkSearchResultData} from "@/types/happywork-types.ts";
 import {FaCirclePlus, FaDeleteLeft} from "react-icons/fa6";
@@ -40,7 +40,7 @@ export default function ModalSelectFile({setList, small = false,}: Props) {
         params: {
           search: formData.keyword,
         }
-      }), {baseText: '搜尋'}
+      }), {label: '搜尋'}
     )
       .then(res => setData(res.data.files))
       .catch(err => errorLogger(err, '開心上班搜尋錯誤'))

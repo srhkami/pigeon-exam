@@ -1,5 +1,5 @@
 import {useAxios} from "@/hooks/index.ts";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {useEffect, useState} from "react";
 
 type Config = {
@@ -7,7 +7,7 @@ type Config = {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
   params?: unknown,
   data?: unknown,
-  baseText?: string,
+  label?: string,
   successText?: string,
   reload?: boolean,
   init?: boolean,
@@ -19,7 +19,7 @@ type Config = {
  * @param config.method 請求方法，預設為GET
  * @param config.params 請求參數
  * @param config.data 請求資料
- * @param config.baseText 快顯通知的基礎文字
+ * @param config.label 快顯通知的基礎文字
  * @param config.successText 快顯通知的成功文字
  * @param config.reload 用來偵測刷新的布林值
  * @return data 從API取得的資料
@@ -45,7 +45,7 @@ export default function useToastApi<T = unknown>(config: Config) {
         data: config.data ?? {},
       }),
       {
-        baseText: config.baseText ?? '載入',
+        label: config.label ?? '載入',
         success: config.successText,
         error: (err) => JSON.stringify(err.response.data),
       }

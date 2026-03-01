@@ -5,7 +5,7 @@ import ArticleLinkEdit from "@/features/Exam/tools/ArticleLink/ArticleLinkEdit.t
 import FileLinkEdit from "@/features/Exam/tools/FileLink/FileLinkEdit.tsx";
 import {ExamMemoForm} from "@/types/exam-types.ts";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
 import {HappyFileLink} from "@/types/enforcement-types.ts";
 import {JSONContent} from "@tiptap/react";

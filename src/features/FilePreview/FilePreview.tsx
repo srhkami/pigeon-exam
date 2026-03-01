@@ -5,14 +5,12 @@ import {MEDIA_IP, WEB_API} from "@/lib/config.ts";
 import {IoArrowBackOutline, IoShareSocial} from "react-icons/io5";
 import {FaArrowRightToBracket} from "react-icons/fa6";
 import {IoMdDownload} from "react-icons/io";
-import {showToast} from "@/utils/handleToast.ts";
+import {errorLogger, showToast, copyText} from "@/func";
 import {HtmlTitle} from '@/layout';
 import {BottomBar, BottomButton, BottomMainButton} from '@/component';
 import CountdownTimer from "./tools/CountdownTimer.tsx";
 import ShowFile from "./tools/ShowFile.tsx";
 import {FileDetailData} from "@/types/happywork-types.ts";
-import {copy} from "@/func/copy.tsx";
-import {errorLogger} from "@/func";
 
 type Props = {
   readonly code: 'f' | 'l',
@@ -40,7 +38,7 @@ export default function FilePreview({code}: Props): ReactNode {
         }
       }),
       {
-        baseText: '載入',
+        label: '載入',
         error: '檔案取得失敗'
       }
     )
@@ -56,7 +54,7 @@ export default function FilePreview({code}: Props): ReactNode {
     // 組合文字
     const textToCopy = `${currentUrl}\n${customText}`;
     // 複製到剪貼簿
-    copy(textToCopy);
+    copyText(textToCopy);
   }
 
   return (

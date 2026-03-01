@@ -5,7 +5,7 @@ import {RiEdit2Fill} from "react-icons/ri";
 import {useNavigate} from "react-router";
 import {Dispatch, SetStateAction, useState} from "react";
 import {JSONContent} from "@tiptap/react";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {useAxios} from "@/hooks";
 import {POLICE_API} from "@/lib/config.ts";
 import toast from "react-hot-toast";
@@ -45,7 +45,7 @@ export default function ExamEssaySelfAnswerCard({obj, setReload}: Props) {
         data: {
           content: content,
         }
-      }), {baseText: '處理', success: '更新成功', error: err => JSON.stringify(err.response.data)}
+      }), {label: '處理', success: '更新成功', error: err => JSON.stringify(err.response.data)}
     )
       .then(() => setReload(p => !p))
       .finally(() => setIsEdit(false))
@@ -82,7 +82,7 @@ export default function ExamEssaySelfAnswerCard({obj, setReload}: Props) {
       api({
         method: 'DELETE',
         url: POLICE_API + '/exam_essay_answer/' + obj.id + '/',
-      }), {baseText: '處理', success: '更新成功', error: err => JSON.stringify(err.response.data)}
+      }), {label: '處理', success: '更新成功', error: err => JSON.stringify(err.response.data)}
     ).then(() => setReload(p => !p))
   }
 

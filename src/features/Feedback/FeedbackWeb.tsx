@@ -3,7 +3,7 @@ import axios from "axios";
 import {useNavigate, useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import {WEB_API} from "@/lib/config.ts";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {HtmlTitle} from "@/layout";
 import {Button, Col, FormInputCol, Row} from "@/component";
 import {FaCircleCheck} from "react-icons/fa6";

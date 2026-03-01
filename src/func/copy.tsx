@@ -1,4 +1,4 @@
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {errorLogger} from "@/func/index.ts";
 
 export default function copyText(text: string) {

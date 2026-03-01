@@ -2,7 +2,7 @@ import {Button, Modal, ModalBody, ModalHeader, ModalTitle} from "@/component";
 import {RiExternalLinkLine} from "react-icons/ri";
 import {useAxios, useModal} from "@/hooks";
 import {useState} from "react";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
 
 type Props = {
@@ -38,7 +38,7 @@ function ModalArticleLink({item}: { readonly item: [string, string] }) {
           law_name: item[0],
           article: item[1],
         }
-      }), {baseText: '載入', error: err => err.response?.data.detail}
+      }), {label: '載入', error: err => err.response?.data.detail}
     ).then(res => {
       setText(res.data);
       onShow();

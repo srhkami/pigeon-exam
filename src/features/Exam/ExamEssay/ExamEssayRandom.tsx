@@ -2,7 +2,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {Button, Collapse, CollapseContent, CollapseTitle} from "@/component";
 import {FaArrowRight} from "react-icons/fa";
 import {useAxios, useCacheApi} from "@/hooks";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
 import {ExamEssayData} from "@/types/exam-types.ts";
 import {HtmlTitle} from "@/layout";
@@ -73,7 +73,7 @@ export default function ExamEssayRandom() {
         method: 'GET',
         url: POLICE_API + '/exam_essay/random_single/',
         params: newParams,
-      }), {baseText: '載入', error: err => JSON.stringify(err.response?.data)}
+      }), {label: '載入', error: err => JSON.stringify(err.response?.data)}
     )
       .then(res => navi(`/exam/essay/detail/${res.data.id}`))
   }

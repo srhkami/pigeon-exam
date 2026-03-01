@@ -2,7 +2,7 @@ import {DetailRow} from "@/component";
 import {useAxios} from "@/hooks";
 import {useEffect, useState} from "react";
 import {USER_API} from "@/lib/config.ts";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import BadgeAccredit from "./BadgeAccredit.tsx";
 import ModalChangePassword from "./ModalChangePassword.tsx";
 import {UserDetailData} from "@/types/user-types.ts";
@@ -26,7 +26,7 @@ export default function UserProfile() {
   }
 
   useEffect(() => {
-    showToast(requestData, {baseText: '載入'})
+    showToast(requestData, {label: '載入'})
       .then(data => setUser(data))
       .catch(err =>errorLogger(err,'載入會員詳情錯誤'))
   }, []);

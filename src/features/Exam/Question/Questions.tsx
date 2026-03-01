@@ -1,6 +1,6 @@
 import {AnswerData, ExamSelectData, QuestionsData} from "@/types/exam-types.ts";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {useAxios} from "@/hooks";
 import {POLICE_API} from "@/lib/config.ts";
 import SelectResultCard from "@/features/Exam/Question/SelectResultCard.tsx";
@@ -33,7 +33,7 @@ export default function Questions({questions, answers, setSelectAnswers}: Props)
           id_list: questions.select ?? [],
           is_read: answers === undefined,
         }
-      }), {baseText: '載入'}
+      }), {label: '載入'}
     ).then(res => setSelectData(res.data))
   }, []);
 

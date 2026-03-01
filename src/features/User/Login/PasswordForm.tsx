@@ -1,6 +1,6 @@
 import {Button} from "@/component";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {handleLogin} from "@/auth/handleUser.ts";
 import {UserLoginForm} from "@/types/user-types.ts";
 import toast from "react-hot-toast";
@@ -15,7 +15,7 @@ export default function PasswordForm() {
   const onSubmit: SubmitHandler<UserLoginForm> = (formData) => {
     showToast(
       handleLogin(formData),
-      {baseText: '登入', success: '登入成功'}
+      {label: '登入', success: '登入成功'}
     )
       .then(() => onReload())
       .catch(err => {

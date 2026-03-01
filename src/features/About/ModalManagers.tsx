@@ -4,7 +4,7 @@ import {USER_API} from "@/lib/config.ts";
 import {ManagerInfoData} from "@/types/user-types.ts";
 import {Button, Modal, ModalBody, ModalHeader, ModalTitle} from "@/component";
 import {useModal} from "@/hooks";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 
 /** 顯示管理員名冊的對話框 */
 export default function ModalManagers() {
@@ -17,7 +17,7 @@ export default function ModalManagers() {
       axios({
         method: 'GET',
         url: USER_API + '/managers/',
-      }),{baseText:'載入'}
+      }),{label:'載入'}
     )
       .then(res => {
         setData(res.data);

@@ -1,6 +1,6 @@
 import {Dropdown, DropdownContent, DropdownToggle} from "@/component";
 import {Link} from "react-router";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {handleLogout} from "@/auth/handleUser.ts";
 import BadgeAccredit from "./BadgeAccredit.tsx";
 import AuthShow from "@/auth/AuthShow.tsx";

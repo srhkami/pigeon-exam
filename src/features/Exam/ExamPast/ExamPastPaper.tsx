@@ -5,7 +5,7 @@ import {useAxios} from "@/hooks";
 import {useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import {ExamResultData} from "@/types/exam-types.ts";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
 import Questions from "@/features/Exam/Question/Questions.tsx";
 
@@ -28,7 +28,7 @@ export default function ExamPastPaper(){
         })
         setData(res1.data);
       }
-      , {baseText: '載入', error:(err)=>JSON.stringify(err.response?.data)}
+      , {label: '載入', error:(err)=>JSON.stringify(err.response?.data)}
     )
   }, []);
 

@@ -1,7 +1,7 @@
 import {Dispatch, ReactNode, SetStateAction, useEffect, useState} from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {USER_API} from "@/lib/config.ts";
 import {Button} from "@/component";
 import {errorLogger} from "@/func";

@@ -3,7 +3,7 @@ import {RiEdit2Fill, RiNewspaperFill} from "react-icons/ri";
 import {useNavigate, useSearchParams} from "react-router";
 import {Button} from "@/component";
 import {useAxios} from "@/hooks";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
 
 type Props = {
@@ -34,7 +34,7 @@ export default function ExamSelectPastList({data}: Props) {
             category: obj.category,
             subject: obj.subject,
           }
-        }), {baseText: '載入', error: err => JSON.stringify(err.response?.data)}
+        }), {label: '載入', error: err => JSON.stringify(err.response?.data)}
       ).then(res => navi('/exam/paper/' + res.data))
     }
 

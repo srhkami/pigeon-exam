@@ -1,6 +1,6 @@
 import {MdError} from "react-icons/md";
 import {Button} from "@/component";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import axios from "axios";
 import {WEB_API} from "@/lib/config.ts";
 import toast from "react-hot-toast";

@@ -2,7 +2,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {Alert, Button, Collapse, CollapseContent, CollapseTitle} from "@/component";
 import {FaArrowRight} from "react-icons/fa";
 import {useAxios, useCacheApi} from "@/hooks";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {Link, useNavigate} from "react-router";
 import {POLICE_API} from "@/lib/config.ts";
 import SelectSingle from "@/features/Exam/ExamSelect/tools/SelectSingle.tsx";
@@ -74,7 +74,7 @@ export default function ExamSelectRandom() {
         method: 'GET',
         url: POLICE_API + '/exam_select/random_multi/',
         params: newParams,
-      }), {baseText: '題目生成', error: err => JSON.stringify(err.response?.data)},
+      }), {label: '題目生成', error: err => JSON.stringify(err.response?.data)},
     ).then(res => navi('/exam/paper/' + res.data))
   }
 

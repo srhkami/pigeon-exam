@@ -7,7 +7,7 @@ import {FaSearch} from "react-icons/fa";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {ApiKeywordForm, ApiResData} from "@/types/api-types.ts";
 import {POLICE_API} from "@/lib/config.ts";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import Articles from "@/features/Exam/tools/ArticleLink/Articles.tsx";
 
 type Props = {
@@ -41,7 +41,7 @@ export default function ModalAddArticleLink({setArticleLink}: Props) {
           search: keyword,
           ordering: 'law_name',
         }
-      }), {baseText: '搜尋'}
+      }), {label: '搜尋'}
     ).then(res => setData(res.data.results))
   }
 

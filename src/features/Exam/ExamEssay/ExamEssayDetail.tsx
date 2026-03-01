@@ -6,7 +6,7 @@ import {Button, Col, ModalTextEditor, Row} from "@/component";
 import {JSONContent} from "@tiptap/react";
 import {FaCheck, FaDoorClosed, FaDoorOpen} from "react-icons/fa";
 import toast from "react-hot-toast";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
 import {useAuth, useAxios, useToastApi} from "@/hooks";
 import {useParams} from "react-router";
@@ -64,7 +64,7 @@ export default function ExamEssayDetail() {
         },
       }),
       {
-        baseText: '處理',
+        label: '處理',
         success: '提交成功',
         error:
           err => JSON.stringify(err.response?.data)

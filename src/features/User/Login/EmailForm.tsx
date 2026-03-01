@@ -1,6 +1,6 @@
 import {Button} from "@/component";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {useState} from "react";
 import BtnEmailCode from "./BtnEmailCode.tsx";
 import {handleEmailLogin} from "@/auth/handleUser.ts";
@@ -22,7 +22,7 @@ export default function EmailForm() {
       return
     }
     showToast(
-      handleEmailLogin(formData), {baseText: '登入', success: '登入成功'}
+      handleEmailLogin(formData), {label: '登入', success: '登入成功'}
     )
       .then(() => onReload())
       .catch(err => {

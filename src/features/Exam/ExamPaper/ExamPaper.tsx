@@ -2,7 +2,7 @@ import {useNavigate, useParams} from "react-router";
 import {useAxios} from "@/hooks";
 import {useEffect, useState} from "react";
 import {ExamPaperData} from "@/types/exam-types.ts";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
 import {HtmlTitle} from "@/layout";
 import {Alert, Button, Col, DetailRow, Row} from "@/component";
@@ -35,7 +35,7 @@ export default function ExamPaper() {
         setData(res.data)
         const questions = res.data.questions; // 取出題目清單
         setSelectAnswers(new Array(questions.select?.length).fill([null])) // 產生答案空清單
-      }, {baseText: '載入', error: err => err.response.data.detail}
+      }, {label: '載入', error: err => err.response.data.detail}
     ).catch(() => navi('/exam'))
   }, []);
 

@@ -2,7 +2,7 @@ import {ExamSelectData} from "@/types/exam-types.ts";
 import {Button} from "@/component";
 import {useState} from "react";
 import {FaArrowRight, FaCheckCircle} from "react-icons/fa";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
 import {useAxios} from "@/hooks";
 import SelectResultCard from "@/features/Exam/Question/SelectResultCard.tsx";
@@ -40,7 +40,7 @@ export default function SelectSingle({formData}: Props) {
         method: 'GET',
         url: POLICE_API + '/exam_select/random_single/',
         params: newParams,
-      }), {baseText: '載入', error: err => JSON.stringify(err.response?.data)}
+      }), {label: '載入', error: err => JSON.stringify(err.response?.data)}
     )
       .then(res => setQ(res.data))
       .finally(() => {

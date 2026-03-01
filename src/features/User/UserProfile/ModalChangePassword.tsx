@@ -1,7 +1,7 @@
 import {USER_API} from "@/lib/config.ts";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useAxios, useModal} from "@/hooks";
-import {showToast} from "@/utils/handleToast.ts";
+import {showToast} from "@/func";
 import {Button, FormInputCol, Modal, ModalBody, ModalHeader, ModalTitle, Row} from "@/component";
 import {FaEdit} from "react-icons/fa";
 import {showFormError} from "@/func";
@@ -40,7 +40,7 @@ export default function ModalChangePassword() {
         method: "POST",
         url: USER_API + '/change_pwd/',
         data: formData,
-      }), {baseText: '處理', success: '重設成功'}
+      }), {label: '處理', success: '重設成功'}
     )
       .then(() => {
         onHide();

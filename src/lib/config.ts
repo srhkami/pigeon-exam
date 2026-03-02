@@ -1,6 +1,6 @@
 /*用以儲存往網頁訊息的設定資料*/
 
-const DEV_MODE: boolean = false;
+const DEV_MODE: boolean = true;
 
 // 根IP
 export const ROOT_IP = DEV_MODE ? 'http://localhost:8000' : 'https://api.pigeonhand.tw';  // 正式環境

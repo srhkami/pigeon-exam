@@ -6,6 +6,7 @@ import SidebarMenu from "@/features/Layout/SidebarMenu.tsx";
 import ThemeToggle from "@/features/Layout/ThemeToggle.tsx";
 import MenuUser from "@/features/User/UserProfile/MenuUser.tsx";
 import SidebarLink from "@/features/Layout/SidebarLink.tsx";
+import { BsLayoutSidebarInset } from "react-icons/bs";
 
 type Props = {
   readonly children?: ReactNode;
@@ -29,20 +30,15 @@ export default function Base({children}: Props) {
   }
 
   return (
-    <div className="drawer lg:drawer-open">
+    <div className="drawer lg:drawer-open lg:px-5 xl:px-10">
       <input id="my-drawer-4" checked={drawerOpen} onChange={onChange} type="checkbox"
              className="drawer-toggle"/>
       <div className="drawer-content">
         {/* Navbar */}
-        <nav className="navbar px-4 w-full sticky top-0 z-10 bg-base-200/50 backdrop-blur-sm flex">
+        <nav className="navbar md:px-4 w-full sticky top-0 z-10 bg-base-200/50 backdrop-blur-sm flex">
           <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-circle mr-2">
             {/* Sidebar toggle icon */}
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round"
-                 strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4">
-              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-              <path d="M9 4v16"></path>
-              <path d="M14 10l2 2l-2 2"></path>
-            </svg>
+            <BsLayoutSidebarInset className='h-4 w-4'/>
           </label>
           <LogoLink/>
           <ThemeToggle/>
@@ -61,7 +57,6 @@ export default function Base({children}: Props) {
           {/* Sidebar content here */}
           <ul className="menu w-full grow gap-2 pt-4">
             {/* List item */}
-
             <SidebarMenu menu={MenuSelect} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
             {/* List item */}
             <SidebarLink page={AllPages.about}/>

@@ -13,7 +13,6 @@ export default defineConfig({
       },
     }),
     VitePWA({
-
       registerType: 'prompt',
       strategies: 'injectManifest',
       injectRegister: 'auto',

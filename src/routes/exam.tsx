@@ -19,8 +19,8 @@ export const exam: RouteObject = {
     {path: '', element: <ExamIntro/>},
     // {
     //   path: 'past', children: [
-    //     {path: '', element: <AuthLayout authType='E'><ExamSelectPast/></AuthLayout>},
-    //     {path: 'paper', element: <AuthLayout authType='E'><ExamPastPaper/></AuthLayout>}
+    //     {path: '', element: <AuthLayout authType='E'><SelectPast/></AuthLayout>},
+    //     {path: 'paper', element: <AuthLayout authType='E'><SelectPastPaper/></AuthLayout>}
     //   ]
     // },
     {

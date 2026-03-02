@@ -1,8 +1,8 @@
 import {MEDIA_IP} from "@/lib/config.ts";
 import {ReactNode} from "react";
-import {Home} from "@/features";
+import {Home, SelectLogs, SelectPast, SelectRandom, SelectStatistics} from "@/features";
 import {AuthType} from "@/types/auth-types.ts";
-import {AuthComponent} from "@/auth";
+import {AuthLayout} from "@/auth";
 
 
 export class Page {
@@ -19,7 +19,7 @@ export class Page {
     this.icon = MEDIA_IP + `/media/icon/${icon}` //圖示路徑
     this.url = url // 路由路徑，由/開始'
     this.auth = auth
-    this.content = this.auth ? <AuthComponent authType={this.auth}>{content}</AuthComponent> : content
+    this.content = this.auth ? <AuthLayout authType={this.auth}>{content}</AuthLayout> : content
   }
 }
 
@@ -53,19 +53,32 @@ export const ExamPagesForUser = {
     '隨機測驗',
     'dice.png',
     '/select/random',
-    'S',
+    'E',
+    <SelectRandom/>
   ),
   selectPast: new Page(
     'examPast',
-    '考古題',
+    '考古題測驗',
     'exam_history.png',
     '/select/past',
+    'E',
+    <SelectPast/>
+  ),
+  selectLogs: new Page(
+    'selectStatistics',
+    '測驗紀錄',
+    'exam_a_plus.png',
+    '/select/logs/1?ordering=-id',
+    'E',
+    <SelectLogs/>
   ),
   selectStatistics: new Page(
     'selectStatistics',
-    '統計及分析',
+    '統計與分析',
     'business-report.png',
     '/select/statistics',
+    'E',
+    <SelectStatistics/>
   ),
   examEssay: new Page(
     'examEssay',
@@ -121,5 +134,5 @@ export const AllPages = {...WebPages, ...PolicePages, ...ExamPagesForUser}
 export const MenuSelect: TSidebarMenu = {
   label: '選擇題',
   icon: 'select.png',
-  list: [AllPages.selectRandom, AllPages.selectPast, AllPages.selectStatistics]
+  list: [AllPages.selectRandom, AllPages.selectPast, AllPages.selectLogs, AllPages.selectStatistics]
 }

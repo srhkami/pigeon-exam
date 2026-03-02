@@ -1,6 +1,6 @@
 // 選擇題
-import {HappyFileLink} from "@/types/enforcement-types.ts";
 import {JSONContent} from "@tiptap/react";
+import {HappyFileLink} from "@/types/happywork-types.ts";
 
 export type ExamSelectData = {
   id: number,

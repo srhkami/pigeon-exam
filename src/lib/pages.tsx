@@ -1,39 +1,43 @@
 import {MEDIA_IP} from "@/lib/config.ts";
 import {ReactNode} from "react";
-
-type Page = {
-  code: string,
-  label: string,
-  icon: string,
-  url: string,
-  content: ReactNode,
-}
-
-type PageList = {
-
-  pages: Page[]
-}
-
-export const studentPages:
+import {Home} from "@/features";
+import {AuthType} from "@/types/auth-types.ts";
+import {AuthComponent} from "@/auth";
 
 
 export class Page {
   code: string;
-  name: string;
+  label: string;
   icon: string;
   url: string;
+  auth?: AuthType;
+  content?: ReactNode;
 
-  constructor(code: string, name: string, icon: string, url: string) {
+  constructor(code: string, label: string, icon: string, url: string, auth?: AuthType, content?: ReactNode) {
     this.code = code // 頁面代稱（英文代碼，等同於key值）
-    this.name = name // 頁面名稱
+    this.label = label // 頁面名稱
     this.icon = MEDIA_IP + `/media/icon/${icon}` //圖示路徑
-    this.url = url // 路由路徑，由/開始
+    this.url = url // 路由路徑，由/開始'
+    this.auth = auth
+    this.content = this.auth ? <AuthComponent authType={this.auth}>{content}</AuthComponent> : content
   }
+}
+
+export type TSidebarMenu = {
+  label: string,
+  icon: string,
+  list: Page[],
 }
 
 
 /* 警政相關頁面*/
 export const PolicePages = {
+  pigeonHand: new Page(
+    'pigeonHand',
+    '鴿手',
+    'PigeonHand_Logo192.png',
+    'https://pigeonhand.tw',
+  ),
   trafficpigeon: new Page(
     'trafficpigeon',
     '交通鴿手',
@@ -42,25 +46,26 @@ export const PolicePages = {
   ),
 }
 
-/* 測驗頁面 */
-export const ExamPages = {
-  exam: new Page(
-    'exam',
-    '小試鴿手',
-    'exam_a_plus.png',
-    '/exam',
-  ),
-  examRandom: new Page(
-    'examRandom',
+/* 測驗 - 使用者頁面 */
+export const ExamPagesForUser = {
+  selectRandom: new Page(
+    'selectRandom',
     '隨機測驗',
     'dice.png',
-    '/exam/random/select',
+    '/select/random',
+    'S',
   ),
-  examSelect: new Page(
-    'examSelect',
-    '選擇題',
-    'select.png',
-    '/exam/select/random',
+  selectPast: new Page(
+    'examPast',
+    '考古題',
+    'exam_history.png',
+    '/select/past',
+  ),
+  selectStatistics: new Page(
+    'selectStatistics',
+    '統計及分析',
+    'business-report.png',
+    '/select/statistics',
   ),
   examEssay: new Page(
     'examEssay',
@@ -68,12 +73,7 @@ export const ExamPages = {
     'left_handed.png',
     '/exam/essay/1?ordering=-year',
   ),
-  examPast: new Page(
-    'examPast',
-    '考古題',
-    'exam_history.png',
-    '/exam/past',
-  ),
+
   examSpecial: new Page(
     'examSpecial',
     '專項測驗',
@@ -88,19 +88,19 @@ export const ExamPages = {
   ),
 }
 
+/* 測驗 - 管理員頁面*/
+export const ExamPagesForManager = {}
+
+
 /* 網站頁面 */
 export const WebPages = {
   home: new Page(
     'home',
-    '返回「鴿手」',
-    'house.png',
-    '/index',
-  ),
-  news: new Page(
-    'news',
-    '最新快訊',
-    'house.png',
-    '/index',
+    '首頁',
+    'exam_a_plus.png',
+    '/',
+    undefined,
+    <Home/>
   ),
   about: new Page(
     'about',
@@ -114,24 +114,12 @@ export const WebPages = {
     'feedback.png',
     '/feedback',
   ),
-  linebot: new Page(
-    'linebot',
-    'Line機器人',
-    'message_bot.png',
-    '/linebot',
-  ),
-  apps: new Page(
-    'apps',
-    '小程式分享',
-    'app_store.png',
-    '/apps',
-  ),
-  pigeonManage: new Page(
-    'pigeonManage',
-    '鴿手後台',
-    'PigeonManage_Logo192.png',
-    'https://manage.pigeonhand.tw/',
-  ),
 }
 
-export const AllPages = {...WebPages, ...PolicePages, ...HappyPages,...ExamPages}
+export const AllPages = {...WebPages, ...PolicePages, ...ExamPagesForUser}
+
+export const MenuSelect: TSidebarMenu = {
+  label: '選擇題',
+  icon: 'select.png',
+  list: [AllPages.selectRandom, AllPages.selectPast, AllPages.selectStatistics]
+}

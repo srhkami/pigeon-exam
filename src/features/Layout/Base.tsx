@@ -1,6 +1,11 @@
 import {Outlet, useLocation} from "react-router";
-import {ReactNode, useEffect} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import {LogoLink} from "@/features";
+import {AllPages, MenuSelect} from "@/lib/pages.tsx";
+import SidebarMenu from "@/features/Layout/SidebarMenu.tsx";
+import ThemeToggle from "@/features/Layout/ThemeToggle.tsx";
+import MenuUser from "@/features/User/UserProfile/MenuUser.tsx";
+import SidebarLink from "@/features/Layout/SidebarLink.tsx";
 
 type Props = {
   readonly children?: ReactNode;
@@ -9,6 +14,8 @@ type Props = {
 export default function Base({children}: Props) {
 
   const {pathname} = useLocation();
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+
   // 當網址有更動時，回到頁面最上方
   useEffect(() => {
     window.scrollTo({
@@ -17,13 +24,18 @@ export default function Base({children}: Props) {
     });
   }, [pathname]);
 
+  const onChange = () => {
+    setDrawerOpen(p => !p)
+  }
+
   return (
     <div className="drawer lg:drawer-open">
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle"/>
+      <input id="my-drawer-4" checked={drawerOpen} onChange={onChange} type="checkbox"
+             className="drawer-toggle"/>
       <div className="drawer-content">
         {/* Navbar */}
-        <nav className="navbar w-full bg-base-300">
-          <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-square btn-ghost">
+        <nav className="navbar px-4 w-full sticky top-0 z-10 bg-base-200/50 backdrop-blur-sm flex">
+          <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-circle mr-2">
             {/* Sidebar toggle icon */}
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round"
                  strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4">
@@ -33,9 +45,11 @@ export default function Base({children}: Props) {
             </svg>
           </label>
           <LogoLink/>
+          <ThemeToggle/>
+          <MenuUser/>
         </nav>
         {/* Page content here */}
-        <main className="px-2 sm:px-3 md:px-6 xl:px-10 py-3 min-h-100">
+        <main className="pt-4 px-2 sm:px-8 md:px-12 lg:px-10 xl:px-16 py-3 min-h-100">
           <Outlet/>
           {children}
         </main>
@@ -43,24 +57,14 @@ export default function Base({children}: Props) {
 
       <div className="drawer-side is-drawer-close:overflow-visible">
         <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
+        <div className="flex flex-col min-h-full  items-start bg-base-200 is-drawer-close:w-16 is-drawer-open:w-64">
           {/* Sidebar content here */}
-          <ul className="menu w-full grow">
+          <ul className="menu w-full grow gap-2 pt-4">
             {/* List item */}
-            <li>
-              <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
-                {/* Home icon */}
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round"
-                     strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4">
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path
-                    d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
-                <span className="is-drawer-close:hidden">Homepage</span>
-              </button>
-            </li>
 
+            <SidebarMenu menu={MenuSelect} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
             {/* List item */}
+            <SidebarLink page={AllPages.about}/>
             <li>
               <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
                 {/* Settings icon */}

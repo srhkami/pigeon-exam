@@ -1,9 +1,9 @@
 import {SubmitHandler, useForm} from "react-hook-form";
-import {Alert, Button, Collapse, CollapseContent, CollapseTitle} from "@/component";
+import {Badge, Button} from "@/component";
 import {FaArrowRight} from "react-icons/fa";
 import {useAxios, useCacheApi} from "@/hooks";
 import {showToast} from "@/func";
-import {Link, useNavigate} from "react-router";
+import {useNavigate} from "react-router";
 import {POLICE_API} from "@/lib/config.ts";
 import SelectSingle from "@/features/Exam/ExamSelect/tools/SelectSingle.tsx";
 import {HtmlTitle} from "@/layout";
@@ -15,6 +15,9 @@ type FormValues = {
   source?: Array<string>,
   category?: Array<string>,
   subject?: Array<string>,
+  // todo:新加入
+  is_not_peat: boolean,
+  is_incorrect: boolean,
 }
 
 type FilterConfig = {
@@ -36,7 +39,7 @@ export default function ExamSelectRandom() {
   const api = useAxios();
   const navi = useNavigate();
 
-  const {data} = useCacheApi<FormValues>({url: POLICE_API +'/exam_select/filter_options/'})
+  const {data} = useCacheApi<FormValues>({url: POLICE_API + '/exam_select/filter_options/'})
 
   const {register, watch, handleSubmit} = useForm<FormValues>({
     defaultValues: {
@@ -82,68 +85,87 @@ export default function ExamSelectRandom() {
     <>
       <HtmlTitle title='選擇題測驗'/>
       <ExamSelectHeader tab={1}/>
-      <Collapse icon='plus'>
-        <CollapseTitle>
-          指定出題範圍
-        </CollapseTitle>
-        <CollapseContent>
-          {/*動態渲染篩選區塊*/}
-          <div className='flex my-2 items-center'>
-            <div className='text-sm'>
-              關鍵字：
-            </div>
-            <input type='text' className='input input-sm' placeholder='篩選題目/選項'
+      <div>
+        <Badge size='lg'>
+          出題選項
+        </Badge>
+        <div className='text-xs mt-1 mb-3 opacity-70'>
+          未勾選選項者，預設為全選
+        </div>
+        <div className='fieldset my-2'>
+          <div className='text-sm'>
+            題目關鍵字：
+          </div>
+          <div>
+            <input type='text' className='input input-sm' placeholder='篩選包含關鍵字的題目'
                    {...register('search')}/>
           </div>
-          {filterConfigs.map((config) => {
-              if (config.options) {
-                return (
-                  <div key={config.fieldName as string} className="flex flex-nowrap items-center my-2">
-                    <div className='text-sm'>
-                      {config.title}：
-                    </div>
-                    <select className='select select-sm w-50' {...register(config.fieldName)}>
-                      <option value=''>請選擇</option>
-                      {/* 渲染選項按鈕 */}
-                      {config.options.map((opt) => (
-                        <option value={opt.value} key={`${config.fieldName}-${opt.value}`}>
-                          {opt.label}
-                        </option>
-                      ))}
-                    </select>
+
+        </div>
+        {filterConfigs.map((config) => {
+            if (config.options) {
+              return (
+                <div key={config.fieldName as string} className="flex flex-nowrap items-center my-2">
+                  <div className='text-sm'>
+                    {config.title}：
                   </div>
-                )
-              }
-              if (config.checks) {
-                return (
-                  <div key={config.fieldName as string}
-                       className="fieldset my-2 ">
-                    <div className='text-sm'>
-                      {config.title}：
-                    </div>
-                    <div className='grid grid-cols-2 gap-1 ml-2'>
-                      {/* 渲染選項按鈕 */}
-                      {config.checks.map((item) => (
-                        <label className="label" key={item}>
-                          <input type="checkbox" className="checkbox checkbox-sm" value={item}
-                                 {...register(config.fieldName)}/>
-                          {item}
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                )
-              }
+                  <select className='select select-sm w-50' {...register(config.fieldName)}>
+                    <option value=''>請選擇</option>
+                    {/* 渲染選項按鈕 */}
+                    {config.options.map((opt) => (
+                      <option value={opt.value} key={`${config.fieldName}-${opt.value}`}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )
             }
-          )}
-          <Alert color='info' style='dash'>
-            <div>
-              未來預計加入詳細區分法規來源的功能，提供學生進一步篩選複習。惟目前仍有大量題目需要整理，若您有意共同完善題庫，請洽詢老師或
-              <Link to='/feedback/web?option=4' className='link inline'>點此聯繫作者</Link>。
-            </div>
-          </Alert>
-        </CollapseContent>
-      </Collapse>
+            if (config.checks) {
+              return (
+                <div key={config.fieldName as string}
+                     className="fieldset my-2 ">
+                  <div className='text-sm'>
+                    {config.title}：
+                  </div>
+                  <div className='grid grid-cols-2 gap-1 ml-2'>
+                    {/* 渲染選項按鈕 */}
+                    {config.checks.map((item) => (
+                      <label className="label" key={item}>
+                        <input type="checkbox" className="checkbox checkbox-sm" value={item}
+                               {...register(config.fieldName)}/>
+                        {item}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )
+            }
+          }
+        )}
+
+
+        <div className="fieldset my-2 ">
+          <div className='text-sm'>
+            進階選項：
+          </div>
+          <div className='grid grid-cols-2 gap-1 ml-2'>
+
+            <label className="label">
+              <input type="checkbox" className="toggle toggle-sm"
+                     {...register('is_not_peat')}/>
+              排除作答過的題目
+            </label>
+
+            <label className="label">
+              <input type="checkbox" className="toggle toggle-sm"
+                     {...register('is_incorrect')}/>
+              挑選曾錯誤的題目
+            </label>
+          </div>
+        </div>
+
+      </div>
       <div className='flex items-center mt-4'>
         <div className='text-sm font-semibold'>出題數目：</div>
         <select className='select select-sm select-primary w-30' {...register('count')}>
@@ -155,6 +177,12 @@ export default function ExamSelectRandom() {
           <option value='50'>出50題</option>
         </select>
       </div>
+      {currentValues.count === '' &&
+        <div className='flex justify-end'>
+          <Button color='success' className='mt-4' disabled>出題<FaArrowRight/></Button>
+        </div>
+
+      }
       {currentValues.count === '1' &&
         <>
           <div className='text-xs italic mt-1 opacity-70'>*每次作答會即時顯示結果，不會儲存個人紀錄</div>

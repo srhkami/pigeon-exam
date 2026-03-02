@@ -1,9 +1,9 @@
 import {createBrowserRouter} from "react-router";
 import {feedback} from "./feedback.tsx";
 import {user} from "./user.tsx";
-import {exam} from "./exam.tsx";
 import {ErrorAlert} from "@/layout";
-import {Base, About, FilePreview, News} from "@/features";
+import {Base, About, FilePreview, Home} from "@/features";
+import {select} from "@/routes/select.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -11,7 +11,8 @@ const routes = createBrowserRouter([
     element: <Base/>,
     errorElement: <Base><ErrorAlert errorType='noPage'/></Base>,
     children: [
-      {path: 'index', element: <News/>},
+      {path: '', element: <Home/>},
+      {path: 'index', element: <Home/>},
       {path: 'about', element: <About/>},
       {
         path: 'l', children: [
@@ -25,7 +26,7 @@ const routes = createBrowserRouter([
       },
       user,
       feedback,
-      exam,
+      select,
     ]
   },
 

@@ -4,6 +4,13 @@ export {default as SelectPast} from '@/features/Select/for-user/Past/SelectPast.
 export {default as SelectLogs} from '@/features/Select/for-user/Logs/SelectLogs.tsx'
 export {default as SelectResult} from '@/features/Select/for-user/Result/SelectResult.tsx'
 export {default as SelectStatistics} from '@/features/Select/for-user/Statistics/SelectStatistics.tsx'
+export {default as SelectPaper} from '@/features/Select/for-user/Paper/SelectPaper.tsx'
+
+
+export {default as EssayBrowser} from '@/features/Essay/for-user/Browser/EssayBrowser.tsx'
+export {default as EssayRandom} from '@/features/Essay/for-user/Random/EssayRandom.tsx'
+export {default as EssayLogs} from '@/features/Essay/for-user/Logs/EssayLogs.tsx'
+export {default as EssayDetail} from '@/features/Essay/for-user/Detail/EssayDetail.tsx'
 
 
 export {default as FeedbackWeb} from './Feedback/FeedbackWeb.tsx'

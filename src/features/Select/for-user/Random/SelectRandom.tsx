@@ -15,8 +15,7 @@ type FormValues = {
   category?: Array<string>,
   subject?: Array<string>,
   // todo:新加入
-  is_not_peat: boolean,
-  is_incorrect: boolean,
+  is_not_repeat: boolean,
 }
 
 type FilterConfig = {
@@ -42,7 +41,7 @@ export default function SelectRandom() {
 
   const {register, watch, handleSubmit} = useForm<FormValues>({
     defaultValues: {
-      source: [], category: [], subject: []
+      source: [], category: [], subject: [], is_not_repeat:true
     }
   });
 
@@ -77,7 +76,7 @@ export default function SelectRandom() {
         url: POLICE_API + '/exam_select/random_multi/',
         params: newParams,
       }), {label: '題目生成', error: err => JSON.stringify(err.response?.data)},
-    ).then(res => navi('/exam/paper/' + res.data))
+    ).then(res => navi('/paper/' + res.data))
   }
 
   return (
@@ -85,7 +84,7 @@ export default function SelectRandom() {
       {/*<HtmlTitle title='選擇題測驗'/>*/}
       <SelectPageHeader tab={1}/>
       <div>
-        <Badge size='lg'>
+        <Badge size='lg' style='outline'>
           出題選項
         </Badge>
         <div className='text-xs mt-1 mb-3 opacity-70'>
@@ -131,7 +130,7 @@ export default function SelectRandom() {
                     {/* 渲染選項按鈕 */}
                     {config.checks.map((item) => (
                       <label className="label" key={item}>
-                        <input type="checkbox" className="checkbox checkbox-sm" value={item}
+                        <input type="checkbox" className="checkbox" value={item}
                                {...register(config.fieldName)}/>
                         {item}
                       </label>
@@ -149,17 +148,10 @@ export default function SelectRandom() {
             進階選項：
           </div>
           <div className='grid grid-cols-2 gap-1 ml-2'>
-
             <label className="label">
-              <input type="checkbox" className="toggle toggle-sm"
-                     {...register('is_not_peat')}/>
-              排除作答過的題目
-            </label>
-
-            <label className="label">
-              <input type="checkbox" className="toggle toggle-sm"
-                     {...register('is_incorrect')}/>
-              挑選曾錯誤的題目
+              <input type="checkbox" className="toggle"
+                     {...register('is_not_repeat')}/>
+              排除測驗過的題目
             </label>
           </div>
         </div>

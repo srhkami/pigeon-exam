@@ -3,13 +3,12 @@ import axios from "axios";
 import {useNavigate, useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import {WEB_API} from "@/lib/config.ts";
-import {showToast} from "@/func";
+import {errorLogger, showToast} from "@/func";
 import {HtmlTitle} from "@/layout";
 import {Button, Col, FormInputCol, Row} from "@/component";
 import {FaCircleCheck} from "react-icons/fa6";
 import ModalLine from "@/features/Feedback/ModalLine.tsx";
 import {useAuth} from "@/hooks";
-import {errorLogger} from "@/func";
 
 type FormValues = {
   name: string,
@@ -20,23 +19,15 @@ type FormValues = {
 
 const selectOptionItems = [
   '會員相關（忘記帳號/信箱、註冊/認證問題)',
-  '網站功能相關（程式/版面錯誤、新功能建議）',
-  '網站內容相關（法規/文件錯誤或過時）',
-  '我想協助維護網站、投稿新內容',
-  '我想加入「全國刑案追追追」社群',
-  '我想加入「鴿來告訴你交通怎麼做」群組',
-  '小試鴿手相關（答案錯誤、法規過時等）',
+  '題目相關（答案錯誤、法規過時等）',
+  '我想協助維護題庫',
   '其他留言',
 ]
 
 const placeholderItems = [
   '務必輸入其他可聯絡到您的方式（如正確信箱、Line ID），才能協助您處理帳號問題',
-  '請輸入錯誤位置、何種情形會觸發等等',
-  '請輸入回報內容，若您非會員且需要管理員聯繫，請留下Line ID等聯絡資訊',
-  '請留下Line ID，以利管理員聯繫您！',
-  '請留下Line ID，以利管理員聯繫您！',
-  '請留下Line ID，會在徵員開始後第一時間通知您！',
   '請貼上題目，並簡單描述問題為何',
+  '請留下Line ID，以利管理員聯繫您！',
   '請輸入回報內容，若您非會員且需要管理員聯繫，請留下Line ID等聯絡資訊',
 ]
 

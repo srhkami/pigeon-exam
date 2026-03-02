@@ -1,9 +1,9 @@
 import {createBrowserRouter} from "react-router";
-import {feedback} from "./feedback.tsx";
-import {user} from "./user.tsx";
 import {ErrorAlert} from "@/layout";
-import {Base, About, FilePreview, Home} from "@/features";
-import {select} from "@/routes/select.tsx";
+import {Base, About, FilePreview, Home, UserProfile, FeedbackWeb, SelectPaper} from "@/features";
+import {AuthLayout} from "@/auth";
+import {selectRouter} from "@/routes/select.tsx";
+import {essayRouter} from "@/routes/essay.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -14,6 +14,7 @@ const routes = createBrowserRouter([
       {path: '', element: <Home/>},
       {path: 'index', element: <Home/>},
       {path: 'about', element: <About/>},
+      {path: 'feedback', element: <FeedbackWeb/>},
       {
         path: 'l', children: [
           {path: ':url', element: <FilePreview code='l'/>}
@@ -24,12 +25,22 @@ const routes = createBrowserRouter([
           {path: ':url', element: <FilePreview code='f'/>}
         ]
       },
-      user,
-      feedback,
-      select,
+      {
+        path: 'user',
+        children: [
+          {path: 'profile', element: <AuthLayout><UserProfile/></AuthLayout>},
+        ]
+      },
+      {
+        path: 'paper', children: [
+          {path: ':uuid', element: <AuthLayout authType='E'><SelectPaper/></AuthLayout>}
+        ]
+      },
+      selectRouter,
+      essayRouter,
     ]
   },
-
 ])
+
 
 export default routes;

@@ -20,7 +20,7 @@ export default function ThemeToggle() {
   };
 
   return (
-    <Button style='ghost' shape='circle' className='ml-auto' onClick={toggleTheme}>
+    <Button style='ghost' shape='circle' className='ml-auto mr-2' onClick={toggleTheme}>
       {theme === "dark" ? <FiMoon className='text-lg'/> : <FiSun className='text-lg'/>}
     </Button>
   );

@@ -1,6 +1,15 @@
 import {MEDIA_IP} from "@/lib/config.ts";
 import {ReactNode} from "react";
-import {Home, SelectLogs, SelectPast, SelectRandom, SelectStatistics} from "@/features";
+import {
+  EssayBrowser,
+  EssayLogs,
+  EssayRandom,
+  Home,
+  SelectLogs,
+  SelectPast,
+  SelectRandom,
+  SelectStatistics
+} from "@/features";
 import {AuthType} from "@/types/auth-types.ts";
 import {AuthLayout} from "@/auth";
 
@@ -46,8 +55,8 @@ export const PolicePages = {
   ),
 }
 
-/* 測驗 - 使用者頁面 */
-export const ExamPagesForUser = {
+/* 選擇題 - 使用者頁面 */
+export const SelectPagesForUser = {
   selectRandom: new Page(
     'selectRandom',
     '隨機測驗',
@@ -57,7 +66,7 @@ export const ExamPagesForUser = {
     <SelectRandom/>
   ),
   selectPast: new Page(
-    'examPast',
+    'selectPast',
     '考古題測驗',
     'exam_history.png',
     '/select/past',
@@ -80,30 +89,48 @@ export const ExamPagesForUser = {
     'E',
     <SelectStatistics/>
   ),
-  examEssay: new Page(
-    'examEssay',
-    '申論題',
-    'left_handed.png',
-    '/exam/essay/1?ordering=-year',
-  ),
 
-  examSpecial: new Page(
-    'examSpecial',
-    '專項測驗',
-    'one-page.png',
-    '/',
-  ),
-  examStatistics: new Page(
-    'examStatistics',
-    '統計及分析',
-    'business-report.png',
-    '/exam/statistics',
-  ),
+
+  // examSpecial: new Page(
+  //   'examSpecial',
+  //   '專項測驗',
+  //   'one-page.png',
+  //   '/',
+  // ),
+
 }
 
 /* 測驗 - 管理員頁面*/
 export const ExamPagesForManager = {}
 
+
+/* 申論題 - 使用者介面*/
+export const EssayPagesForUser = {
+  essayBrowser: new Page(
+    'essayBrowser',
+    '申論題總覽',
+    'sign_document.png',
+    '/essay/list/1?ordering=-year',
+    'E',
+    <EssayBrowser/>
+  ),
+  essayRandom: new Page(
+    'essayRandom',
+    '隨機出題',
+    'dice.png',
+    '/essay/random',
+    'E',
+    <EssayRandom/>
+  ),
+  essayLogs: new Page(
+    'essayLogs',
+    '作答紀錄',
+    'letters.png',
+    '/essay/logs/1?ordering=-id',
+    'E',
+    <EssayLogs/>
+  ),
+}
 
 /* 網站頁面 */
 export const WebPages = {
@@ -129,10 +156,25 @@ export const WebPages = {
   ),
 }
 
-export const AllPages = {...WebPages, ...PolicePages, ...ExamPagesForUser}
+export const AllPages = {...WebPages, ...PolicePages, ...SelectPagesForUser, ...EssayPagesForUser}
 
 export const MenuSelect: TSidebarMenu = {
   label: '選擇題',
   icon: 'select.png',
-  list: [AllPages.selectRandom, AllPages.selectPast, AllPages.selectLogs, AllPages.selectStatistics]
+  list: [
+    SelectPagesForUser.selectRandom,
+    SelectPagesForUser.selectPast,
+    SelectPagesForUser.selectLogs,
+    SelectPagesForUser.selectStatistics
+  ]
+}
+
+export const MenuEssay: TSidebarMenu = {
+  label: '申論題',
+  icon: 'left_handed.png',
+  list: [
+    EssayPagesForUser.essayBrowser,
+    EssayPagesForUser.essayRandom,
+    EssayPagesForUser.essayLogs
+  ]
 }

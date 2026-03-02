@@ -14,7 +14,7 @@ export default function SelectStatistics() {
     <div>
       <PageHeader title={title}/>
       <Row>
-        <Col xs={12} md={6} className='p-1'>
+        <Col xs={12} md={6} className='p-2'>
           <div className="stats shadow w-full">
             <div className="stat place-items-center">
               <div className="stat-title">已完成測驗</div>
@@ -32,7 +32,7 @@ export default function SelectStatistics() {
             </div>
           </div>
         </Col>
-        <Col xs={12} md={6} className='p-1'>
+        <Col xs={12} md={6} className='p-2'>
           <div className="stats shadow w-full">
             <div className="stat place-items-center">
               <div className="stat-title">正確答題</div>

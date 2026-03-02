@@ -6,7 +6,7 @@ import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
 import {ExamEssayData} from "@/types/exam-types.ts";
 import {HtmlTitle} from "@/layout";
-import ExamEssayHeader from "@/features/Essay/for-user/tools/ExamEssayHeader.tsx";
+import EssayPageHeader from "@/features/Essay/for-user/Browser/EssayPageHeader.tsx";
 import {useNavigate} from "react-router";
 
 type FormValues = {
@@ -31,7 +31,7 @@ type FilterConfig = {
  * 申論題的隨機測驗
  * @constructor
  */
-export default function ExamEssayRandom() {
+export default function EssayRandom() {
 
   const api = useAxios();
   const navi = useNavigate();
@@ -81,7 +81,7 @@ export default function ExamEssayRandom() {
   return (
     <>
       <HtmlTitle title='申論題測驗'/>
-      <ExamEssayHeader tab={2} />
+      <EssayPageHeader tab={2} />
       <Collapse icon='plus'>
         <CollapseTitle>
           指定出題範圍
@@ -125,7 +125,7 @@ export default function ExamEssayRandom() {
                       {/* 渲染選項按鈕 */}
                       {config.checks.map((item) => (
                         <label className="label" key={item}>
-                          <input type="checkbox" className="checkbox checkbox-sm" value={item}
+                          <input type="checkbox" className="checkbox" value={item}
                                  {...register(config.fieldName)}/>
                           {item}
                         </label>

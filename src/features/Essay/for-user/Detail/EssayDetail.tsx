@@ -1,6 +1,6 @@
 import {ExamEssayData} from "@/types/exam-types.ts";
 import {HtmlTitle, PageHeader} from "@/layout";
-import ExamEssayCard from "@/features/Essay/for-user/ExamEssayCard.tsx";
+import EssayCard from "@/features/Essay/for-user/Detail/EssayCard.tsx";
 import {useState} from "react";
 import {Button, Col, ModalTextEditor, Row} from "@/component";
 import {JSONContent} from "@tiptap/react";
@@ -11,7 +11,7 @@ import {POLICE_API} from "@/lib/config.ts";
 import {useAuth, useAxios, useToastApi} from "@/hooks";
 import {useParams} from "react-router";
 
-export default function ExamEssayDetail() {
+export default function EssayDetail() {
 
   const title = '申論題題目';
   const api = useAxios();
@@ -84,7 +84,7 @@ export default function ExamEssayDetail() {
     <>
       <HtmlTitle title={title}/>
       <PageHeader title={title}/>
-      <ExamEssayCard q={data} i={data.id - 1} config={{showDetail: true, showLinks: true, showSample: showSample}}/>
+      <EssayCard q={data} i={data.id - 1} config={{showDetail: true, showLinks: true, showSample: showSample}}/>
       <div className='label mt-4'>
         我的回答
       </div>

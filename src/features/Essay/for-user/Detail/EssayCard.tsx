@@ -23,7 +23,7 @@ type Props = {
  * @param setReload 重新整理的函數
  * @constructor
  */
-export default function ExamEssayCard({q, i, config, setReload}: Props) {
+export default function EssayCard({q, i, config, setReload}: Props) {
 
   const title = q.question.length > 50 ? q.question.slice(0, 50) + "..." : q.question
   const navi = useNavigate();

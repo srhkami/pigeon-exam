@@ -4,7 +4,7 @@ type Props = {
   readonly tab: 1 | 2 | 3,
 }
 
-export default function ExamEssayHeader({tab}: Props) {
+export default function EssayPageHeader({tab}: Props) {
 
   const classes = (value: 1 | 2 | 3) => tab === value ? 'tab tab-active' : 'tab';
 

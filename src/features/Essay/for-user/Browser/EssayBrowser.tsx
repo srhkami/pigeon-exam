@@ -4,10 +4,10 @@ import {POLICE_API} from "@/lib/config.ts";
 import {HtmlTitle} from "@/layout";
 import {DataBrowser, DataBrowserTitle} from "@/component";
 import ModalEssayFilter from "@/features/Essay/for-user/tools/ModalEssayFilter.tsx";
-import ExamEssayCard from "@/features/Essay/for-user/ExamEssayCard.tsx";
-import ExamEssayHeader from "@/features/Essay/for-user/tools/ExamEssayHeader.tsx";
+import EssayCard from "@/features/Essay/for-user/Detail/EssayCard.tsx";
+import EssayPageHeader from "@/features/Essay/for-user/Browser/EssayPageHeader.tsx";
 
-export default function ExamEssay() {
+export default function EssayBrowser() {
 
   const {data, pageInfo, setReload} = useDataBrowser<ExamEssayData>({
     url: POLICE_API + '/exam_essay/',
@@ -18,16 +18,16 @@ export default function ExamEssay() {
 
   const dataList = data.map(q => {
     return (
-      <ExamEssayCard key={q.id} q={q} i={q.id - 1}
-                     config={{showDetail: true, showSample: false, showLinks: false}}
-                     setReload={setReload}/>
+      <EssayCard key={q.id} q={q} i={q.id - 1}
+                 config={{showDetail: true, showSample: false, showLinks: false}}
+                 setReload={setReload}/>
     )
   })
 
   return (
     <>
       <HtmlTitle title='申論題總覽'/>
-      <ExamEssayHeader tab={1}/>
+      <EssayPageHeader tab={1}/>
       <DataBrowser
         header={<>
           <DataBrowserTitle title='題目列表'/>

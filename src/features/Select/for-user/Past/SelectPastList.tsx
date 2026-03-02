@@ -35,7 +35,7 @@ export default function SelectPastList({data}: Props) {
             subject: obj.subject,
           }
         }), {label: '載入', error: err => JSON.stringify(err.response?.data)}
-      ).then(res => navi('/exam/paper/' + res.data))
+      ).then(res => navi('/paper/' + res.data))
     }
 
     if (keyword && !title.includes(keyword)) {

@@ -1,5 +1,4 @@
-import {HtmlTitle} from "@/layout";
-import PageHeader from "../../../../layout/PageHeader.tsx";
+import PageHeader from "../../../Layout/PageHeader.tsx";
 import {DetailRow} from "@/component";
 import {useAxios} from "@/hooks";
 import {useSearchParams} from "react-router";
@@ -35,8 +34,7 @@ export default function SelectPastPaper(){
   if (!data) return null;
 
   return(
-    <>
-      <HtmlTitle title={title}/>
+    <div>
       <PageHeader title={title}/>
       <div>
         <DetailRow
@@ -57,6 +55,6 @@ export default function SelectPastPaper(){
         選擇題（共{data.questions.select?.length}題）
       </div>
       <Questions questions={data.questions} answers={data.answers}/>
-    </>
+    </div>
   )
 }

@@ -5,8 +5,7 @@ import {MEDIA_IP, WEB_API} from "@/lib/config.ts";
 import {IoArrowBackOutline, IoShareSocial} from "react-icons/io5";
 import {FaArrowRightToBracket} from "react-icons/fa6";
 import {IoMdDownload} from "react-icons/io";
-import {errorLogger, showToast, copyText} from "@/func";
-import {HtmlTitle} from '@/layout';
+import {copyText, errorLogger, showToast} from "@/func";
 import {BottomBar, BottomButton, BottomMainButton} from '@/component';
 import CountdownTimer from "./tools/CountdownTimer.tsx";
 import ShowFile from "./tools/ShowFile.tsx";
@@ -58,8 +57,6 @@ export default function FilePreview({code}: Props): ReactNode {
   }
 
   return (
-    <>
-      <HtmlTitle title='檔案預覽'/>
       <div>
         {data?.url &&
           <div className='card bg-base-100 border-base-300'>
@@ -104,6 +101,5 @@ export default function FilePreview({code}: Props): ReactNode {
           </BottomButton>
         </BottomBar>
       </div>
-    </>
   )
 }

@@ -1,10 +1,9 @@
 import {Dispatch, ReactNode, SetStateAction, useEffect, useState} from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {showToast} from "@/func";
+import {errorLogger, showToast} from "@/func";
 import {USER_API} from "@/lib/config.ts";
 import {Button} from "@/component";
-import {errorLogger} from "@/func";
 
 type TimerProps = {
   readonly initialTime: number,

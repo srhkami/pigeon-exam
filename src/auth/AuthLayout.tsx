@@ -1,6 +1,6 @@
 import {ReactNode} from "react";
 import {handleHasAuth} from "./handleHasAuth.ts";
-import {ErrorAlert} from "@/layout";
+import {ErrorAlert} from "@/features";
 import {AuthType} from "@/types/auth-types.ts";
 import {useAuth} from "@/hooks";
 

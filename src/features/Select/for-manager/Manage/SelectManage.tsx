@@ -1,5 +1,4 @@
 import {useDataBrowser} from "@/hooks";
-import {HtmlTitle} from "@/layout";
 import {DataBrowser, DataBrowserTitle, FabAction, FloatingActionButton} from "@/component";
 import {ExamSelectCardConfig, ExamSelectData} from "@/types/exam-types.ts";
 import {RiEdit2Fill} from "react-icons/ri";
@@ -33,7 +32,6 @@ export default function SelectManage() {
 
   return (
     <>
-      <HtmlTitle title={title}/>
       <DataBrowser
         header={
           <>

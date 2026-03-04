@@ -80,8 +80,7 @@ export default function SelectRandom() {
   }
 
   return (
-    <>
-      {/*<HtmlTitle title='選擇題測驗'/>*/}
+    <div>
       <SelectPageHeader tab={1}/>
       <div>
         <Badge size='lg' style='outline'>
@@ -190,6 +189,6 @@ export default function SelectRandom() {
           </div>
         </>
       }
-    </>
+    </div>
   )
 }

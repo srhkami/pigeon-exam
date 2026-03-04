@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {ExamPaperData} from "@/types/exam-types.ts";
 import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
-import {HtmlTitle} from "@/layout";
+import {PageHeader} from "@/features";
 import {Alert, Button, Col, DetailRow, Row} from "@/component";
 import {IoWarningOutline} from "react-icons/io5";
 import toast from "react-hot-toast";
@@ -111,12 +111,8 @@ export default function SelectPaper() {
   }
 
   return (
-    <>
-      <HtmlTitle title='試卷'/>
-      <div className='text-2xl font-bold mb-3 border-l-4 border-l-primary pl-4'>
-        {data.title}
-      </div>
-      <div className='divider'></div>
+    <div>
+      <PageHeader title={data.title}/>
       <div>
         <DetailRow
           start='建立者：'
@@ -141,6 +137,6 @@ export default function SelectPaper() {
           <FaCheck/>交卷
         </Button>
       </div>
-    </>
+    </div>
   )
 }

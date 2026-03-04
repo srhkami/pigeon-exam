@@ -1,7 +1,6 @@
 import {useDataBrowser} from "@/hooks";
 import {ExamEssayData} from "@/types/exam-types.ts";
 import {POLICE_API} from "@/lib/config.ts";
-import {HtmlTitle} from "@/layout";
 import {DataBrowser, DataBrowserTitle} from "@/component";
 import ModalEssayFilter from "@/features/Essay/for-user/tools/ModalEssayFilter.tsx";
 import EssayCard from "@/features/Essay/for-user/Detail/EssayCard.tsx";
@@ -25,8 +24,7 @@ export default function EssayBrowser() {
   })
 
   return (
-    <>
-      <HtmlTitle title='申論題總覽'/>
+    <div>
       <EssayPageHeader tab={1}/>
       <DataBrowser
         header={<>
@@ -39,6 +37,6 @@ export default function EssayBrowser() {
           {dataList}
         </ul>
       </DataBrowser>
-    </>
+    </div>
   )
 }

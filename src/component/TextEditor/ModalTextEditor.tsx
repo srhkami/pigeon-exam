@@ -12,7 +12,7 @@ import BtnTextColor from "@/component/TextEditor/buttons/BtnTextColor.tsx";
 import BtnTextAlign from "@/component/TextEditor/buttons/BtnTextAlign.tsx";
 import BtnList from "@/component/TextEditor/buttons/BtnList.tsx";
 import BtnImage from "@/component/TextEditor/buttons/BtnImage.tsx";
-import {PageHeader} from "@/layout";
+import {PageHeader} from "@/features";
 import {FaFile} from "react-icons/fa6";
 
 type Props = {

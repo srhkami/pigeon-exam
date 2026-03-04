@@ -2,7 +2,7 @@ import {useToastApi} from "@/hooks";
 import {ExamLogData} from "@/types/exam-types.ts";
 import {POLICE_API} from "@/lib/config.ts";
 import {Col, Row} from "@/component";
-import PageHeader from "@/layout/PageHeader.tsx";
+import PageHeader from "@/features/Layout/PageHeader.tsx";
 
 export default function SelectStatistics() {
 

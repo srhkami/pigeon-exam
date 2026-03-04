@@ -1,7 +1,6 @@
 import {useDataBrowser} from "@/hooks";
 import {ExamEssayCardConfig, ExamEssayData} from "@/types/exam-types.ts";
 import {POLICE_API} from "@/lib/config.ts";
-import {HtmlTitle} from "@/layout";
 import {DataBrowser, DataBrowserTitle, FloatingActionButton} from "@/component";
 import {RiEdit2Fill} from "react-icons/ri";
 import {useEffect, useState} from "react";
@@ -37,7 +36,6 @@ export default function EssayManage() {
 
   return (
     <>
-      <HtmlTitle title={title}/>
       <DataBrowser
         header={<>
           <DataBrowserTitle title={title}/>

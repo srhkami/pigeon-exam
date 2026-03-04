@@ -1,10 +1,9 @@
 import {USER_API} from "@/lib/config.ts";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useAxios, useModal} from "@/hooks";
-import {showToast} from "@/func";
+import {showFormError, showToast} from "@/func";
 import {Button, FormInputCol, Modal, ModalBody, ModalHeader, ModalTitle, Row} from "@/component";
 import {FaEdit} from "react-icons/fa";
-import {showFormError} from "@/func";
 
 type FormValues = {
   password: string,

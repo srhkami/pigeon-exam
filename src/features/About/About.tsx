@@ -1,19 +1,16 @@
-import {HtmlTitle, IndexPage} from "@/layout";
+import {IndexPage} from "@/layout";
 import ModalChangeLog from "@/features/About/ModalChangeLog.tsx";
 import ModalLine from "@/features/Feedback/ModalLine.tsx";
 import {APP_VER, UPDATE_AT} from "@/lib/logs.ts";
 import ModalManagers from "@/features/About/ModalManagers.tsx";
 import AccordionHowInstall from "@/features/About/AccordionHowInstall.tsx";
-import PageHeader from "@/layout/PageHeader.tsx";
+import PageHeader from "@/features/Layout/PageHeader.tsx";
 
 export default function About() {
-  const title = '關於本網站';
   return (
-    <>
-      <HtmlTitle title={title}/>
       <IndexPage>
         <div>
-          <PageHeader title={title}/>
+          <PageHeader title='關於本網站'/>
           <section id='版本' className='scroll-mt-20 card card-border border-base-300 bg-base-100 mb-3'>
             <div className='card-body font-semibold'>
               <div className='flex items-center justify-between'>
@@ -96,6 +93,5 @@ export default function About() {
           </section>
         </div>
       </IndexPage>
-    </>
   )
 }

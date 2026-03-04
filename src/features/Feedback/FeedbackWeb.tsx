@@ -4,7 +4,6 @@ import {useNavigate, useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import {WEB_API} from "@/lib/config.ts";
 import {errorLogger, showToast} from "@/func";
-import {HtmlTitle} from "@/layout";
 import {Button, Col, FormInputCol, Row} from "@/component";
 import {FaCircleCheck} from "react-icons/fa6";
 import ModalLine from "@/features/Feedback/ModalLine.tsx";
@@ -83,56 +82,53 @@ export default function FeedbackWeb() {
   }
 
   return (
-    <>
-      <HtmlTitle title='聯繫網站作者'/>
-      <div className='card card-border bg-base-100 border-base-300'>
-        <div className='card-body'>
-          <div className='text-2xl font-bold'>聯繫網站作者</div>
-          <div className='divider m-0'></div>
-          <div className='flex justify-center'>
-            <Row className='sm:w-5/6 md:w-2/3 px-4'>
-              <Col xs={12} className='bg-base-300 rounded-lg p-4'>
-                <div className='text-sm font-semibold'>
-                  本網站由作者單人開發，仍有許多不足之處，敬請見諒
-                  <br/>若遇上任何網站、APP之問題，或有任何寶貴意見，可直接加入Line好友向我告知！
-                  <br/>亦可直接填寫下方回饋表單：
-                </div>
-                <div className='flex'>
-                  <ModalLine/>
-                </div>
-              </Col>
-              <FormInputCol xs={6} label='如何稱呼您*' error={errors.name?.message}>
-                <input type='text' className='input input-sm w-full' readOnly={isReadOnly}
-                       {...register('name', {required: '此欄位必填', maxLength: {value: 16, message: '最多16個字'}})}/>
-              </FormInputCol>
-              <FormInputCol xs={10} label='請留下您的信箱*' error={errors.email?.message}>
-                <input type='email' className='input input-sm w-full' readOnly={isReadOnly}
-                       {...register('email', {required: '此欄位必填'})}/>
-              </FormInputCol>
-              <FormInputCol xs={10} md={8} label='回報類別*' error={errors.title?.message}>
-                <select className='select select-sm w-full'
-                        {...register('title', {
-                          required: '請選擇此欄位',
-                          onChange: () => showPlaceholder(),
-                        })}>
-                  <option value=''>請選擇</option>
-                  {selectOptions}
-                </select>
-              </FormInputCol>
-              <FormInputCol xs={12} label='回報內容*' error={errors.content?.message}>
+    <div className='card card-border bg-base-100 border-base-300'>
+      <div className='card-body'>
+        <div className='text-2xl font-bold'>聯繫網站作者</div>
+        <div className='divider m-0'></div>
+        <div className='flex justify-center'>
+          <Row className='sm:w-5/6 md:w-2/3 px-4'>
+            <Col xs={12} className='bg-base-300 rounded-lg p-4'>
+              <div className='text-sm font-semibold'>
+                本網站由作者單人開發，仍有許多不足之處，敬請見諒
+                <br/>若遇上任何網站、APP之問題，或有任何寶貴意見，可直接加入Line好友向我告知！
+                <br/>亦可直接填寫下方回饋表單：
+              </div>
+              <div className='flex'>
+                <ModalLine/>
+              </div>
+            </Col>
+            <FormInputCol xs={6} label='如何稱呼您*' error={errors.name?.message}>
+              <input type='text' className='input input-sm w-full' readOnly={isReadOnly}
+                     {...register('name', {required: '此欄位必填', maxLength: {value: 16, message: '最多16個字'}})}/>
+            </FormInputCol>
+            <FormInputCol xs={10} label='請留下您的信箱*' error={errors.email?.message}>
+              <input type='email' className='input input-sm w-full' readOnly={isReadOnly}
+                     {...register('email', {required: '此欄位必填'})}/>
+            </FormInputCol>
+            <FormInputCol xs={10} md={8} label='回報類別*' error={errors.title?.message}>
+              <select className='select select-sm w-full'
+                      {...register('title', {
+                        required: '請選擇此欄位',
+                        onChange: () => showPlaceholder(),
+                      })}>
+                <option value=''>請選擇</option>
+                {selectOptions}
+              </select>
+            </FormInputCol>
+            <FormInputCol xs={12} label='回報內容*' error={errors.content?.message}>
                   <textarea className='textarea textarea-sm w-full' placeholder={placeholder}
                             {...register('content', {required: '此欄位必填'})}/>
-              </FormInputCol>
-              <Col xs={12} className='flex justify-end mt-4 pr-2'>
-                <Button size='sm' color='success' onClick={handleSubmit(onSubmit)}>
-                  <FaCircleCheck className='ml-1'/>
-                  送出
-                </Button>
-              </Col>
-            </Row>
-          </div>
+            </FormInputCol>
+            <Col xs={12} className='flex justify-end mt-4 pr-2'>
+              <Button size='sm' color='success' onClick={handleSubmit(onSubmit)}>
+                <FaCircleCheck className='ml-1'/>
+                送出
+              </Button>
+            </Col>
+          </Row>
         </div>
       </div>
-    </>
+    </div>
   )
 }

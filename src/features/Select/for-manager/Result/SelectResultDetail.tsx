@@ -2,13 +2,12 @@ import {useAxios} from "@/hooks";
 import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {ExamResultData} from "@/types/exam-types.ts";
-import {HtmlTitle} from "@/layout";
 import {Button, DetailRow} from "@/component";
 import {FaSave, FaSearch} from "react-icons/fa";
 import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
 import Questions from "@/features/Select/for-manager/Question/Questions.tsx";
-import PageHeader from "../../../../layout/PageHeader.tsx";
+import PageHeader from "../../../Layout/PageHeader.tsx";
 
 export default function SelectResultDetail() {
 
@@ -43,8 +42,7 @@ export default function SelectResultDetail() {
   if (!data) return null;
 
   return (
-    <>
-      <HtmlTitle title='測驗結果'/>
+    <div>
       <PageHeader title={data.title}/>
       <div className='my-2 flex justify-end'>
         <Button size='sm' style='outline' onClick={onSaveAsPaper}>
@@ -86,6 +84,6 @@ export default function SelectResultDetail() {
       {/*<ul className='list'>*/}
       {/*  {selectItems}*/}
       {/*</ul>*/}
-    </>
+    </div>
   )
 }

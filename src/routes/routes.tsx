@@ -1,5 +1,4 @@
-import {createBrowserRouter} from "react-router";
-import {ErrorAlert} from "@/layout";
+import {createBrowserRouter} from "react-router";import {ErrorAlert} from "@/features";
 import {Base, About, FilePreview, Home, UserProfile, FeedbackWeb, SelectPaper} from "@/features";
 import {AuthLayout} from "@/auth";
 import {selectRouter} from "@/routes/select.tsx";

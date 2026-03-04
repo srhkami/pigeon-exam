@@ -4,12 +4,11 @@ import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {useAxios, useModal} from "@/hooks";
 import {ApiKeywordForm} from "@/types/api-types.ts";
 import {POLICE_API} from "@/lib/config.ts";
-import {showToast} from "@/func";
+import {errorLogger, showToast} from "@/func";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {FileDetailData, HappyFileLink, HappyworkSearchResultData} from "@/types/happywork-types.ts";
 import {FaCirclePlus, FaDeleteLeft} from "react-icons/fa6";
 import toast from "react-hot-toast";
-import {errorLogger} from "@/func";
 
 type Props = {
   readonly setList: Dispatch<SetStateAction<Array<HappyFileLink>>>,

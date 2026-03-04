@@ -1,6 +1,2 @@
-export {default as BtnThemeToggle} from '../features/Layout/ThemeToggle.tsx'
-export {default as ErrorAlert} from '../features/Layout/ErrorAlert.tsx'
 export {default as Footer} from './Footer.tsx'
-export {default as HtmlTitle} from './HtmlTitle.tsx'
 export {default as IndexPage} from './IndexPage.tsx'
-export {default as PageHeader} from './PageHeader.tsx'

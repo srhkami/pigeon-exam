@@ -4,9 +4,8 @@ import {useEffect, useState} from "react";
 import {ExamResultData} from "@/types/exam-types.ts";
 import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
-import {HtmlTitle} from "@/layout";
 import {DetailRow} from "@/component";
-import PageHeader from "@/layout/PageHeader.tsx";
+import PageHeader from "@/features/Layout/PageHeader.tsx";
 import Questions from "@/features/Select/for-user/Question/Questions.tsx";
 
 export default function SelectResult() {
@@ -32,8 +31,7 @@ export default function SelectResult() {
   if (!data) return null;
 
   return (
-    <>
-      <HtmlTitle title='測驗結果'/>
+    <div>
       <PageHeader title={data.title}/>
       <div className='mb-2 flex items-center'>
         <span className='text-6xl italic text-red-500'>{Math.round(data.right_count / data.total_count * 100)}</span>
@@ -58,6 +56,6 @@ export default function SelectResult() {
         選擇題（共{data.questions.select?.length}題）
       </div>
       <Questions questions={data.questions} answers={data.answers}/>
-    </>
+    </div>
   )
 }

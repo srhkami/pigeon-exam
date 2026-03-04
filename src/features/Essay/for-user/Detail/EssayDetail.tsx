@@ -1,5 +1,5 @@
 import {ExamEssayData} from "@/types/exam-types.ts";
-import {HtmlTitle, PageHeader} from "@/layout";
+import {PageHeader} from "@/features";
 import EssayCard from "@/features/Essay/for-user/Detail/EssayCard.tsx";
 import {useState} from "react";
 import {Button, Col, ModalTextEditor, Row} from "@/component";
@@ -82,7 +82,6 @@ export default function EssayDetail() {
 
   return (
     <>
-      <HtmlTitle title={title}/>
       <PageHeader title={title}/>
       <EssayCard q={data} i={data.id - 1} config={{showDetail: true, showLinks: true, showSample: showSample}}/>
       <div className='label mt-4'>

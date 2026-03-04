@@ -5,7 +5,6 @@ import {useAxios, useCacheApi} from "@/hooks";
 import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
 import {ExamEssayData} from "@/types/exam-types.ts";
-import {HtmlTitle} from "@/layout";
 import EssayPageHeader from "@/features/Essay/for-user/Browser/EssayPageHeader.tsx";
 import {useNavigate} from "react-router";
 
@@ -79,8 +78,7 @@ export default function EssayRandom() {
   }
 
   return (
-    <>
-      <HtmlTitle title='申論題測驗'/>
+    <div>
       <EssayPageHeader tab={2} />
       <Collapse icon='plus'>
         <CollapseTitle>
@@ -143,6 +141,6 @@ export default function EssayRandom() {
             出題<FaArrowRight/>
           </Button>
       </div>
-    </>
+    </div>
   )
 }

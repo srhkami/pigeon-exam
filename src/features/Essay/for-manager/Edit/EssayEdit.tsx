@@ -6,7 +6,7 @@ import {POLICE_API} from "@/lib/config.ts";
 import {showFormError, showToast} from "@/func";
 import {Button, Col, FormInputCol, ModalTextEditor, Row} from "@/component";
 import {FaSave} from "react-icons/fa";
-import {PageHeader} from "@/layout";
+import {PageHeader} from "@/features";
 import {HiXMark} from "react-icons/hi2";
 import {JSONContent} from "@tiptap/react";
 import ArticleLinkEdit from "@/features/Link/ArticleLink/ArticleLinkEdit.tsx";

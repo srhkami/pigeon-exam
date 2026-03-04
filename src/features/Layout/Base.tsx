@@ -1,13 +1,14 @@
 import {Outlet, useLocation} from "react-router";
 import {ReactNode, useEffect, useState} from "react";
 import {LogoLink} from "@/features";
-import {AllPages, MenuEssay, MenuSelect} from "@/lib/pages.tsx";
+import {AllPages, MenuEssay, MenuSelect, MenuSelectManage} from "@/lib/pages.tsx";
 import SidebarMenu from "@/features/Layout/SidebarMenu.tsx";
 import ThemeToggle from "@/features/Layout/ThemeToggle.tsx";
 import MenuUser from "@/features/User/UserProfile/MenuUser.tsx";
 import SidebarLink from "@/features/Layout/SidebarLink.tsx";
 import { BsLayoutSidebarInset } from "react-icons/bs";
 import {Toaster} from "react-hot-toast";
+import {AuthComponent} from "@/auth";
 
 type Props = {
   readonly children?: ReactNode;
@@ -59,6 +60,9 @@ export default function Base({children}: Props) {
             {/* List item */}
             <SidebarMenu menu={MenuSelect} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
             <SidebarMenu menu={MenuEssay} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
+            <AuthComponent authType='EH'>
+              <SidebarMenu menu={MenuSelectManage} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
+            </AuthComponent>
             {/* List item */}
             <SidebarLink page={AllPages.feedback}/>
             <SidebarLink page={AllPages.about}/>

@@ -35,6 +35,23 @@ export type ExamSelectReadData = {
   subject: string, // 科目
 }
 
+// 選擇題表單
+export type ExamSelectForm = {
+  question?: string, //題目
+  question_number?: number | null, //題號
+  options?: Array<string>, // 選項
+  answer?: Array<number>, // 解答
+  year?: string, // 年份
+  source?: string, // 題目來源
+  category?: string, // 類科
+  subject?: string, // 科目
+  is_public?: boolean, // 是否公開
+  article_link?: Array<[string, string]>// 法條連結，是['法規名稱','法條']組成的清單
+  file_link?: Array<HappyFileLink>, // 檔案連結
+  comment?: JSONContent | null, // 註解
+  remark?: string | null, // 備註
+}
+
 // 選擇題卡片設定
 export type ExamSelectCardConfig = {
   showOptions: boolean, // 顯示選項及來源
@@ -168,13 +185,13 @@ export type ExamEssayAnswerData = {
   id: number,
   user: number,
   user_display: string,
-  question_display:string,
+  question_display: string,
   created_at: string,
   question: number,
   content: JSONContent | null,
   likes: Array<number>,
   likes_count: number,
-  is_liked:boolean,
+  is_liked: boolean,
 }
 
 // 申論題卡片設定

@@ -1,6 +1,6 @@
 import {RouteObject} from "react-router";
-import {SelectPagesForUser} from "@/lib/pages.tsx";
-import {SelectResult} from "@/features";
+import {SelectPagesForManager, SelectPagesForUser} from "@/lib/pages.tsx";
+import {SelectResult, SelectResultDetail} from "@/features";
 import {AuthLayout} from "@/auth";
 
 export const selectRouter: RouteObject = {
@@ -15,8 +15,35 @@ export const selectRouter: RouteObject = {
     {path: 'statistics', element: SelectPagesForUser.selectStatistics.content},
     {
       path: 'result', children: [
-        {path: ':id', element: <AuthLayout authType='E'><SelectResult/></AuthLayout>}
+        {
+          path: 'manage', children: [
+            {path: ':page', element: SelectPagesForManager.selectResultManage.content}
+          ]
+        },
+        {path: ':id', element: <AuthLayout authType='E'><SelectResult/></AuthLayout>},
       ]
-    }
+    },
+    {
+      path: 'manage', children: [
+        {
+          path: 'question', children:
+            [
+              {path: ':page', element: SelectPagesForManager.selectManage.content}
+            ]
+        },
+        {
+          path: 'result', children:
+            [
+              {
+                path: 'detail', children: [
+                  {path: ':id', element: <AuthLayout authType='EH'><SelectResultDetail/></AuthLayout>},
+                ]
+              },
+              {path: ':page', element: SelectPagesForManager.selectResultManage.content}
+            ]
+        }
+      ]
+    },
+
   ]
 }

@@ -6,8 +6,9 @@ import {
   EssayRandom,
   Home,
   SelectLogs,
+  SelectManage,
   SelectPast,
-  SelectRandom,
+  SelectRandom, SelectResultManage,
   SelectStatistics
 } from "@/features";
 import {AuthType} from "@/types/auth-types.ts";
@@ -89,19 +90,27 @@ export const SelectPagesForUser = {
     'E',
     <SelectStatistics/>
   ),
-
-
-  // examSpecial: new Page(
-  //   'examSpecial',
-  //   '專項測驗',
-  //   'one-page.png',
-  //   '/',
-  // ),
-
 }
 
-/* 測驗 - 管理員頁面*/
-export const ExamPagesForManager = {}
+
+export const SelectPagesForManager = {
+  selectManage: new Page(
+    'selectManage',
+    '選擇題管理',
+    'questions.png',
+    '/select/manage/question/1?ordering=-id',
+    'EH',
+    <SelectManage/>
+  ),
+  selectResultManage: new Page(
+    'selectResultManage',
+    '測驗結果管理',
+    'exam_a_plus.png',
+    '/select/manage/result/1?ordering=-id',
+    'EH',
+    <SelectResultManage/>
+  ),
+}
 
 
 /* 申論題 - 使用者介面*/
@@ -176,5 +185,14 @@ export const MenuEssay: TSidebarMenu = {
     EssayPagesForUser.essayBrowser,
     EssayPagesForUser.essayRandom,
     EssayPagesForUser.essayLogs
+  ]
+}
+
+export const MenuSelectManage: TSidebarMenu = {
+  label: '選擇題管理',
+  icon: 'select.png',
+  list: [
+    SelectPagesForManager.selectManage,
+    SelectPagesForManager.selectResultManage,
   ]
 }

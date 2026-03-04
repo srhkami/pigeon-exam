@@ -6,6 +6,10 @@ export {default as SelectResult} from '@/features/Select/for-user/Result/SelectR
 export {default as SelectStatistics} from '@/features/Select/for-user/Statistics/SelectStatistics.tsx'
 export {default as SelectPaper} from '@/features/Select/for-user/Paper/SelectPaper.tsx'
 
+export {default as SelectManage} from '@/features/Select/for-manager/Manage/SelectManage.tsx'
+export {default as SelectResultManage} from '@/features/Select/for-manager/Result/SelectResultManage.tsx'
+export {default as SelectResultDetail} from '@/features/Select/for-manager/Result/SelectResultDetail.tsx'
+
 
 export {default as EssayBrowser} from '@/features/Essay/for-user/Browser/EssayBrowser.tsx'
 export {default as EssayRandom} from '@/features/Essay/for-user/Random/EssayRandom.tsx'

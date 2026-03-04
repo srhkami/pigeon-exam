@@ -6,7 +6,11 @@ import {AuthLayout} from "@/auth";
 export const essayRouter: RouteObject = {
   path: 'essay', children: [
     {path: 'random', element: EssayPagesForUser.essayRandom.content},
-    {path: 'list', element: EssayPagesForUser.essayBrowser.content},
+    {
+      path: 'list', children: [
+        {path: ':page', element: EssayPagesForUser.essayBrowser.content}
+      ]
+    },
     {
       path: 'logs', children: [
         {path: ':page', element: EssayPagesForUser.essayLogs.content}

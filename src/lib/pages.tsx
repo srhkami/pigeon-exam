@@ -2,7 +2,7 @@ import {MEDIA_IP} from "@/lib/config.ts";
 import {ReactNode} from "react";
 import {
   EssayBrowser,
-  EssayLogs,
+  EssayLogs, EssayManage,
   EssayRandom,
   Home,
   SelectLogs,
@@ -112,7 +112,6 @@ export const SelectPagesForManager = {
   ),
 }
 
-
 /* 申論題 - 使用者介面*/
 export const EssayPagesForUser = {
   essayBrowser: new Page(
@@ -138,6 +137,18 @@ export const EssayPagesForUser = {
     '/essay/logs/1?ordering=-id',
     'E',
     <EssayLogs/>
+  ),
+}
+
+/* 申論題 - 管理員介面*/
+export const EssayPagesForManager = {
+  essayManage: new Page(
+    'essayManage',
+    '申論題管理',
+    'sign_document.png',
+    '/essay/manage/question/1?ordering=-year',
+    'EH',
+    <EssayManage/>
   ),
 }
 
@@ -188,11 +199,12 @@ export const MenuEssay: TSidebarMenu = {
   ]
 }
 
-export const MenuSelectManage: TSidebarMenu = {
-  label: '選擇題管理',
-  icon: 'select.png',
+export const MenuManage: TSidebarMenu = {
+  label: '管理系統',
+  icon: 'exam.png',
   list: [
     SelectPagesForManager.selectManage,
     SelectPagesForManager.selectResultManage,
+    EssayPagesForManager.essayManage,
   ]
 }

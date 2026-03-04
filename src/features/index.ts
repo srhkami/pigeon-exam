@@ -10,12 +10,12 @@ export {default as SelectManage} from '@/features/Select/for-manager/Manage/Sele
 export {default as SelectResultManage} from '@/features/Select/for-manager/Result/SelectResultManage.tsx'
 export {default as SelectResultDetail} from '@/features/Select/for-manager/Result/SelectResultDetail.tsx'
 
-
 export {default as EssayBrowser} from '@/features/Essay/for-user/Browser/EssayBrowser.tsx'
 export {default as EssayRandom} from '@/features/Essay/for-user/Random/EssayRandom.tsx'
 export {default as EssayLogs} from '@/features/Essay/for-user/Logs/EssayLogs.tsx'
 export {default as EssayDetail} from '@/features/Essay/for-user/Detail/EssayDetail.tsx'
 
+export {default as EssayManage} from '@/features/Essay/for-manager/EssayManage.tsx'
 
 export {default as FeedbackWeb} from './Feedback/FeedbackWeb.tsx'
 export {default as FilePreview} from './FilePreview/FilePreview.tsx'

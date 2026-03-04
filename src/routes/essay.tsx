@@ -1,5 +1,5 @@
 import {RouteObject} from "react-router";
-import {EssayPagesForUser} from "@/lib/pages.tsx";
+import {EssayPagesForUser, SelectPagesForManager} from "@/lib/pages.tsx";
 import {EssayDetail} from "@/features";
 import {AuthLayout} from "@/auth";
 
@@ -15,6 +15,16 @@ export const essayRouter: RouteObject = {
     {
       path: 'detail', children: [
         {path: ':id', element: <AuthLayout authType='E'><EssayDetail/></AuthLayout>}
+      ]
+    },
+    {
+      path: 'manage', children: [
+        {
+          path: 'question', children:
+            [
+              {path: ':page', element: SelectPagesForManager.selectManage.content}
+            ]
+        },
       ]
     }
   ]

@@ -5,7 +5,8 @@ import {FaArrowRight, FaCheckCircle} from "react-icons/fa";
 import {showToast} from "@/func";
 import {EXAM_API} from "@/lib/config.ts";
 import {useAxios} from "@/hooks";
-import SelectResultCard from "@/features/Select/for-user/Result/SelectResultCard.tsx";
+import QsCardForInput from "@/features/Select/for-user/Question/for-input/QsCardForInput.tsx";
+import QsCardForView from "@/features/Select/for-user/Question/for-view/QsCardForView.tsx";
 
 type Props = {
   readonly formData: {
@@ -64,7 +65,7 @@ export default function SelectSingle({formData}: Props) {
   if (isSubmitted) {
     return (
       <div>
-        <SelectResultCard q={q} a={answers[0]} i={0}
+        <QsCardForView q={q} a={answers[0]} i={0}
                           config={{
                             showOptions: true, // 顯示選項及來源
                             showRating: true, // 顯示題目評級
@@ -83,13 +84,7 @@ export default function SelectSingle({formData}: Props) {
 
   return (
     <>
-      <SelectResultCard q={q} i={0} setAnswers={setAnswers}
-                        config={{
-                          showOptions: true, // 顯示選項及來源
-                          showRating: false, // 顯示題目評級
-                          showLinks: false, // 顯示關聯
-                          showComment: false, // 顯示註解
-                        }}/>
+      <QsCardForInput q={q} index={0} setAnswers={setAnswers}/>
       <div className='flex justify-end'>
         <Button color='success' onClick={onSubmit}>
           <FaCheckCircle/>

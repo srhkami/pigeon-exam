@@ -6,7 +6,7 @@ import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
 import {DetailRow} from "@/component";
 import PageHeader from "@/features/Layout/PageHeader.tsx";
-import Questions from "@/features/Select/for-user/Question/Questions.tsx";
+import QsListForView from "@/features/Select/for-user/Question/for-view/QsListForView.tsx";
 
 export default function SelectResult() {
 
@@ -55,7 +55,7 @@ export default function SelectResult() {
       <div className='border-l-4 border-l-primary pl-4 text-lg font-bold mb-2'>
         選擇題（共{data.questions.select?.length}題）
       </div>
-      <Questions questions={data.questions} answers={data.answers}/>
+      <QsListForView questions={data.questions} answers={data.answers}/>
     </div>
   )
 }

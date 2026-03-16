@@ -1,4 +1,3 @@
-import PageHeader from "../../../Layout/PageHeader.tsx";
 import {DetailRow} from "@/component";
 import {useAxios} from "@/hooks";
 import {useSearchParams} from "react-router";
@@ -6,7 +5,8 @@ import {useEffect, useState} from "react";
 import {ExamResultData} from "@/types/exam-types.ts";
 import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
-import Questions from "@/features/Select/for-user/Question/Questions.tsx";
+import QsListForView from "@/features/Select/for-user/Question/for-view/QsListForView.tsx";
+import {PageHeader} from "@/features";
 
 /* 考古題單純顯示題目及解答的組件 */
 export default function SelectPastPaper(){
@@ -54,7 +54,7 @@ export default function SelectPastPaper(){
       <div className='border-l-4 border-l-primary pl-4 text-lg font-bold mb-2'>
         選擇題（共{data.questions.select?.length}題）
       </div>
-      <Questions questions={data.questions} answers={data.answers}/>
+      <QsListForView questions={data.questions} answers={data.answers}/>
     </div>
   )
 }

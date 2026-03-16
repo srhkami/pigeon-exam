@@ -9,7 +9,7 @@ import {Alert, Button, Col, DetailRow, Row} from "@/component";
 import {IoWarningOutline} from "react-icons/io5";
 import toast from "react-hot-toast";
 import {FaCheck} from "react-icons/fa";
-import Questions from "@/features/Select/for-user/Question/Questions.tsx";
+import QsListForInput from "@/features/Select/for-user/Question/for-input/QsListForInput.tsx";
 
 /**
  * 試卷
@@ -131,7 +131,7 @@ export default function SelectPaper() {
       <div className='border-l-4 border-l-primary pl-4 text-lg font-bold mb-2'>
         選擇題（共{data.questions.select?.length}題）
       </div>
-      <Questions questions={data.questions} setSelectAnswers={setSelectAnswers}/>
+      <QsListForInput questions={data.questions} setSelectAnswers={setSelectAnswers}/>
       <div className='flex justify-end'>
         <Button color='primary' onClick={onCheck}>
           <FaCheck/>交卷

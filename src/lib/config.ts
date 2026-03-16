@@ -12,4 +12,5 @@ export const MEDIA_IP = ROOT_IP;
 export const WEB_API = ROOT_IP + '/web';
 export const USER_API = ROOT_IP + '/user';
 export const POLICE_API = ROOT_IP + '/police';
-export const TRAFFIC_API = ROOT_IP + '/traffic';
+export const EXAM_API = ROOT_IP + '/exam';
+export const EXAM_API_V2 = ROOT_IP + '/v2/exam';

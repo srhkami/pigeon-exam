@@ -9,6 +9,7 @@ import SidebarLink from "@/features/Layout/SidebarLink.tsx";
 import {BsLayoutSidebarInset} from "react-icons/bs";
 import {Toaster} from "react-hot-toast";
 import {AuthComponent} from "@/auth";
+import Footer from "@/features/Layout/Footer.tsx";
 
 type Props = {
   readonly children?: ReactNode;
@@ -47,10 +48,11 @@ export default function Base({children}: Props) {
           <MenuUser/>
         </nav>
         {/* Page content here */}
-        <main className="pt-4 px-2 sm:px-8 md:px-12 lg:px-10 xl:px-16 py-3">
+        <main className="pt-4 px-2 sm:px-12 md:px-18 lg:px-24">
           <Outlet/>
           {children}
         </main>
+        <Footer/>
       </div>
       <div className="drawer-side is-drawer-close:overflow-visible">
         <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>

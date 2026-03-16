@@ -4,7 +4,7 @@ import {FaArrowRight} from "react-icons/fa";
 import {useAxios, useCacheApi} from "@/hooks";
 import {showToast} from "@/func";
 import {useNavigate} from "react-router";
-import {POLICE_API} from "@/lib/config.ts";
+import {EXAM_API, EXAM_API_V2} from "@/lib/config.ts";
 import SelectSingle from "@/features/Select/for-user/Random/SelectSingle.tsx";
 import SelectPageHeader from "@/features/Select/for-user/Random/SelectPageHeader.tsx";
 
@@ -37,11 +37,11 @@ export default function SelectRandom() {
   const api = useAxios();
   const navi = useNavigate();
 
-  const {data} = useCacheApi<FormValues>({url: POLICE_API + '/exam_select/filter_options/'})
+  const {data} = useCacheApi<FormValues>({url: EXAM_API_V2 +'/select/filter_options'})
 
   const {register, watch, handleSubmit} = useForm<FormValues>({
     defaultValues: {
-      source: [], category: [], subject: [], is_not_repeat:true
+      source: [], category: [], subject: [], is_not_repeat: true
     }
   });
 
@@ -73,7 +73,7 @@ export default function SelectRandom() {
     showToast(
       api({
         method: 'GET',
-        url: POLICE_API + '/exam_select/random_multi/',
+        url: EXAM_API + '/select_questions/random_multi/',
         params: newParams,
       }), {label: '題目生成', error: err => JSON.stringify(err.response?.data)},
     ).then(res => navi('/paper/' + res.data))
@@ -156,10 +156,12 @@ export default function SelectRandom() {
         </div>
 
       </div>
-      <div className='flex items-center mt-4'>
-        <div className='text-sm font-semibold'>出題數目：</div>
-        <select className='select select-sm select-primary w-30' {...register('count')}>
-          <option value=''>請選擇</option>
+      <Badge size='lg' style='outline' className='mt-4'>
+        出題數目
+      </Badge>
+      <div className='flex items-center justify-between mt-2'>
+        <select className='select select-primary w-40' {...register('count')}>
+          <option value=''>請選擇出題數</option>
           <option value='1'>每次1題</option>
           <option value='10'>出10題</option>
           <option value='20'>出20題</option>
@@ -167,15 +169,16 @@ export default function SelectRandom() {
           <option value='50'>出50題</option>
         </select>
       </div>
+
       {currentValues.count === '' &&
         <div className='flex justify-end'>
-          <Button color='success' className='mt-4' disabled>出題<FaArrowRight/></Button>
+          <Button color='success' className='mt-4' disabled>開始出題<FaArrowRight/></Button>
         </div>
 
       }
       {currentValues.count === '1' &&
         <>
-          <div className='text-xs italic mt-1 opacity-70'>*每次作答會即時顯示結果，不會儲存個人紀錄</div>
+          <div className='text-xs italic mt-1 opacity-70'>*每次作答會即時顯示結果</div>
           {currentValues.count === '1' &&
             <SelectSingle formData={currentValues}/>
           }
@@ -183,9 +186,9 @@ export default function SelectRandom() {
       }
       {(currentValues.count && currentValues.count !== '1') &&
         <>
-          <div className='text-xs italic mt-1 opacity-70'>*會生成一份隨機試卷，測驗完畢會儲存個人記錄</div>
+          <div className='text-xs italic mt-1 opacity-70'>*提交所有答案後才會顯示結果</div>
           <div className='flex justify-end'>
-            <Button color='success' className='mt-4' onClick={handleSubmit(onSubmit)}>出題<FaArrowRight/></Button>
+            <Button color='success' className='mt-4' onClick={handleSubmit(onSubmit)}>開始出題<FaArrowRight/></Button>
           </div>
         </>
       }

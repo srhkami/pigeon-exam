@@ -5,7 +5,6 @@ import {useEffect} from "react";
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import 'keen-slider/keen-slider.min.css'
-import ReloadPrompt from "@/layout/ReloadPrompt.tsx";
 import {QueryClient} from '@tanstack/react-query';
 import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
 import {createAsyncStoragePersister} from '@tanstack/query-async-storage-persister';
@@ -49,7 +48,6 @@ export default function App() {
         }}
       >
         <RouterProvider router={routes}/>
-        <ReloadPrompt/>
       </PersistQueryClientProvider>
     </AuthProvider>
   )

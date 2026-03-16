@@ -7,7 +7,6 @@ import {Badge, Button, RichTextShow} from "@/component";
 import {useState} from "react";
 import SelectEdit from "@/features/Select/for-manager/Manage/Edit/SelectEdit.tsx";
 import QuestionRating from "@/features/Layout/QuestionRating.tsx";
-import ModalSelectMemo from "@/features/Select/for-user/Memo/ModalSelectMemo.tsx";
 import ArticleLink from "@/features/Link/ArticleLink/ArticleLink.tsx";
 import FileLink from "@/features/Link/FileLink/FileLink.tsx";
 
@@ -114,7 +113,6 @@ export default function SelectResultCard({q, a, i, config, onRefetch}: Props) {
           config?.showRating &&
           <div className='flex'>
             <QuestionRating right_count={q.right_count} total_count={q.total_count} showNumber showPercent/>
-            <ModalSelectMemo q={q}/>
           </div>
         }
         {

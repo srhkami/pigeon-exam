@@ -5,7 +5,7 @@ import {useLocation, useNavigate, useParams, useSearchParams} from "react-router
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useEffect} from "react";
 import {FaRedo, FaSearch} from "react-icons/fa";
-import {POLICE_API} from "@/lib/config.ts";
+import {EXAM_API_V2} from "@/lib/config.ts";
 
 type ExamFilter = {
   source?: Array<string>,
@@ -67,7 +67,7 @@ export default function ModalSelectFilter({detailMode = true}: Props) {
     subject: searchParams.get("subject")?.split(',') || [],
   };
 
-  const {data} = useCacheApi<ExamFilter>({url: POLICE_API +'/exam_select/filter_options/'})
+  const {data} = useCacheApi<ExamFilter>({url: EXAM_API_V2 +'/select/filter_options'})
 
   const {
     register,

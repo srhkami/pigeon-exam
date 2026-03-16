@@ -3,7 +3,7 @@ import {Button} from "@/component";
 import {useState} from "react";
 import {FaArrowRight, FaCheckCircle} from "react-icons/fa";
 import {showToast} from "@/func";
-import {POLICE_API} from "@/lib/config.ts";
+import {EXAM_API} from "@/lib/config.ts";
 import {useAxios} from "@/hooks";
 import SelectResultCard from "@/features/Select/for-user/Result/SelectResultCard.tsx";
 
@@ -38,7 +38,7 @@ export default function SelectSingle({formData}: Props) {
     showToast(
       api({
         method: 'GET',
-        url: POLICE_API + '/exam_select/random_single/',
+        url: EXAM_API + '/select_questions/random_single/',
         params: newParams,
       }), {label: '載入', error: err => JSON.stringify(err.response?.data)}
     )
@@ -57,7 +57,7 @@ export default function SelectSingle({formData}: Props) {
 
   if (!q) return (
     <div className='flex justify-end'>
-      <Button color='success' className='mt-4' onClick={onStart}>出題<FaArrowRight/></Button>
+      <Button color='success' className='mt-4' onClick={onStart}>開始出題<FaArrowRight/></Button>
     </div>
   )
 
@@ -74,7 +74,7 @@ export default function SelectSingle({formData}: Props) {
         />
         <div className='flex justify-end'>
           <Button size='sm' color='primary' onClick={onStart}>
-            下一題<FaArrowRight/>
+            出下一題<FaArrowRight/>
           </Button>
         </div>
       </div>
@@ -91,7 +91,7 @@ export default function SelectSingle({formData}: Props) {
                           showComment: false, // 顯示註解
                         }}/>
       <div className='flex justify-end'>
-        <Button size='sm' color='success' onClick={onSubmit}>
+        <Button color='success' onClick={onSubmit}>
           <FaCheckCircle/>
           提交
         </Button>

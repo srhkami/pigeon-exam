@@ -9,7 +9,6 @@ import FileLink from "@/features/Link/FileLink/FileLink.tsx";
 import {Badge, RichTextShow} from "@/component";
 import {Dispatch, SetStateAction} from "react";
 import {useForm} from "react-hook-form";
-import ModalSelectMemo from "@/features/Select/for-user/Memo/ModalSelectMemo.tsx";
 
 type Props = {
   readonly q: ExamSelectData,
@@ -154,7 +153,6 @@ export default function SelectResultCard({q, a, i, config, setAnswers}: Props) {
           config?.showRating &&
           <div className='flex'>
             <QuestionRating right_count={q.right_count} total_count={q.total_count}/>
-            <ModalSelectMemo q={q}/>
           </div>
         }
         {

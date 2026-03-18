@@ -3,8 +3,8 @@ import {Button, Collapse, CollapseContent, CollapseTitle} from "@/component";
 import {FaArrowRight} from "react-icons/fa";
 import {useAxios, useCacheApi} from "@/hooks";
 import {showToast} from "@/func";
-import {POLICE_API} from "@/lib/config.ts";
-import {ExamEssayData} from "@/types/exam-types.ts";
+import {EXAM_API} from "@/lib/config.ts";
+import {EssayQuestionData} from "@/types/exam-types.ts";
 import EssayPageHeader from "@/features/Essay/for-user/Browser/EssayPageHeader.tsx";
 import {useNavigate} from "react-router";
 
@@ -35,7 +35,7 @@ export default function EssayRandom() {
   const api = useAxios();
   const navi = useNavigate();
 
-  const {data} = useCacheApi<FormValues>({url: POLICE_API +'/exam_essay/filter_options/'})
+  const {data} = useCacheApi<FormValues>({url: EXAM_API +'/essay_questions/filter_options/'})
 
   const {register, handleSubmit} = useForm<FormValues>({
     defaultValues: {
@@ -68,9 +68,9 @@ export default function EssayRandom() {
     );
     const newParams = new URLSearchParams(cleanData as any);
     showToast(
-      api<ExamEssayData>({
+      api<EssayQuestionData>({
         method: 'GET',
-        url: POLICE_API + '/exam_essay/random_single/',
+        url: EXAM_API + '/essay_questions/random_single/',
         params: newParams,
       }), {label: '載入', error: err => JSON.stringify(err.response?.data)}
     )

@@ -2,11 +2,11 @@ import {DetailRow} from "@/component";
 import {useAxios} from "@/hooks";
 import {useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
-import {ExamResultData} from "@/types/exam-types.ts";
+import {PaperRecordData} from "@/types/exam-types.ts";
 import {showToast} from "@/func";
-import {POLICE_API} from "@/lib/config.ts";
-import QsListForView from "@/features/Select/for-user/Question/for-view/QsListForView.tsx";
+import {EXAM_API} from "@/lib/config.ts";
 import {PageHeader} from "@/features";
+import QsCardForView from "@/features/Select/for-user/Question/for-view/QsCardForView.tsx";
 
 /* 考古題單純顯示題目及解答的組件 */
 export default function SelectPastPaper(){
@@ -15,14 +15,14 @@ export default function SelectPastPaper(){
   const api = useAxios();
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);   // 解析params，轉換為物件
-  const [data, setData] = useState<ExamResultData>();
+  const [data, setData] = useState<PaperRecordData>();
 
   useEffect(() => {
     showToast(
       async () => {
-        const res1 = await api<ExamResultData>({
+        const res1 = await api<PaperRecordData>({
           method: 'GET',
-          url: POLICE_API + '/exam/past_exam_paper/',
+          url: EXAM_API + '/past_exam_paper/',
           params: params,
         })
         setData(res1.data);
@@ -52,9 +52,28 @@ export default function SelectPastPaper(){
       </div>
       <div className='divider'></div>
       <div className='border-l-4 border-l-primary pl-4 text-lg font-bold mb-2'>
-        選擇題（共{data.questions.select?.length}題）
+        選擇題（共{data.select_records.length}題）
       </div>
-      <QsListForView questions={data.questions} answers={data.answers}/>
+      <ul className='list'>
+        {
+          data.select_records.map((item, index) => {
+            return (
+              <QsCardForView
+                key={item.id}
+                i={index}
+                q={item.question}
+                a={item.answer}
+                config={{
+                  showOptions: true,
+                  showComment: false,
+                  showLinks: true,
+                  showRating: true
+                }}
+              />
+            )
+          })
+        }
+      </ul>
     </div>
   )
 }

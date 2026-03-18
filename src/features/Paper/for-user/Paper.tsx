@@ -8,8 +8,8 @@ import {Alert, Button, Col, DetailRow, Row} from "@/component";
 import {IoWarningOutline} from "react-icons/io5";
 import toast from "react-hot-toast";
 import {PageHeader} from "@/features";
-import QsListForInput from "@/features/Select/for-user/Question/for-input/QsListForInput.tsx";
 import {FaCheck} from "react-icons/fa";
+import QsCardForInput from "@/features/Select/for-user/Question/for-input/QsCardForInput.tsx";
 
 export default function Paper(){
 
@@ -93,7 +93,7 @@ export default function Paper(){
       title: data.title,
       subject: data.subject,
       category: data.category,
-      select_questions: data.select_questions,
+      select_question_ids: data.select_question_ids,
       select_answers: selectAnswers,
       select_score: data.select_score,
     }
@@ -129,7 +129,15 @@ export default function Paper(){
       <div className='border-l-4 border-l-primary pl-4 text-lg font-bold mb-2'>
         選擇題（共{data.select_questions.length}題）
       </div>
-      <QsListForInput questions={data.select_questions} setSelectAnswers={setSelectAnswers}/>
+      <ul className='list'>
+        {
+          data.select_questions.map((q,i)=>{
+            return(
+              <QsCardForInput key={q.id} q={q} index={i} setAnswers={setSelectAnswers}/>
+            )
+          })
+        }
+      </ul>
       <div className='flex justify-end'>
         <Button color='primary' onClick={onCheck}>
           <FaCheck/>交卷

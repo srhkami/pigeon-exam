@@ -1,10 +1,10 @@
 import {useForm} from "react-hook-form";
 import {Dispatch, SetStateAction} from "react";
-import {ExamSelectReadData} from "@/types/exam-types.ts";
+import {SelectQuestionReadData} from "@/types/exam-types.ts";
 import {QsCard, QsCardOptionLabel, QsCardSource, QsCardTitle} from "@/features/Select/for-user/Question/QsCardBase.tsx";
 
 type Props = {
-  readonly q: ExamSelectReadData,
+  readonly q: SelectQuestionReadData,
   readonly index: number,
   readonly setAnswers: Dispatch<SetStateAction<Array<Array<number | null>>>>, // 設定答案
 }

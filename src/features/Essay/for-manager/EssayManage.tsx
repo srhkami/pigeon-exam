@@ -1,36 +1,35 @@
 import {useDataBrowser} from "@/hooks";
-import {ExamEssayCardConfig, ExamEssayData} from "@/types/exam-types.ts";
+import {EssayCardConfig, EssayQuestionData} from "@/types/exam-types.ts";
 import {POLICE_API} from "@/lib/config.ts";
 import {DataBrowser, DataBrowserTitle, FloatingActionButton} from "@/component";
 import {RiEdit2Fill} from "react-icons/ri";
-import {useEffect, useState} from "react";
-import {SubmitHandler, useForm} from "react-hook-form";
-import EsamManageCard from "@/features/Essay/for-manager/EsamManageCard.tsx";
+import {useForm} from "react-hook-form";
+import QsCardForEdit from "@/features/Essay/for-manager/QsCardForEdit.tsx";
 import ModalEssayAdd from "@/features/Essay/for-manager/Edit/ModalEssayAdd.tsx";
 import ModalEssayFilter from "@/features/Essay/for-manager/tools/ModalEssayFilter.tsx";
 
 export default function EssayManage() {
 
   const title = '申論題管理';
-  const [config, setConfig] = useState<ExamEssayCardConfig>()
-  const {data, pageInfo, onRefetch} = useDataBrowser<ExamEssayData>({url:POLICE_API + '/exam_essay/'});
+  // const [config, setConfig] = useState<ExamEssayCardConfig>()
+  const {data, pageInfo, onRefetch} = useDataBrowser<EssayQuestionData>({url:POLICE_API + '/essay_questions/'});
 
-  const {register, handleSubmit, watch} = useForm<ExamEssayCardConfig>();
-  const onSubmit: SubmitHandler<ExamEssayCardConfig> = (formData) => {
-    setConfig(formData);
-  }
-  useEffect(() => {
-    // 訂閱表單變動
-    const subscription = watch(() => {
-      handleSubmit(onSubmit)();
-    })
-    // 清除訂閱以避免記憶體洩漏
-    return () => subscription.unsubscribe();
-  }, [watch, handleSubmit]);
+  const {register, getValues} = useForm<EssayCardConfig>();
+  // const onSubmit: SubmitHandler<ExamEssayCardConfig> = (formData) => {
+  //   setConfig(formData);
+  // }
+  // useEffect(() => {
+  //   // 訂閱表單變動
+  //   const subscription = watch(() => {
+  //     handleSubmit(onSubmit)();
+  //   })
+  //   // 清除訂閱以避免記憶體洩漏
+  //   return () => subscription.unsubscribe();
+  // }, [watch, handleSubmit]);
 
   const dataList = data.map(q => {
     return (
-      <EsamManageCard key={q.id} q={q} i={q.id - 1} config={config} onRefetch={onRefetch}/>
+      <QsCardForEdit key={q.id} q={q} i={q.id - 1} config={getValues()} onRefetch={onRefetch}/>
     )
   })
 

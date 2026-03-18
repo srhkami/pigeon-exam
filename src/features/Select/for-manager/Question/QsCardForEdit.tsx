@@ -1,15 +1,18 @@
 import {SelectQuestionData, SelectCardConfig} from "@/types/exam-types.ts";
-import {FaRegStickyNote} from "react-icons/fa";
+import {FaEdit, FaRegStickyNote} from "react-icons/fa";
 import ArticleLink from "@/features/Link/ArticleLink/ArticleLink.tsx";
 import FileLink from "@/features/Link/FileLink/FileLink.tsx";
-import {Badge, RichTextShow} from "@/component";
+import {Badge, Button, RichTextShow} from "@/component";
 import {QsCard, QsCardOptionLabel, QsCardSource, QsCardTitle} from "@/features/Select/for-user/Question/QsCardBase.tsx";
+import {useState} from "react";
+import SelectEdit from "@/features/Select/for-manager/Manage/Edit/SelectEdit.tsx";
 
 type Props = {
   readonly q: SelectQuestionData,
   readonly a: Array<number | null>,
   readonly i: number,
   readonly config?: SelectCardConfig,
+  readonly onRefetch?: ()=>void,
 }
 
 /**
@@ -18,14 +21,32 @@ type Props = {
  * @param a 使用者答案
  * @param i 索引值
  * @param config 卡片設定
+ * @param onRefetch 重新整理的函數
  * @constructor
  */
-export default function QsCardForView({q, a, i, config}: Props) {
+export default function QsCardForEdit({q, a, i, config, onRefetch}: Props) {
+
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   const title = q.question.length > 35 ? q.question.slice(0, 35) + "..." : q.question
 
+  if (isEdit && onRefetch !== undefined) {
+    return (
+      <div className="hover:bg-base-200 card-border border-2 border-error rounded-xl my-1 relative p-2">
+        <SelectEdit obj={q} onRefetch={onRefetch} setIsEdit={setIsEdit}/>
+      </div>
+    )
+  }
+
   return (
     <QsCard is_correct={a.length !== 0 && q.answer[0] === a[0]}>
+      {/*編輯按鈕*/}
+      {onRefetch !== undefined &&
+        <Button className='absolute top-1 right-1' size='sm' shape='circle'
+                onClick={() => setIsEdit(true)}>
+          <FaEdit/>
+        </Button>
+      }
       <QsCardTitle i={i} title={config?.showOptions ? q.question : title}/>
       {
         config?.showOptions &&

@@ -1,12 +1,12 @@
-import {ExamEssayAnswerData} from "@/types/exam-types.ts";
+import {EssayRecordData} from "@/types/exam-types.ts";
 import {useAxios} from "@/hooks";
 import {useState} from "react";
-import {POLICE_API} from "@/lib/config.ts";
+import {EXAM_API} from "@/lib/config.ts";
 import {Button} from "@/component";
 import {BiLike, BiSolidLike} from "react-icons/bi";
 
 type Props = {
-  readonly obj: ExamEssayAnswerData
+  readonly obj: EssayRecordData,
 }
 
 export default function LikeButton({obj}: Props) {
@@ -17,7 +17,7 @@ export default function LikeButton({obj}: Props) {
   const onLike = () => {
     api<{ is_liked: boolean, likes_count: number }>({
       method: 'POST',
-      url: POLICE_API + `/exam_essay_answer/${obj.id}/like/`,
+      url: EXAM_API + `/essay_records/${obj.id}/like/`,
     }).then((res) => {
       setIsLiked(res.data.is_liked);
       setLikesCount(res.data.likes_count);

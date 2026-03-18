@@ -79,8 +79,10 @@ export type PaperData = {
   title: string, // 標題
   subject: string, // 考試科目
   category: string, // 考試類科
-  select_questions: Array<number>,
-  essay_questions: Array<number>,
+  select_questions: Array<SelectQuestionReadData>,
+  select_question_ids: Array<number>,
+  essay_questions: Array<EssayQuestionData>,
+  essay_question_ids: Array<number>,
   uuid: string,// 識別碼
   is_public: boolean, // 是否開放
   select_score: number,
@@ -92,10 +94,10 @@ export type PaperSubmitForm = {
   title: string,
   subject: string,
   category: string,
-  select_questions?: Array<number>,
+  select_question_ids?: Array<number>,
   select_answers?: Array<Array<number | null>>,
   select_score?: number,
-  essay_questions?: Array<number>,
+  essay_question_ids?: Array<number>,
   essay_answers?: Array<string>,
   essay_score?: number,
 }
@@ -133,7 +135,7 @@ export type ExamPastData = {
 
 
 // 申論題題目
-export type ExamEssayData = {
+export type EssayQuestionData = {
   id: number,
   user: number,
   user_display: string,
@@ -151,7 +153,7 @@ export type ExamEssayData = {
 }
 
 // 申論題題目表單
-export type ExamEssayForm = {
+export type EssayQuestionForm = {
   question?: string,
   sample_answer?: JSONContent | null,
   year?: string,
@@ -163,8 +165,8 @@ export type ExamEssayForm = {
   file_link?: Array<HappyFileLink>,
 }
 
-// 申論題題目
-export type ExamEssayAnswerData = {
+// 申論題答題紀錄
+export type EssayRecordData = {
   id: number,
   user: number,
   user_display: string,
@@ -178,7 +180,7 @@ export type ExamEssayAnswerData = {
 }
 
 // 申論題卡片設定
-export type ExamEssayCardConfig = {
+export type EssayCardConfig = {
   showDetail: boolean, // 顯示來源及答案
   showLinks: boolean, // 顯示關聯
   showSample: boolean, // 顯示擬答

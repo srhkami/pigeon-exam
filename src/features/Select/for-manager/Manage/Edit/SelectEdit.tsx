@@ -2,7 +2,7 @@ import {useAuth, useAxios} from "@/hooks";
 import {Dispatch, SetStateAction, useState} from "react";
 import {JSONContent} from "@tiptap/react";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {ExamSelectData, ExamSelectForm} from "@/types/exam-types.ts";
+import {SelectQuestionData, SelectQuestionForm} from "@/types/exam-types.ts";
 import {Button, Col, FormInputCol, ModalTextEditor, Row} from "@/component";
 import {FaSave} from "react-icons/fa";
 import {PageHeader} from "@/features";
@@ -15,7 +15,7 @@ import ArticleLinkEdit from "@/features/Link/ArticleLink/ArticleLinkEdit.tsx";
 import FileLinkEdit from "@/features/Link/FileLink/FileLinkEdit.tsx";
 
 type Props = {
-  readonly obj?: ExamSelectData,
+  readonly obj?: SelectQuestionData,
   readonly onRefetch: ()=>void,
   readonly setIsEdit?: Dispatch<SetStateAction<boolean>>,
 }
@@ -37,7 +37,7 @@ export default function SelectEdit({obj, onRefetch, setIsEdit}: Props) {
     formState: {
       errors,  // 錯誤內容
     }
-  } = useForm<ExamSelectForm>({
+  } = useForm<SelectQuestionForm>({
     // 設定每當欄位改變後重新校驗
     mode: 'onBlur',
     reValidateMode: 'onChange',
@@ -63,7 +63,7 @@ export default function SelectEdit({obj, onRefetch, setIsEdit}: Props) {
     }
   }
 
-  const onSubmit: SubmitHandler<ExamSelectForm> = (formData) => {
+  const onSubmit: SubmitHandler<SelectQuestionForm> = (formData) => {
     formData['options'] = options;
     formData['answer'] = answer;
     formData['article_link'] = articleLink;
@@ -98,7 +98,6 @@ export default function SelectEdit({obj, onRefetch, setIsEdit}: Props) {
         .then(() => {
           onRefetch();
           setValue('question', '');
-          setValue('question_number', null);
           setValue('remark', '')
           setAnswer([]);
           setArticleLink([]);
@@ -128,10 +127,6 @@ export default function SelectEdit({obj, onRefetch, setIsEdit}: Props) {
       <FormInputCol xs={6} md={4} label='出題年份*' error={errors.year?.message}>
         <input type="number" className="input input-sm w-full"
                {...register('year', {required: true, maxLength: {value: 3, message: '字數勿大於3'}})}/>
-      </FormInputCol>
-      <FormInputCol xs={6} md={4} label='題號*' error={errors.question_number?.message}>
-        <input type="number" className="input input-sm w-full" placeholder='原試卷中的題號'
-               {...register('question_number', {maxLength: {value: 16, message: '字數勿大於16'},})}/>
       </FormInputCol>
       <FormInputCol xs={6} md={4} label='出處*' error={errors.source?.message}>
         <select className='select select-sm w-full' {...register('source')}>

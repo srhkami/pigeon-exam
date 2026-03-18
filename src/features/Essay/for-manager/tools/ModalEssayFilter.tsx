@@ -5,7 +5,7 @@ import {useLocation, useNavigate, useParams, useSearchParams} from "react-router
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useEffect} from "react";
 import {FaRedo, FaSearch} from "react-icons/fa";
-import {POLICE_API} from "@/lib/config";
+import {EXAM_API} from "@/lib/config";
 
 type ExamFilter = {
   source?: Array<string>,
@@ -64,7 +64,7 @@ export default function ModalEssayFilter({detailMode = true}: Props) {
     subject: searchParams.get("subject")?.split(',') || [],
   };
 
-  const {data} = useCacheApi<ExamFilter>({url: POLICE_API +'/exam_essay/filter_options/'})
+  const {data} = useCacheApi<ExamFilter>({url: EXAM_API +'/essay_questions/filter_options/'})
 
   const {
     register,

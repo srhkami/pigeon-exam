@@ -1,7 +1,7 @@
 import {useAuth, useAxios} from "@/hooks";
 import {Dispatch, SetStateAction, useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {ExamEssayData, ExamEssayForm} from "@/types/exam-types.ts";
+import {EssayQuestionData, EssayQuestionForm} from "@/types/exam-types.ts";
 import {POLICE_API} from "@/lib/config.ts";
 import {showFormError, showToast} from "@/func";
 import {Button, Col, FormInputCol, ModalTextEditor, Row} from "@/component";
@@ -14,7 +14,7 @@ import FileLinkEdit from "@/features/Link/FileLink/FileLinkEdit.tsx";
 import {HappyFileLink} from "@/types/happywork-types.ts";
 
 type Props = {
-  readonly obj?: ExamEssayData,
+  readonly obj?: EssayQuestionData,
   readonly onRefetch: ()=>void,
   readonly setIsEdit?: Dispatch<SetStateAction<boolean>>,
 }
@@ -33,14 +33,14 @@ export default function EssayEdit({obj, onRefetch, setIsEdit}: Props) {
     formState: {
       errors,  // 錯誤內容
     }
-  } = useForm<ExamEssayForm>({
+  } = useForm<EssayQuestionForm>({
     // 設定每當欄位改變後重新校驗
     mode: 'onBlur',
     reValidateMode: 'onChange',
     defaultValues: obj,
   });
 
-  const onSubmit: SubmitHandler<ExamEssayForm> = (formData) => {
+  const onSubmit: SubmitHandler<EssayQuestionForm> = (formData) => {
     formData['sample_answer'] = sample;
     formData['article_link'] = articleLink;
     formData['file_link'] = fileLink;
@@ -48,7 +48,7 @@ export default function EssayEdit({obj, onRefetch, setIsEdit}: Props) {
       showToast(
         api({
           method: 'PATCH',
-          url: POLICE_API + '/exam_essay/' + obj.id + '/',
+          url: POLICE_API + '/essay_questions/' + obj.id + '/',
           data: formData
         }), {label: '處理', success: '儲存成功'}
       )
@@ -63,7 +63,7 @@ export default function EssayEdit({obj, onRefetch, setIsEdit}: Props) {
       showToast(
         api({
           method: 'POST',
-          url: POLICE_API + '/exam_essay/',
+          url: POLICE_API + '/essay_questions/',
           data: {
             ...formData,
             user: userInfo.id,

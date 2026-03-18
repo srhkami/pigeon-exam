@@ -1,18 +1,17 @@
-import {useAuth, useAxios} from "@/hooks";
+import {useAxios} from "@/hooks";
 import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {PaperRecordData} from "@/types/exam-types.ts";
+import {Button, DetailRow} from "@/component";
+import {FaSearch} from "react-icons/fa";
 import {showToast} from "@/func";
 import {POLICE_API} from "@/lib/config.ts";
-import {DetailRow} from "@/component";
-import PageHeader from "@/features/Layout/PageHeader.tsx";
+import {PageHeader} from "@/features";
 import QsCardForView from "@/features/Select/for-user/Question/for-view/QsCardForView.tsx";
-import {ErrorAlert} from "@/features";
 
-export default function PaperRecord() {
+export default function PaperRecordDetail() {
 
   const api = useAxios();
-  const {userInfo} = useAuth();
   const navi = useNavigate();
   const {id} = useParams();
   const [data, setData] = useState<PaperRecordData>();
@@ -30,20 +29,40 @@ export default function PaperRecord() {
     ).catch(() => navi('/'))
   }, []);
 
-  if (!data) return null;
+  // const onSaveAsPaper = () => {
+  //   showToast(
+  //     api<{ id: number }>({
+  //       method: 'POST',
+  //       url: POLICE_API + '/exam_result/sava_as_paper/',
+  //       data: {result_id: id},
+  //     })
+  //   ).then(res => navi('/exam/paper/detail/' + res.data.id))
+  // }
 
-  if (data.user !== userInfo.id){
-    return <ErrorAlert errorType='noAuth'/>
-  }
+  if (!data) return null;
 
   return (
     <div>
       <PageHeader title={data.title}/>
+      {/*<div className='my-2 flex justify-end'>*/}
+      {/*  <Button size='sm' style='outline' onClick={onSaveAsPaper}>*/}
+      {/*    <FaSave/>將結果存成新試卷*/}
+      {/*  </Button>*/}
+      {/*</div>*/}
       <div className='mb-2 flex items-center'>
         <span className='text-6xl italic text-red-500'>{data.score}</span>
         <span className='ml-2 mt-auto text-2xl italic'>分</span>
       </div>
       <div>
+        <DetailRow
+          start='答題者：'
+          center={data.user_display}
+          end={
+            <Button size='xs' style='outline'
+                    onClick={() => navi('/exam/result/1?ordering=-id&user_id=' + data.user)}>
+              <FaSearch/>其他結果
+            </Button>
+          }/>
         {/*<DetailRow*/}
         {/*  start='答對題數：'*/}
         {/*  center={<span>{data.right_count} / {data.total_count}</span>}/>*/}
@@ -51,10 +70,10 @@ export default function PaperRecord() {
           start='測驗時間：'
           center={data.created_at}/>
         <DetailRow
-          start='類科：'
+          start='測驗類科：'
           center={data.category}/>
         <DetailRow
-          start='科目：'
+          start='測驗科目：'
           center={data.subject}/>
       </div>
       <div className='divider'></div>
@@ -73,8 +92,8 @@ export default function PaperRecord() {
                 config={{
                   showOptions: true,
                   showComment: false,
-                  showLinks: true,
-                  showRating: true
+                  showLinks: false,
+                  showRating: false
                 }}
               />
             )

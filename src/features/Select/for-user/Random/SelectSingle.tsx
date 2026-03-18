@@ -1,4 +1,4 @@
-import {ExamSelectData} from "@/types/exam-types.ts";
+import {SelectQuestionReadData, SelectRecordData} from "@/types/exam-types.ts";
 import {Button} from "@/component";
 import {useState} from "react";
 import {FaArrowRight, FaCheckCircle} from "react-icons/fa";
@@ -25,7 +25,8 @@ type Props = {
 export default function SelectSingle({formData}: Props) {
 
   const api = useAxios();
-  const [q, setQ] = useState<ExamSelectData>();
+  const [q, setQ] = useState<SelectQuestionReadData>();
+  const [record, setRecord] = useState<SelectRecordData>();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [answers, setAnswers] = useState<Array<Array<number | null>>>([[null],]);
 
@@ -37,7 +38,7 @@ export default function SelectSingle({formData}: Props) {
     );
     const newParams = new URLSearchParams(cleanData as any);
     showToast(
-      api({
+      api<SelectQuestionReadData>({
         method: 'GET',
         url: EXAM_API + '/select_questions/random_single/',
         params: newParams,
@@ -47,12 +48,24 @@ export default function SelectSingle({formData}: Props) {
       .finally(() => {
         setIsSubmitted(false);
         setAnswers([[null],]);
+        setRecord(undefined);
       })
   }
 
   // 提交
   const onSubmit = () => {
     setIsSubmitted(true);
+    showToast(
+      api<SelectRecordData>({
+        method: 'POST',
+        url: EXAM_API + '/select_records/submit/',
+        data: {
+          question: q?.id,
+          user_answer: answers[0],
+        },
+      }), {label: '提交', error: err => JSON.stringify(err.response?.data)}
+    ).then(res=>setRecord(res.data))
+
   }
 
 
@@ -62,10 +75,10 @@ export default function SelectSingle({formData}: Props) {
     </div>
   )
 
-  if (isSubmitted) {
+  if (isSubmitted && record) {
     return (
       <div>
-        <QsCardForView q={q} a={answers[0]} i={0}
+        <QsCardForView q={record.question} a={answers[0]} i={0}
                           config={{
                             showOptions: true, // 顯示選項及來源
                             showRating: true, // 顯示題目評級

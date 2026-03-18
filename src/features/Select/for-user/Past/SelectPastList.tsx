@@ -4,7 +4,7 @@ import {useNavigate, useSearchParams} from "react-router";
 import {Button} from "@/component";
 import {useAxios} from "@/hooks";
 import {showToast} from "@/func";
-import {POLICE_API} from "@/lib/config.ts";
+import {EXAM_API} from "@/lib/config.ts";
 
 type Props = {
   readonly data: Array<ExamPastData>  | null,
@@ -27,7 +27,7 @@ export default function SelectPastList({data}: Props) {
       showToast(
         api<string>({
           method: 'POST',
-          url: POLICE_API + '/exam/past_exam_paper/',
+          url: EXAM_API + '/past_exam_paper/',
           data: {
             year: obj.year,
             source: obj.source,

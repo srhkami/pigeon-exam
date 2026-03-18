@@ -1,19 +1,20 @@
 
 export {default as SelectRandom} from '@/features/Select/for-user/Random/SelectRandom.tsx'
 export {default as SelectPast} from '@/features/Select/for-user/Past/SelectPast.tsx'
-export {default as SelectLogs} from '@/features/Select/for-user/Logs/SelectLogs.tsx'
-export {default as SelectStatistics} from '@/features/Select/for-user/Statistics/SelectStatistics.tsx'x
 
 export {default as SelectManage} from '@/features/Select/for-manager/Manage/SelectManage.tsx'
-export {default as SelectResultManage} from '@/features/Select/for-manager/Result/SelectResultManage.tsx'
-export {default as SelectResultDetail} from '@/features/Select/for-manager/Result/SelectResultDetail.tsx'
 
 export {default as EssayBrowser} from '@/features/Essay/for-user/Browser/EssayBrowser.tsx'
 export {default as EssayRandom} from '@/features/Essay/for-user/Random/EssayRandom.tsx'
-export {default as EssayLogs} from '@/features/Essay/for-user/Logs/EssayLogs.tsx'
 export {default as EssayDetail} from '@/features/Essay/for-user/Detail/EssayDetail.tsx'
 
 export {default as EssayManage} from '@/features/Essay/for-manager/EssayManage.tsx'
+
+export {default as Paper} from '@/features/Paper/for-user/Paper.tsx'
+export {default as PaperRecord} from '@/features/Paper/for-user/PaperRecord.tsx'
+
+export {default as PaperRecordManage} from '@/features/Paper/for-manager/PaperRecordManage.tsx'
+export {default as PaperRecordDetail} from '@/features/Paper/for-manager/PaperRecordDetail.tsx'
 
 export {default as FeedbackWeb} from './Feedback/FeedbackWeb.tsx'
 export {default as FilePreview} from './FilePreview/FilePreview.tsx'

@@ -1,13 +1,13 @@
-import {ExamEssayData} from "@/types/exam-types.ts";
+import {EssayQuestionData} from "@/types/exam-types.ts";
 import {PageHeader} from "@/features";
-import EssayCard from "@/features/Essay/for-user/Detail/EssayCard.tsx";
+import QsCardForView from "@/features/Essay/for-user/Detail/QsCardForView.tsx";
 import {useState} from "react";
 import {Button, Col, ModalTextEditor, Row} from "@/component";
 import {JSONContent} from "@tiptap/react";
 import {FaCheck, FaDoorClosed, FaDoorOpen} from "react-icons/fa";
 import toast from "react-hot-toast";
 import {showToast} from "@/func";
-import {POLICE_API} from "@/lib/config.ts";
+import {EXAM_API, POLICE_API} from "@/lib/config.ts";
 import {useAuth, useAxios, useToastApi} from "@/hooks";
 import {useParams} from "react-router";
 
@@ -17,7 +17,7 @@ export default function EssayDetail() {
   const api = useAxios();
   const {id} = useParams();
   const {userInfo} = useAuth();
-  const {data} = useToastApi<ExamEssayData>({url: `${POLICE_API}/exam_essay/${id}/`})
+  const {data} = useToastApi<EssayQuestionData>({url: `${POLICE_API}/essay_questions/${id}/`})
 
   const [showSample, setShowSample] = useState<boolean>(false);
   const [answer, setAnswer] = useState<JSONContent | null>(null);
@@ -54,9 +54,9 @@ export default function EssayDetail() {
 
   const onSubmit = () => {
     showToast(
-      api<ExamEssayData>({
+      api<EssayQuestionData>({
         method: 'POST',
-        url: POLICE_API + '/exam_essay_answer/create/',
+        url: EXAM_API + '/essay_records/create/',
         data: {
           user: userInfo.id,
           question: id,
@@ -83,7 +83,7 @@ export default function EssayDetail() {
   return (
     <>
       <PageHeader title={title}/>
-      <EssayCard q={data} i={data.id - 1} config={{showDetail: true, showLinks: true, showSample: showSample}}/>
+      <QsCardForView q={data} i={data.id - 1} config={{showDetail: true, showLinks: true, showSample: showSample}}/>
       <div className='label mt-4'>
         我的回答
       </div>

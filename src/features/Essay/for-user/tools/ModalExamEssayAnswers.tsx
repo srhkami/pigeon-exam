@@ -1,13 +1,13 @@
 import {Button, Modal, ModalBody, ModalHeader, ModalTitle, RichTextShow} from "@/component";
 import {useModal, useToastApi} from "@/hooks";
-import {ExamEssayAnswerData, ExamEssayData} from "@/types/exam-types.ts";
+import {EssayRecordData, EssayQuestionData} from "@/types/exam-types.ts";
 import {ApiResData} from "@/types/api-types.ts";
-import {POLICE_API} from "@/lib/config.ts";
+import {EXAM_API} from "@/lib/config.ts";
 import {FaCircleUser} from "react-icons/fa6";
 import LikeButton from "./LikeButton.tsx";
 
 type Props = {
-  readonly q: ExamEssayData;
+  readonly q: EssayQuestionData;
 }
 
 /**
@@ -19,8 +19,8 @@ export default function ModalExamEssayAnswers({q}: Props) {
 
   const {isShow, onShow, onHide} = useModal();
 
-  const {data} = useToastApi<ApiResData<Array<ExamEssayAnswerData>>>({
-    url: POLICE_API + '/exam_essay_answer/',
+  const {data} = useToastApi<ApiResData<Array<EssayRecordData>>>({
+    url: EXAM_API + '/essay_records/',
     method: 'GET',
     params: {
       'question': q.id,

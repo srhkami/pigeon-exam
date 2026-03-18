@@ -1,5 +1,6 @@
-import {createBrowserRouter} from "react-router";import {ErrorAlert} from "@/features";
-import {Base, About, FilePreview, Home, UserProfile, FeedbackWeb, SelectPaper} from "@/features";
+import {createBrowserRouter} from "react-router";
+import {ErrorAlert} from "@/features";
+import {Base, About, FilePreview, Home, UserProfile, FeedbackWeb, Paper, PaperRecord} from "@/features";
 import {AuthLayout} from "@/auth";
 import {selectRouter} from "@/routes/select.tsx";
 import {essayRouter} from "@/routes/essay.tsx";
@@ -32,7 +33,12 @@ const routes = createBrowserRouter([
       },
       {
         path: 'paper', children: [
-          {path: ':uuid', element: <AuthLayout authType='E'><SelectPaper/></AuthLayout>}
+          {
+            path: 'record', children: [
+              {path: ':id', element: <AuthLayout authType='E'><PaperRecord/></AuthLayout>},
+            ]
+          },
+          {path: ':uuid', element: <AuthLayout authType='E'><Paper/></AuthLayout>}
         ]
       },
       selectRouter,

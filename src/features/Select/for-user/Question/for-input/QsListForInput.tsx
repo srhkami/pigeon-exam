@@ -1,4 +1,4 @@
-import {ExamSelectReadData, QuestionsData} from "@/types/exam-types.ts";
+import {SelectQuestionReadData} from "@/types/exam-types.ts";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {showToast} from "@/func";
 import {useAxios} from "@/hooks";
@@ -14,22 +14,22 @@ import QsCardForInput from "@/features/Select/for-user/Question/for-input/QsCard
  */
 
 type Props = {
-  readonly questions: QuestionsData,
+  readonly questions: Array<number>,
   readonly setSelectAnswers: Dispatch<SetStateAction<Array<Array<number | null>>>>,
 }
 
 export default function QsListForInput({questions, setSelectAnswers}: Props) {
 
   const api = useAxios();
-  const [selectData, setSelectData] = useState<Array<ExamSelectReadData>>([]); //選擇題題目清單
+  const [selectData, setSelectData] = useState<Array<SelectQuestionReadData>>([]); //選擇題題目清單
 
   useEffect(() => {
     showToast(
-      api<Array<ExamSelectReadData>>({
+      api<Array<SelectQuestionReadData>>({
         method: 'POST',
         url: POLICE_API + '/exam_select/questions/',
         data: {
-          id_list: questions.select ?? [],
+          id_list: questions,
           is_read: true,
         }
       }), {label: '載入'}
@@ -37,9 +37,9 @@ export default function QsListForInput({questions, setSelectAnswers}: Props) {
   }, []);
 
   const items = selectData.map((q, index) => {
-      return (
-        <QsCardForInput key={q.id} q={q} index={index} setAnswers={setSelectAnswers}/>
-      )
+    return (
+      <QsCardForInput key={q.id} q={q} index={index} setAnswers={setSelectAnswers}/>
+    )
   })
 
   return (

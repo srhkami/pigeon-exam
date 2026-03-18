@@ -2,13 +2,13 @@
 import {JSONContent} from "@tiptap/react";
 import {HappyFileLink} from "@/types/happywork-types.ts";
 
-export type ExamSelectData = {
+// 選擇題題目
+export type SelectQuestionData = {
   id: number,
   user: number,
   user_display: string, // 出題者
   created_at: string, // 建立時間
   question: string, //題目
-  question_number: number | null, //題號
   options: Array<string>, // 選項
   answer: Array<number>, // 解答
   year: string, // 年份
@@ -16,16 +16,14 @@ export type ExamSelectData = {
   category: string, // 類別
   subject: string, // 科目
   is_public: boolean, // 是否公開
-  total_count: number, // 總答題數
-  right_count: number, // 正確答題數
   article_link: Array<[string, string]>,// 法條連結，是['法規名稱','法條']組成的清單
   file_link: Array<HappyFileLink>, // 檔案連結
   comment: JSONContent | null, // 註解
   remark: string | null, // 備註
-  memo_count: number, // 筆記數量
 }
 
-export type ExamSelectReadData = {
+// 選擇題題目（只讀）
+export type SelectQuestionReadData = {
   id: number,
   question: string, //題目
   options: Array<string>, // 選項
@@ -36,9 +34,8 @@ export type ExamSelectReadData = {
 }
 
 // 選擇題表單
-export type ExamSelectForm = {
+export type SelectQuestionForm = {
   question?: string, //題目
-  question_number?: number | null, //題號
   options?: Array<string>, // 選項
   answer?: Array<number>, // 解答
   year?: string, // 年份
@@ -53,21 +50,28 @@ export type ExamSelectForm = {
 }
 
 // 選擇題卡片設定
-export type ExamSelectCardConfig = {
+export type SelectCardConfig = {
   showOptions: boolean, // 顯示選項及來源
   showRating: boolean, // 顯示題目評級
   showLinks: boolean, // 顯示關聯
   showComment: boolean, // 顯示註解
 }
 
-// 題目列表
-export type QuestionsData = {
-  select?: Array<number>,
-  input?: Array<number>
+// 選擇題答題紀錄
+export type SelectRecordData = {
+  id: number,
+  user: number,
+  user_display: string,
+  created_at: string,
+  answer: Array<number | null>,
+  is_correct: boolean,
+  feedback_memo: string,
+  feedback_score: number,
+  question: SelectQuestionData,
 }
 
-// 出題試卷
-export type ExamPaperData = {
+// 試卷
+export type PaperData = {
   id: number,
   user: number,
   user_display: string, // 建立者
@@ -75,41 +79,42 @@ export type ExamPaperData = {
   title: string, // 標題
   subject: string, // 考試科目
   category: string, // 考試類科
-  questions: QuestionsData,
+  select_questions: Array<number>,
+  essay_questions: Array<number>,
   uuid: string,// 識別碼
   is_public: boolean, // 是否開放
-  total_count: number, // 總答題數
-  right_count: number, // 正確答題數
+  select_score: number,
+  essay_score: number,
 }
 
-// 答案列表
-export type AnswerData = {
-  select: Array<Array<number>>,
-  input: Array<string>
-}
-
-// 對錯列表
-export type ResultData = {
-  select: Array<boolean>,
-  input: Array<boolean>
-}
-
-// 測驗結果
-export type ExamResultData = {
-  id: number,
-  created_at: string, // 建立時間
-  user: number, // 答題者
-  user_display: string,
+// 試卷提交表單
+export type PaperSubmitForm = {
   title: string,
-  subject: string, // 試卷科目
-  category: string, // 試卷類科
-  questions: QuestionsData,
-  answers: AnswerData, // 答題列表
-  result: ResultData, // 對錯列表
-  total_count: number, // 總答題數
-  right_count: number, // 正確答題數
-  remark: string | null, // 備註
+  subject: string,
+  category: string,
+  select_questions?: Array<number>,
+  select_answers?: Array<Array<number | null>>,
+  select_score?: number,
+  essay_questions?: Array<number>,
+  essay_answers?: Array<string>,
+  essay_score?: number,
 }
+
+// 試卷結果
+export type PaperRecordData = {
+  id: number,
+  user: number,
+  user_display: string, // 建立者
+  created_at: string, // 建立時間
+  title: string, // 標題
+  subject: string, // 考試科目
+  category: string, // 考試類科
+  select_records: Array<SelectRecordData>,
+  essay_records: Array<number>,
+  score: number,
+  remark: string,
+}
+
 
 // 個人記錄
 export type ExamLogData = {
@@ -126,28 +131,6 @@ export type ExamPastData = {
   subject: string,
 }
 
-// 筆記資料
-export type ExamMemoData = {
-  id: number,
-  user: number,
-  user_display: string, // 出題者
-  question: number, // 對應題目
-  created_at: string, // 建立時間
-  article_link: Array<[string, string]>,// 法條連結，是['法規名稱','法條']組成的清單
-  file_link: Array<HappyFileLink>, // 檔案連結
-  comment: JSONContent | null, // 註解
-  remark: string | null, // 備註
-}
-
-// 筆記表單
-export type ExamMemoForm = {
-  user: number,
-  question: number, // 對應題目
-  article_link: Array<[string, string]>,// 法條連結，是['法規名稱','法條']組成的清單
-  file_link: Array<HappyFileLink>, // 檔案連結
-  comment: JSONContent | null, // 註解
-  remark: string | null, // 備註
-}
 
 // 申論題題目
 export type ExamEssayData = {

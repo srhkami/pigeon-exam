@@ -2,9 +2,7 @@
 export {default as SelectRandom} from '@/features/Select/for-user/Random/SelectRandom.tsx'
 export {default as SelectPast} from '@/features/Select/for-user/Past/SelectPast.tsx'
 export {default as SelectLogs} from '@/features/Select/for-user/Logs/SelectLogs.tsx'
-export {default as SelectResult} from '@/features/Select/for-user/Result/SelectResult.tsx'
-export {default as SelectStatistics} from '@/features/Select/for-user/Statistics/SelectStatistics.tsx'
-export {default as SelectPaper} from '@/features/Select/for-user/Paper/SelectPaper.tsx'
+export {default as SelectStatistics} from '@/features/Select/for-user/Statistics/SelectStatistics.tsx'x
 
 export {default as SelectManage} from '@/features/Select/for-manager/Manage/SelectManage.tsx'
 export {default as SelectResultManage} from '@/features/Select/for-manager/Result/SelectResultManage.tsx'

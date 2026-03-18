@@ -1,4 +1,4 @@
-import {ExamSelectCardConfig, ExamSelectData} from "@/types/exam-types.ts";
+import {SelectQuestionData, SelectCardConfig} from "@/types/exam-types.ts";
 import QuestionRating from "@/features/Layout/QuestionRating.tsx";
 import {FaRegStickyNote} from "react-icons/fa";
 import ArticleLink from "@/features/Link/ArticleLink/ArticleLink.tsx";
@@ -7,10 +7,10 @@ import {Badge, RichTextShow} from "@/component";
 import {QsCard, QsCardOptionLabel, QsCardSource, QsCardTitle} from "@/features/Select/for-user/Question/QsCardBase.tsx";
 
 type Props = {
-  readonly q: ExamSelectData,
+  readonly q: SelectQuestionData,
   readonly a: Array<number | null>,
   readonly i: number,
-  readonly config?: ExamSelectCardConfig,
+  readonly config?: SelectCardConfig,
 }
 
 /**
@@ -19,7 +19,6 @@ type Props = {
  * @param a 使用者答案
  * @param i 索引值
  * @param config 卡片設定
- * @param setAnswers 設定答案的函數
  * @constructor
  */
 export default function QsCardForView({q, a, i, config}: Props) {
@@ -53,7 +52,7 @@ export default function QsCardForView({q, a, i, config}: Props) {
       {
         config?.showRating &&
         <div className='flex'>
-          <QuestionRating right_count={q.right_count} total_count={q.total_count}/>
+          {/*<QuestionRating right_count={q.right_count} total_count={q.total_count}/>*/}
         </div>
       }
       {

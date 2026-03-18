@@ -1,40 +1,36 @@
-import {useNavigate, useParams} from "react-router";
 import {useAxios} from "@/hooks";
+import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
-import {ExamPaperData} from "@/types/exam-types.ts";
+import {PaperData, PaperSubmitForm} from "@/types/exam-types.ts";
 import {showToast} from "@/func";
-import {POLICE_API} from "@/lib/config.ts";
-import {PageHeader} from "@/features";
+import {EXAM_API_V2, POLICE_API} from "@/lib/config.ts";
 import {Alert, Button, Col, DetailRow, Row} from "@/component";
 import {IoWarningOutline} from "react-icons/io5";
 import toast from "react-hot-toast";
-import {FaCheck} from "react-icons/fa";
+import {PageHeader} from "@/features";
 import QsListForInput from "@/features/Select/for-user/Question/for-input/QsListForInput.tsx";
+import {FaCheck} from "react-icons/fa";
 
-/**
- * 試卷
- * @constructor
- */
-export default function SelectPaper() {
+export default function Paper(){
 
   const api = useAxios();
   const navi = useNavigate();
   const {uuid} = useParams();
 
-  const [data, setData] = useState<ExamPaperData>();
+  const [data, setData] = useState<PaperData>();
   const [selectAnswers, setSelectAnswers] = useState<Array<Array<number | null>>>([]);
 
   useEffect(() => {
     showToast(
       async () => {
-        const res = await api<ExamPaperData>({
+        const res = await api<PaperData>({
           method: "GET",
           url: POLICE_API + '/exam_paper/uuid/',
           params: {uuid: uuid},
         })
         setData(res.data)
-        const questions = res.data.questions; // 取出題目清單
-        setSelectAnswers(new Array(questions.select?.length).fill([null])) // 產生答案空清單
+        const select_questions = res.data.select_questions; // 取出題目清單
+        setSelectAnswers(new Array(select_questions.length).fill([null])) // 產生答案空清單
       }, {label: '載入', error: err => err.response.data.detail}
     ).catch(() => navi('/exam'))
   }, []);
@@ -93,18 +89,20 @@ export default function SelectPaper() {
 
   // 提交
   const onSubmit = () => {
+    const formData: PaperSubmitForm = {
+      title: data.title,
+      subject: data.subject,
+      category: data.category,
+      select_questions: data.select_questions,
+      select_answers: selectAnswers,
+      select_score: data.select_score,
+    }
+
     showToast(
       api({
         method: "POST",
-        url: POLICE_API + '/exam_paper/submit/',
-        data: {
-          paper_id: data.id,
-          title: data.title,
-          subject: data.subject,
-          category: data.category,
-          questions: data.questions,
-          answers: {select: selectAnswers, input: []}
-        }
+        url: EXAM_API_V2 + '/paper/submit',
+        data: formData,
       }), {error: err => JSON.stringify(err.response.data)}
     )
       .then(res => navi('/exam/result/' + res.data.id))
@@ -129,9 +127,9 @@ export default function SelectPaper() {
       </div>
       <div className='divider'></div>
       <div className='border-l-4 border-l-primary pl-4 text-lg font-bold mb-2'>
-        選擇題（共{data.questions.select?.length}題）
+        選擇題（共{data.select_questions.length}題）
       </div>
-      <QsListForInput questions={data.questions} setSelectAnswers={setSelectAnswers}/>
+      <QsListForInput questions={data.select_questions} setSelectAnswers={setSelectAnswers}/>
       <div className='flex justify-end'>
         <Button color='primary' onClick={onCheck}>
           <FaCheck/>交卷

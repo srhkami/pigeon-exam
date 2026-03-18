@@ -1,6 +1,6 @@
 import {RouteObject} from "react-router";
 import {SelectPagesForManager, SelectPagesForUser} from "@/lib/pages.tsx";
-import {SelectResult, SelectResultDetail} from "@/features";
+import {SelectResultDetail} from "@/features";
 import {AuthLayout} from "@/auth";
 
 export const selectRouter: RouteObject = {
@@ -20,7 +20,7 @@ export const selectRouter: RouteObject = {
             {path: ':page', element: SelectPagesForManager.selectResultManage.content}
           ]
         },
-        {path: ':id', element: <AuthLayout authType='E'><SelectResult/></AuthLayout>},
+        // {path: ':id', element: <AuthLayout authType='E'><SelectResult/></AuthLayout>},
       ]
     },
     {

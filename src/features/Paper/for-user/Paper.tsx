@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {PaperData, PaperSubmitForm} from "@/types/exam-types.ts";
 import {showToast} from "@/func";
-import {EXAM_API_V2, POLICE_API} from "@/lib/config.ts";
+import {EXAM_API, EXAM_API_V2} from "@/lib/config.ts";
 import {Alert, Button, Col, DetailRow, Row} from "@/component";
 import {IoWarningOutline} from "react-icons/io5";
 import toast from "react-hot-toast";
@@ -11,7 +11,7 @@ import {PageHeader} from "@/features";
 import {FaCheck} from "react-icons/fa";
 import QsCardForInput from "@/features/Select/for-user/Question/for-input/QsCardForInput.tsx";
 
-export default function Paper(){
+export default function Paper() {
 
   const api = useAxios();
   const navi = useNavigate();
@@ -25,7 +25,7 @@ export default function Paper(){
       async () => {
         const res = await api<PaperData>({
           method: "GET",
-          url: POLICE_API + '/exam_paper/uuid/',
+          url: EXAM_API + '/papers/uuid/',
           params: {uuid: uuid},
         })
         setData(res.data)
@@ -131,13 +131,14 @@ export default function Paper(){
       </div>
       <ul className='list'>
         {
-          data.select_questions.map((q,i)=>{
-            return(
+          data.select_questions.map((q, i) => {
+            return (
               <QsCardForInput key={q.id} q={q} index={i} setAnswers={setSelectAnswers}/>
             )
           })
         }
       </ul>
+      <div className='divider'></div>
       <div className='flex justify-end'>
         <Button color='primary' onClick={onCheck}>
           <FaCheck/>交卷

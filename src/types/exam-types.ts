@@ -149,7 +149,7 @@ export type EssayQuestionData = {
   article_link: Array<[string, string]>,
   file_link: Array<HappyFileLink>,
   is_public: boolean,
-  answer_count: number,
+  record_count: number,
 }
 
 // 申論題題目表單

@@ -39,7 +39,7 @@ export default function QsCardForEdit({q, a, i, config, onRefetch}: Props) {
   }
 
   return (
-    <QsCard is_correct={a.length !== 0 && q.answer[0] === a[0]}>
+    <QsCard is_correct={undefined}>
       {/*編輯按鈕*/}
       {onRefetch !== undefined &&
         <Button className='absolute top-1 right-1' size='sm' shape='circle'

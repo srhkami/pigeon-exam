@@ -1,5 +1,5 @@
 import {RouteObject} from "react-router";
-import {EssayPagesForUser, SelectPagesForManager} from "@/lib/pages.tsx";
+import {EssayPagesForManager, EssayPagesForUser, SelectPagesForManager} from "@/lib/pages.tsx";
 import {EssayDetail} from "@/features";
 import {AuthLayout} from "@/auth";
 
@@ -11,11 +11,11 @@ export const essayRouter: RouteObject = {
         {path: ':page', element: EssayPagesForUser.essayBrowser.content}
       ]
     },
-    {
-      path: 'logs', children: [
-        {path: ':page', element: EssayPagesForUser.essayLogs.content}
-      ]
-    },
+    // {
+    //   path: 'logs', children: [
+    //     {path: ':page', element: EssayPagesForUser.essayLogs.content}
+    //   ]
+    // },
     {
       path: 'detail', children: [
         {path: ':id', element: <AuthLayout authType='E'><EssayDetail/></AuthLayout>}
@@ -24,9 +24,9 @@ export const essayRouter: RouteObject = {
     {
       path: 'manage', children: [
         {
-          path: 'question', children:
+          path: 'questions', children:
             [
-              {path: ':page', element: SelectPagesForManager.selectManage.content}
+              {path: ':page', element: EssayPagesForManager.essayManage.content}
             ]
         },
       ]

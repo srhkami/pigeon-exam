@@ -6,32 +6,20 @@ import {TbReload} from "react-icons/tb";
 import {useForm} from "react-hook-form";
 import ModalSelectFilter from "@/features/Select/for-manager/Manage/ModalSelectFilter.tsx";
 import ModalSelectAdd from "@/features/Select/for-manager/Manage/Edit/ModalSelectAdd.tsx";
-import {POLICE_API} from "@/lib/config.ts";
+import {EXAM_API} from "@/lib/config.ts";
 import QsCardForEdit from "@/features/Select/for-manager/Question/QsCardForEdit.tsx";
 
 /* 選擇題管理 */
-export default function SelectManage() {
+export default function SelectQuestionManage() {
 
   const title = '單選題管理';
-  // const [config, setConfig] = useState<SelectCardConfig>()
-  const {data, pageInfo, onRefetch} = useDataBrowser<SelectQuestionData>({url: POLICE_API + '/exam_select/'});
-
-  const {register, getValues} = useForm<SelectCardConfig>();
-  // const onSubmit: SubmitHandler<SelectCardConfig> = (formData) => {
-  //   setConfig(formData);
-  // }
-  // useEffect(() => {
-  //   // 訂閱表單變動
-  //   const subscription = watch(() => {
-  //     handleSubmit(onSubmit)();
-  //   })
-  //   // 清除訂閱以避免記憶體洩漏
-  //   return () => subscription.unsubscribe();
-  // }, [watch, handleSubmit]);
+  const {data, pageInfo, onRefetch} = useDataBrowser<SelectQuestionData>({url: EXAM_API + '/select_questions/'});
+  const {register, watch} = useForm<SelectCardConfig>();
+  const config = watch();
 
   const dataList = data.map(obj => {
     return (
-      <QsCardForEdit key={obj.id} q={obj} a={[]} i={obj.id-1} config={getValues()} onRefetch={onRefetch}/>
+      <QsCardForEdit key={obj.id} q={obj} a={[]} i={obj.id-1} config={config} onRefetch={onRefetch}/>
     )
   })
 

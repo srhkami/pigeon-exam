@@ -2,7 +2,7 @@
 export {default as SelectRandom} from '@/features/Select/for-user/Random/SelectRandom.tsx'
 export {default as SelectPast} from '@/features/Select/for-user/Past/SelectPast.tsx'
 
-export {default as SelectManage} from '@/features/Select/for-manager/Manage/SelectManage.tsx'
+export {default as SelectQuestionManage} from '@/features/Select/for-manager/Manage/SelectQuestionManage.tsx'
 
 export {default as EssayBrowser} from '@/features/Essay/for-user/Browser/EssayBrowser.tsx'
 export {default as EssayRandom} from '@/features/Essay/for-user/Random/EssayRandom.tsx'

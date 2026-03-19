@@ -1,6 +1,6 @@
 import {useDataBrowser} from "@/hooks";
 import {EssayCardConfig, EssayQuestionData} from "@/types/exam-types.ts";
-import {POLICE_API} from "@/lib/config.ts";
+import {EXAM_API} from "@/lib/config.ts";
 import {DataBrowser, DataBrowserTitle, FloatingActionButton} from "@/component";
 import {RiEdit2Fill} from "react-icons/ri";
 import {useForm} from "react-hook-form";
@@ -11,25 +11,13 @@ import ModalEssayFilter from "@/features/Essay/for-manager/tools/ModalEssayFilte
 export default function EssayManage() {
 
   const title = '申論題管理';
-  // const [config, setConfig] = useState<ExamEssayCardConfig>()
-  const {data, pageInfo, onRefetch} = useDataBrowser<EssayQuestionData>({url:POLICE_API + '/essay_questions/'});
-
-  const {register, getValues} = useForm<EssayCardConfig>();
-  // const onSubmit: SubmitHandler<ExamEssayCardConfig> = (formData) => {
-  //   setConfig(formData);
-  // }
-  // useEffect(() => {
-  //   // 訂閱表單變動
-  //   const subscription = watch(() => {
-  //     handleSubmit(onSubmit)();
-  //   })
-  //   // 清除訂閱以避免記憶體洩漏
-  //   return () => subscription.unsubscribe();
-  // }, [watch, handleSubmit]);
+  const {data, pageInfo, onRefetch} = useDataBrowser<EssayQuestionData>({url: EXAM_API + '/essay_questions/'});
+  const {register, watch} = useForm<EssayCardConfig>();
+  const config = watch();
 
   const dataList = data.map(q => {
     return (
-      <QsCardForEdit key={q.id} q={q} i={q.id - 1} config={getValues()} onRefetch={onRefetch}/>
+      <QsCardForEdit key={q.id} q={q} i={q.id - 1} config={config} onRefetch={onRefetch}/>
     )
   })
 

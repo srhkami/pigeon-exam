@@ -2,14 +2,12 @@ import {MEDIA_IP} from "@/lib/config.ts";
 import {ReactNode} from "react";
 import {
   EssayBrowser,
-  EssayLogs, EssayManage,
+  EssayManage,
   EssayRandom,
   Home,
-  SelectLogs,
-  SelectManage,
+  SelectQuestionManage,
   SelectPast,
-  SelectRandom, SelectResultManage,
-  SelectStatistics
+  SelectRandom
 } from "@/features";
 import {AuthType} from "@/types/auth-types.ts";
 import {AuthLayout} from "@/auth";
@@ -74,22 +72,22 @@ export const SelectPagesForUser = {
     'E',
     <SelectPast/>
   ),
-  selectLogs: new Page(
-    'selectStatistics',
-    '測驗紀錄',
-    'exam_a_plus.png',
-    '/select/logs/1?ordering=-id',
-    'E',
-    <SelectLogs/>
-  ),
-  selectStatistics: new Page(
-    'selectStatistics',
-    '統計與分析',
-    'business-report.png',
-    '/select/statistics',
-    'E',
-    <SelectStatistics/>
-  ),
+  // selectLogs: new Page(
+  //   'selectStatistics',
+  //   '測驗紀錄',
+  //   'exam_a_plus.png',
+  //   '/select/logs/1?ordering=-id',
+  //   'E',
+  //   <SelectLogs/>
+  // ),
+  // selectStatistics: new Page(
+  //   'selectStatistics',
+  //   '統計與分析',
+  //   'business-report.png',
+  //   '/select/statistics',
+  //   'E',
+  //   <SelectStatistics/>
+  // ),
 }
 
 
@@ -98,18 +96,18 @@ export const SelectPagesForManager = {
     'selectManage',
     '選擇題管理',
     'questions.png',
-    '/select/manage/question/1?ordering=-id',
+    '/select/manage/questions/1?ordering=-id',
     'EH',
-    <SelectManage/>
+    <SelectQuestionManage/>
   ),
-  selectResultManage: new Page(
-    'selectResultManage',
-    '測驗結果管理',
-    'exam_a_plus.png',
-    '/select/manage/result/1?ordering=-id',
-    'EH',
-    <SelectResultManage/>
-  ),
+  // selectResultManage: new Page(
+  //   'selectResultManage',
+  //   '測驗結果管理',
+  //   'exam_a_plus.png',
+  //   '/select/manage/result/1?ordering=-id',
+  //   'EH',
+  //   <SelectManage/>
+  // ),
 }
 
 /* 申論題 - 使用者介面*/
@@ -130,14 +128,14 @@ export const EssayPagesForUser = {
     'E',
     <EssayRandom/>
   ),
-  essayLogs: new Page(
-    'essayLogs',
-    '作答紀錄',
-    'letters.png',
-    '/essay/logs/1?ordering=-id',
-    'E',
-    <EssayLogs/>
-  ),
+  // essayLogs: new Page(
+  //   'essayLogs',
+  //   '作答紀錄',
+  //   'letters.png',
+  //   '/essay/logs/1?ordering=-id',
+  //   'E',
+  //   <EssayLogs/>
+  // ),
 }
 
 /* 申論題 - 管理員介面*/
@@ -146,7 +144,7 @@ export const EssayPagesForManager = {
     'essayManage',
     '申論題管理',
     'sign_document.png',
-    '/essay/manage/question/1?ordering=-year',
+    '/essay/manage/questions/1?ordering=-year',
     'EH',
     <EssayManage/>
   ),
@@ -184,8 +182,8 @@ export const MenuSelect: TSidebarMenu = {
   list: [
     SelectPagesForUser.selectRandom,
     SelectPagesForUser.selectPast,
-    SelectPagesForUser.selectLogs,
-    SelectPagesForUser.selectStatistics
+    // SelectPagesForUser.selectLogs,
+    // SelectPagesForUser.selectStatistics
   ]
 }
 
@@ -195,7 +193,7 @@ export const MenuEssay: TSidebarMenu = {
   list: [
     EssayPagesForUser.essayBrowser,
     EssayPagesForUser.essayRandom,
-    EssayPagesForUser.essayLogs
+    // EssayPagesForUser.essayLogs
   ]
 }
 
@@ -204,7 +202,7 @@ export const MenuManage: TSidebarMenu = {
   icon: 'exam.png',
   list: [
     SelectPagesForManager.selectManage,
-    SelectPagesForManager.selectResultManage,
+    // SelectPagesForManager.selectResultManage,
     EssayPagesForManager.essayManage,
   ]
 }

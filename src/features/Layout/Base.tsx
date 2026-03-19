@@ -1,7 +1,7 @@
 import {Outlet, useLocation} from "react-router";
 import {ReactNode, useEffect, useState} from "react";
 import {LogoLink} from "@/features";
-import {AllPages, MenuEssay, MenuManage, MenuSelect} from "@/lib/pages.tsx";
+import {AllPages, MenuEssay, MenuEssayManage, MenuSelect, MenuSelectManage} from "@/lib/pages.tsx";
 import SidebarMenu from "@/features/Layout/SidebarMenu.tsx";
 import ThemeToggle from "@/features/Layout/ThemeToggle.tsx";
 import MenuUser from "@/features/User/UserProfile/MenuUser.tsx";
@@ -62,13 +62,20 @@ export default function Base({children}: Props) {
             {/* List item */}
             <SidebarMenu menu={MenuSelect} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
             <SidebarMenu menu={MenuEssay} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
-            <AuthComponent authType='EH'>
-              <SidebarMenu menu={MenuManage} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
-            </AuthComponent>
             {/* List item */}
             <SidebarLink page={AllPages.feedback}/>
             <SidebarLink page={AllPages.about}/>
-
+            <AuthComponent authType='EH'>
+              <li>
+                <div className='divider m-0'></div>
+              </li>
+            </AuthComponent>
+            <AuthComponent authType='EH'>
+              <SidebarMenu menu={MenuSelectManage} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
+            </AuthComponent>
+            <AuthComponent authType='EH'>
+              <SidebarMenu menu={MenuEssayManage} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
+            </AuthComponent>
           </ul>
         </div>
       </div>

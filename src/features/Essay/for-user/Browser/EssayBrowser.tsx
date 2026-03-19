@@ -25,7 +25,7 @@ export default function EssayBrowser() {
 
   return (
     <div>
-      <EssayPageHeader tab={1}/>
+      <EssayPageHeader tab={2}/>
       <DataBrowser
         header={<>
           <DataBrowserTitle title='題目列表'/>

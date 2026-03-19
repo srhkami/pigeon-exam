@@ -11,6 +11,7 @@ import {
 } from "@/features";
 import {AuthType} from "@/types/auth-types.ts";
 import {AuthLayout} from "@/auth";
+import SelectRecordManage from "@/features/Select/for-manager/Manage/SelectRecordManage.tsx";
 
 
 export class Page {
@@ -91,35 +92,8 @@ export const SelectPagesForUser = {
 }
 
 
-export const SelectPagesForManager = {
-  selectManage: new Page(
-    'selectManage',
-    '選擇題管理',
-    'questions.png',
-    '/select/manage/questions/1?ordering=-id',
-    'EH',
-    <SelectQuestionManage/>
-  ),
-  // selectResultManage: new Page(
-  //   'selectResultManage',
-  //   '測驗結果管理',
-  //   'exam_a_plus.png',
-  //   '/select/manage/result/1?ordering=-id',
-  //   'EH',
-  //   <SelectManage/>
-  // ),
-}
-
 /* 申論題 - 使用者介面*/
 export const EssayPagesForUser = {
-  essayBrowser: new Page(
-    'essayBrowser',
-    '申論題總覽',
-    'sign_document.png',
-    '/essay/list/1?ordering=-year',
-    'E',
-    <EssayBrowser/>
-  ),
   essayRandom: new Page(
     'essayRandom',
     '隨機出題',
@@ -127,6 +101,14 @@ export const EssayPagesForUser = {
     '/essay/random',
     'E',
     <EssayRandom/>
+  ),
+  essayBrowser: new Page(
+    'essayBrowser',
+    '題目總覽',
+    'sign_document.png',
+    '/essay/list/1?ordering=-year',
+    'E',
+    <EssayBrowser/>
   ),
   // essayLogs: new Page(
   //   'essayLogs',
@@ -136,6 +118,26 @@ export const EssayPagesForUser = {
   //   'E',
   //   <EssayLogs/>
   // ),
+}
+
+/* 選擇題 - 管理員頁面 */
+export const SelectPagesForManager = {
+  selectManage: new Page(
+    'selectManage',
+    '題目管理',
+    'questions.png',
+    '/select/manage/questions/1?ordering=-id',
+    'EH',
+    <SelectQuestionManage/>
+  ),
+  selectRecordManage: new Page(
+    'selectRecordManage',
+    '紀錄查閱',
+    'exam_a_plus.png',
+    '/select/manage/records/1?ordering=-id',
+    'EH',
+    <SelectRecordManage/>
+  ),
 }
 
 /* 申論題 - 管理員介面*/
@@ -197,12 +199,19 @@ export const MenuEssay: TSidebarMenu = {
   ]
 }
 
-export const MenuManage: TSidebarMenu = {
-  label: '管理系統',
+export const MenuSelectManage: TSidebarMenu = {
+  label: '選擇題管理',
   icon: 'exam.png',
   list: [
     SelectPagesForManager.selectManage,
-    // SelectPagesForManager.selectResultManage,
+    SelectPagesForManager.selectRecordManage,
+  ]
+}
+
+export const MenuEssayManage: TSidebarMenu = {
+  label: '申論題管理',
+  icon: 'exam.png',
+  list: [
     EssayPagesForManager.essayManage,
   ]
 }

@@ -1,5 +1,5 @@
 import {RouteObject} from "react-router";
-import {EssayPagesForManager, EssayPagesForUser, SelectPagesForManager} from "@/lib/pages.tsx";
+import {EssayPagesForManager, EssayPagesForUser} from "@/lib/pages.tsx";
 import {EssayDetail} from "@/features";
 import {AuthLayout} from "@/auth";
 

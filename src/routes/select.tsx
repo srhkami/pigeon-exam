@@ -1,6 +1,5 @@
 import {RouteObject} from "react-router";
 import {SelectPagesForManager, SelectPagesForUser} from "@/lib/pages.tsx";
-import {AuthLayout} from "@/auth";
 
 export const selectRouter: RouteObject = {
   path: 'select', children: [
@@ -18,6 +17,12 @@ export const selectRouter: RouteObject = {
           path: 'questions', children:
             [
               {path: ':page', element: SelectPagesForManager.selectManage.content}
+            ]
+        },
+        {
+          path: 'records', children:
+            [
+              {path: ':page', element: SelectPagesForManager.selectRecordManage.content}
             ]
         },
         {
@@ -40,9 +45,3 @@ export const selectRouter: RouteObject = {
     },
   ]
 }
-
-// export const selectManageRouter:RouteObject = {
-//   path:'select', children:[
-//
-//   ]
-// }

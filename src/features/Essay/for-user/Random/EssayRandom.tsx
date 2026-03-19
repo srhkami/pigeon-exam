@@ -1,5 +1,5 @@
 import {SubmitHandler, useForm} from "react-hook-form";
-import {Button, Collapse, CollapseContent, CollapseTitle} from "@/component";
+import {Badge, Button} from "@/component";
 import {FaArrowRight} from "react-icons/fa";
 import {useAxios, useCacheApi} from "@/hooks";
 import {showToast} from "@/func";
@@ -74,20 +74,20 @@ export default function EssayRandom() {
         params: newParams,
       }), {label: '載入', error: err => JSON.stringify(err.response?.data)}
     )
-      .then(res => navi(`/exam/essay/detail/${res.data.id}`))
+      .then(res => navi(`/essay/detail/${res.data.id}`))
   }
 
   return (
     <div>
-      <EssayPageHeader tab={2} />
-      <Collapse icon='plus'>
-        <CollapseTitle>
-          指定出題範圍
-        </CollapseTitle>
-        <CollapseContent>
+      <EssayPageHeader tab={1} />
+      <div>
+        <div>
+          <Badge size='lg' style='outline'>
+            出題選項
+          </Badge>
           <div className='flex my-2 items-center'>
             <div className='text-sm'>
-              關鍵字：
+              題目關鍵字：
             </div>
             <input type='text' className='input input-sm' placeholder='篩選題目/相關法規'
                    {...register('search')}/>
@@ -134,8 +134,8 @@ export default function EssayRandom() {
               }
             }
           )}
-        </CollapseContent>
-      </Collapse>
+        </div>
+      </div>
       <div className='flex mt-4'>
           <Button color='success' className='ml-auto' onClick={handleSubmit(onSubmit)}>
             出題<FaArrowRight/>

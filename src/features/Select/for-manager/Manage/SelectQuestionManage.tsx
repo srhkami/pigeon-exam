@@ -12,7 +12,7 @@ import QsCardForEdit from "@/features/Select/for-manager/Question/QsCardForEdit.
 /* 選擇題管理 */
 export default function SelectQuestionManage() {
 
-  const title = '單選題管理';
+  const title = '選擇題 - 題目';
   const {data, pageInfo, onRefetch} = useDataBrowser<SelectQuestionData>({url: EXAM_API + '/select_questions/'});
   const {register, watch} = useForm<SelectCardConfig>();
   const config = watch();

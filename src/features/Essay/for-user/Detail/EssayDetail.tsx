@@ -7,7 +7,7 @@ import {JSONContent} from "@tiptap/react";
 import {FaCheck, FaDoorClosed, FaDoorOpen} from "react-icons/fa";
 import toast from "react-hot-toast";
 import {showToast} from "@/func";
-import {EXAM_API, POLICE_API} from "@/lib/config.ts";
+import {EXAM_API} from "@/lib/config.ts";
 import {useAuth, useAxios, useToastApi} from "@/hooks";
 import {useParams} from "react-router";
 
@@ -17,7 +17,7 @@ export default function EssayDetail() {
   const api = useAxios();
   const {id} = useParams();
   const {userInfo} = useAuth();
-  const {data} = useToastApi<EssayQuestionData>({url: `${POLICE_API}/essay_questions/${id}/`})
+  const {data} = useToastApi<EssayQuestionData>({url: `${EXAM_API}/essay_questions/${id}/`})
 
   const [showSample, setShowSample] = useState<boolean>(false);
   const [answer, setAnswer] = useState<JSONContent | null>(null);

@@ -36,6 +36,7 @@ export type ApiFilterKey = {
   is_public?: string,
   status?: string,
   title?: string,
+  is_correct?:string,
 }
 
 // 定義單個選項的結構

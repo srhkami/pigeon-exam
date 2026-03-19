@@ -17,7 +17,7 @@ export default function SelectPast() {
       <div className='card bg-base-100 card-border border-base-300 overflow-hidden'>
         <div className='card-body'>
           <div className='flex justify-between items-center'>
-            <DataBrowserTitle title='考古題列表'/>
+            <DataBrowserTitle title='考古題總覽'/>
             <ModalFilter filterConfigs={[]} placeholder='搜尋標題'/>
           </div>
           <div className='divider m-0'></div>

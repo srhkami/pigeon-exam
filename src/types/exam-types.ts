@@ -21,6 +21,8 @@ export interface SelectQuestionSimpleData extends SelectQuestionReadData {
   article_link: Array<[string, string]>,// 法條連結，是['法規名稱','法條']組成的清單
   file_link: Array<HappyFileLink>, // 檔案連結
   comment: JSONContent | null, // 註解
+  record_count: number,
+  correct_count: number,
 }
 
 // 選擇題答題紀錄（輕量級）
@@ -41,8 +43,6 @@ export interface SelectQuestionData extends SelectQuestionSimpleData {
   remark: string | null, // 備註
   user_display: string, // 出題者
   records: Array<SelectRecordSimpleData>,
-  record_count: number,
-  correct_count: number,
 }
 
 // 選擇題答題紀錄（全般）

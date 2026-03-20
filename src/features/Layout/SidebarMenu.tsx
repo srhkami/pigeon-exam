@@ -1,22 +1,28 @@
 import {MEDIA_IP} from "@/lib/config.ts";
 import {TSidebarMenu} from "@/lib/pages.tsx";
 import {Link} from "react-router";
-import {useRef} from "react";
+import {Dispatch, SetStateAction, useRef} from "react";
 
 type Props = {
   readonly menu: TSidebarMenu,
   readonly drawerOpen: boolean,
-  readonly onDrawerOpen: () => void,
+  readonly setDrawerOpen: Dispatch<SetStateAction<boolean>>,
 }
 
-export default function SidebarMenu({menu, drawerOpen, onDrawerOpen}: Props) {
+export default function SidebarMenu({menu, drawerOpen, setDrawerOpen}: Props) {
 
   const ref = useRef<HTMLDetailsElement | null>(null);
 
   const onclick = () => {
     if (!drawerOpen && ref.current) {
-      onDrawerOpen();
+      setDrawerOpen(true);
       ref.current.open = true;
+    }
+  }
+
+  const onBtnClick = () => {
+    if (drawerOpen && window.innerWidth <= 1024){
+      setDrawerOpen(false);
     }
   }
 
@@ -38,8 +44,8 @@ export default function SidebarMenu({menu, drawerOpen, onDrawerOpen}: Props) {
         <ul className="text-sm is-drawer-close:hidden">
           {menu.list.map(page => {
             return (
-              <li key={page.code}>
-                <Link to={page.url} className='f-09 flex'>
+              <li key={page.url} onClick={onBtnClick}>
+                <Link to={page.url}  className='f-09 flex'>
                   <img src={page.icon} alt={page.label} className='h-5 mr-1 my-auto'/>
                   {page.label}
                 </Link>

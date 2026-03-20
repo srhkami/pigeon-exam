@@ -6,6 +6,7 @@ import {Badge, Button, RichTextShow} from "@/component";
 import {QsCard, QsCardOptionLabel, QsCardSource, QsCardTitle} from "@/features/Select/for-user/Question/QsCardBase.tsx";
 import {useState} from "react";
 import SelectEdit from "@/features/Select/for-manager/Manage/Edit/SelectEdit.tsx";
+import {QuestionRating} from "@/features";
 
 type Props = {
   readonly q: SelectQuestionData,
@@ -72,7 +73,7 @@ export default function QsCardForEdit({q, a, i, config, onRefetch}: Props) {
       {
         config?.showRating &&
         <div className='flex'>
-          {/*<QuestionRating right_count={q.right_count} total_count={q.total_count}/>*/}
+          <QuestionRating correct_count={q.correct_count} total_count={q.record_count}/>
         </div>
       }
       {

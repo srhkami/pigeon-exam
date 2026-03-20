@@ -12,8 +12,9 @@ export {default as EssayManage} from '@/features/Essay/for-manager/EssayManage.t
 
 export {default as Paper} from '@/features/Paper/for-user/Paper.tsx'
 export {default as PaperRecord} from '@/features/Paper/for-user/PaperRecord.tsx'
+export {default as PaperRecords} from '@/features/Paper/for-user/PaperRecords.tsx'
 
-export {default as PaperRecordManage} from '@/features/Paper/for-manager/PaperRecordManage.tsx'
+export {default as PaperRecordsManage} from '@/features/Paper/for-manager/PaperRecordsManage.tsx'
 export {default as PaperRecordDetail} from '@/features/Paper/for-manager/PaperRecordDetail.tsx'
 
 export {default as FeedbackWeb} from './Feedback/FeedbackWeb.tsx'
@@ -29,3 +30,4 @@ export {default as ErrorLogToast} from './Layout/ErrorLogToast.tsx'
 export {default as Home} from './Home/Home.tsx'
 export {default as ErrorAlert} from './Layout/ErrorAlert.tsx'
 export {default as PageHeader} from './Layout/PageHeader.tsx'
+export {default as QuestionRating} from './Layout/QuestionRating.tsx'

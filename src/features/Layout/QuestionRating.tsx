@@ -1,7 +1,7 @@
 import {Badge} from "@/component";
 
 type Props = {
-  readonly right_count: number,
+  readonly correct_count: number,
   readonly total_count: number,
   readonly showNumber?: boolean,
   readonly showPercent?: boolean,
@@ -9,25 +9,25 @@ type Props = {
 
 /**
  * 用來顯示題目的困難度
- * @param right_count 正確答題數
+ * @param correct_count 正確答題數
  * @param total_count 總答題數
  * @param showNumber 是否顯示數字 2/10
  * @param showPercent 是否顯示趴數 20%
  * @constructor
  */
 export default function QuestionRating({
-                                         right_count,
+                                         correct_count,
                                          total_count,
                                          showNumber = false,
                                          showPercent = false
                                        }: Props) {
 
-  const n = Math.round(right_count / total_count * 100);
+  const n = Math.round(correct_count / total_count * 100);
 
   let color: "neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error" = 'neutral';
   let text: string = '？？';
 
-  if (total_count >= 5) {
+  if (total_count >= 1) {
     if (n <= 40) {
       color = 'error'
       text = '極難'
@@ -46,11 +46,13 @@ export default function QuestionRating({
     }
   }
 
+  const tip = `正確率：${correct_count} / ${total_count} `
+
   return (
-    <div className='tooltip tooltip-top flex gap-1 items-center font-semibold' data-tip='透過答題紀錄統計難易度，以40/60/80/90%區分等級'>
+    <div className='tooltip tooltip-right flex gap-1 items-center font-semibold' data-tip={tip}>
       <Badge size='xs' color={color}>Lv.{text}</Badge>
       {(showPercent) && <span>{n}%</span>}
-      {showNumber && <span>({right_count}/{total_count})</span>}
+      {showNumber && <span>({correct_count}/{total_count})</span>}
     </div>
   )
 }

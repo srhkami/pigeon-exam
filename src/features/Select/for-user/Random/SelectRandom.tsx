@@ -15,7 +15,8 @@ type FormValues = {
   category?: Array<string>,
   subject?: Array<string>,
   // todo:新加入
-  is_not_repeat: boolean,
+  is_unanswered: boolean,
+  is_incorrect: boolean,
 }
 
 type FilterConfig = {
@@ -37,11 +38,11 @@ export default function SelectRandom() {
   const api = useAxios();
   const navi = useNavigate();
 
-  const {data} = useCacheApi<FormValues>({url: EXAM_API_V2 +'/select/filter_options'})
+  const {data} = useCacheApi<FormValues>({url: EXAM_API_V2 + '/select/filter_options'})
 
-  const {register, watch, handleSubmit} = useForm<FormValues>({
+  const {register, watch, handleSubmit, setValue} = useForm<FormValues>({
     defaultValues: {
-      source: [], category: [], subject: [], is_not_repeat: true
+      source: [], category: [], subject: [], is_unanswered: true
     }
   });
 
@@ -84,7 +85,7 @@ export default function SelectRandom() {
       <SelectPageHeader tab={1}/>
       <div>
         <Badge size='lg' style='outline'>
-          出題選項
+          出題範圍
         </Badge>
         <div className='text-xs mt-1 mb-3 opacity-70'>
           未勾選選項者，預設為全選
@@ -140,21 +141,33 @@ export default function SelectRandom() {
             }
           }
         )}
-
-
+        <Badge size='lg' style='outline' className='mt-4'>
+          進階選項
+        </Badge>
         <div className="fieldset my-2 ">
-          <div className='text-sm'>
-            進階選項：
+          <div className='grid grid-cols-2 gap-1 ml-2'>
+            <label className="label">
+              <input type="checkbox" className="toggle toggle-primary"
+                     {...register('is_unanswered', {
+                       onChange: () => {
+                         if (currentValues.is_incorrect) setValue("is_incorrect", false)
+                       }
+                     })}/>
+              排除作答過的題目
+            </label>
           </div>
           <div className='grid grid-cols-2 gap-1 ml-2'>
             <label className="label">
-              <input type="checkbox" className="toggle"
-                     {...register('is_not_repeat')}/>
-              排除測驗過的題目
+              <input type="checkbox" className="toggle toggle-primary"
+                     {...register('is_incorrect', {
+                       onChange: () => {
+                         if (currentValues.is_unanswered) setValue("is_unanswered", false)
+                       }
+                     })}/>
+              只選曾作錯的題目
             </label>
           </div>
         </div>
-
       </div>
       <Badge size='lg' style='outline' className='mt-4'>
         出題數目

@@ -8,7 +8,7 @@ import {PiExam} from "react-icons/pi";
 import {MdOutlineOpenInNew} from "react-icons/md";
 
 /* 測驗結果管理 */
-export default function SelectResultManage() {
+export default function PaperRecordsManage() {
 
   const {data, pageInfo} = useDataBrowser<PaperRecordData>({url: EXAM_API + '/paper_records/'});
 
@@ -42,7 +42,7 @@ export default function SelectResultManage() {
     <DataBrowser
       header={
         <>
-          <DataBrowserTitle title='測驗結果管理'/>
+          <DataBrowserTitle title='測驗紀錄查閱'/>
           <ModalSelectFilter detailMode={false}/>
         </>
       }

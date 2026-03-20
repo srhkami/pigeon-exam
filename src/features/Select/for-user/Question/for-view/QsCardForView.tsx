@@ -4,6 +4,7 @@ import ArticleLink from "@/features/Link/ArticleLink/ArticleLink.tsx";
 import FileLink from "@/features/Link/FileLink/FileLink.tsx";
 import {Badge, RichTextShow} from "@/component";
 import {QsCard, QsCardOptionLabel, QsCardSource, QsCardTitle} from "@/features/Select/for-user/Question/QsCardBase.tsx";
+import {QuestionRating} from "@/features";
 
 type Props = {
   readonly q: SelectQuestionSimpleData,
@@ -51,7 +52,7 @@ export default function QsCardForView({q, a, i, config}: Props) {
       {
         config?.showRating &&
         <div className='flex'>
-          {/*<QuestionRating right_count={q.right_count} total_count={q.total_count}/>*/}
+          <QuestionRating correct_count={q.correct_count} total_count={q.record_count}/>
         </div>
       }
       {

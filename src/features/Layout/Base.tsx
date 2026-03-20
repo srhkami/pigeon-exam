@@ -1,7 +1,15 @@
 import {Outlet, useLocation} from "react-router";
 import {ReactNode, useEffect, useState} from "react";
 import {LogoLink} from "@/features";
-import {AllPages, MenuEssay, MenuEssayManage, MenuPaperManage, MenuSelect, MenuSelectManage} from "@/lib/pages.tsx";
+import {
+  AllPages,
+  MenuEssay,
+  MenuEssayManage,
+  MenuPaper,
+  MenuPaperManage,
+  MenuSelect,
+  MenuSelectManage
+} from "@/lib/pages.tsx";
 import SidebarMenu from "@/features/Layout/SidebarMenu.tsx";
 import ThemeToggle from "@/features/Layout/ThemeToggle.tsx";
 import MenuUser from "@/features/User/UserProfile/MenuUser.tsx";
@@ -60,24 +68,25 @@ export default function Base({children}: Props) {
           {/* Sidebar content here */}
           <ul className="menu w-full grow gap-2 pt-4">
             {/* List item */}
-            <SidebarMenu menu={MenuSelect} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
-            <SidebarMenu menu={MenuEssay} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
+            <SidebarMenu menu={MenuSelect} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
+            <SidebarMenu menu={MenuEssay} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
+            <SidebarMenu menu={MenuPaper} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
             {/* List item */}
-            <SidebarLink page={AllPages.feedback}/>
-            <SidebarLink page={AllPages.about}/>
+            <SidebarLink page={AllPages.feedback} setDrawerOpen={setDrawerOpen}/>
+            <SidebarLink page={AllPages.about}  setDrawerOpen={setDrawerOpen}/>
             <AuthComponent authType='EH'>
               <li>
                 <div className='divider m-0'></div>
               </li>
             </AuthComponent>
             <AuthComponent authType='EH'>
-              <SidebarMenu menu={MenuSelectManage} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
+              <SidebarMenu menu={MenuSelectManage} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
             </AuthComponent>
             <AuthComponent authType='EH'>
-              <SidebarMenu menu={MenuEssayManage} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
+              <SidebarMenu menu={MenuEssayManage} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
             </AuthComponent>
             <AuthComponent authType='EM'>
-              <SidebarMenu menu={MenuPaperManage} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
+              <SidebarMenu menu={MenuPaperManage} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
             </AuthComponent>
           </ul>
         </div>

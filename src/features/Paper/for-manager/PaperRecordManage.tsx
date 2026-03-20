@@ -2,7 +2,7 @@ import {useDataBrowser} from "@/hooks";
 import {Button, DataBrowser, DataBrowserTitle} from "@/component";
 import {PaperRecordData} from "@/types/exam-types.ts";
 import ModalSelectFilter from "@/features/Select/for-manager/Manage/ModalSelectFilter.tsx";
-import {POLICE_API} from "@/lib/config.ts";
+import {EXAM_API} from "@/lib/config.ts";
 import {useNavigate} from "react-router";
 import {PiExam} from "react-icons/pi";
 import {MdOutlineOpenInNew} from "react-icons/md";
@@ -10,7 +10,7 @@ import {MdOutlineOpenInNew} from "react-icons/md";
 /* 測驗結果管理 */
 export default function SelectResultManage() {
 
-  const {data, pageInfo} = useDataBrowser<PaperRecordData>({url:POLICE_API +'/paper_records/'});
+  const {data, pageInfo} = useDataBrowser<PaperRecordData>({url: EXAM_API + '/paper_records/'});
 
   const navi = useNavigate();
 
@@ -31,7 +31,7 @@ export default function SelectResultManage() {
           </div>
         </div>
         <Button style='ghost' shape='circle'
-                onClick={() => navi('/select/manage/result/detail/' + record.id)}>
+                onClick={() => navi('/paper/manage/record/' + record.id)}>
           <MdOutlineOpenInNew className='text-xl'/>
         </Button>
       </li>

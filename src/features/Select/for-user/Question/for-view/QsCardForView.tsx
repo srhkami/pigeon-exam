@@ -1,4 +1,4 @@
-import {SelectQuestionData, SelectCardConfig} from "@/types/exam-types.ts";
+import {SelectCardConfig, SelectQuestionSimpleData} from "@/types/exam-types.ts";
 import {FaRegStickyNote} from "react-icons/fa";
 import ArticleLink from "@/features/Link/ArticleLink/ArticleLink.tsx";
 import FileLink from "@/features/Link/FileLink/FileLink.tsx";
@@ -6,7 +6,7 @@ import {Badge, RichTextShow} from "@/component";
 import {QsCard, QsCardOptionLabel, QsCardSource, QsCardTitle} from "@/features/Select/for-user/Question/QsCardBase.tsx";
 
 type Props = {
-  readonly q: SelectQuestionData,
+  readonly q: SelectQuestionSimpleData,
   readonly a: Array<number | null>,
   readonly i: number,
   readonly config?: SelectCardConfig,

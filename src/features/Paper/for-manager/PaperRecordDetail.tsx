@@ -5,7 +5,7 @@ import {PaperRecordData} from "@/types/exam-types.ts";
 import {Button, DetailRow} from "@/component";
 import {FaSearch} from "react-icons/fa";
 import {showToast} from "@/func";
-import {POLICE_API} from "@/lib/config.ts";
+import {EXAM_API} from "@/lib/config.ts";
 import {PageHeader} from "@/features";
 import QsCardForView from "@/features/Select/for-user/Question/for-view/QsCardForView.tsx";
 
@@ -21,7 +21,7 @@ export default function PaperRecordDetail() {
       async () => {
         const res = await api<PaperRecordData>({
           method: 'GET',
-          url: POLICE_API + '/paper_records/' + id + '/',
+          url: EXAM_API + '/paper_records/' + id + '/',
         })
         setData(res.data);
       }
@@ -59,7 +59,7 @@ export default function PaperRecordDetail() {
           center={data.user_display}
           end={
             <Button size='xs' style='outline'
-                    onClick={() => navi('/exam/result/1?ordering=-id&user_id=' + data.user)}>
+                    onClick={() => navi('/paper/manage/list/1?ordering=-id&user_id=' + data.user)}>
               <FaSearch/>其他結果
             </Button>
           }/>

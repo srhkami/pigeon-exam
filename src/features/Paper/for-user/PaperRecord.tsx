@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {PaperRecordData} from "@/types/exam-types.ts";
 import {showToast} from "@/func";
-import {POLICE_API} from "@/lib/config.ts";
+import {EXAM_API} from "@/lib/config.ts";
 import {DetailRow} from "@/component";
 import PageHeader from "@/features/Layout/PageHeader.tsx";
 import QsCardForView from "@/features/Select/for-user/Question/for-view/QsCardForView.tsx";
@@ -22,7 +22,7 @@ export default function PaperRecord() {
       async () => {
         const res = await api<PaperRecordData>({
           method: 'GET',
-          url: POLICE_API + '/paper_records/' + id + '/',
+          url: EXAM_API + '/paper_records/' + id + '/',
         })
         setData(res.data);
       }

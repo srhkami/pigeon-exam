@@ -32,7 +32,7 @@ export default function Paper() {
         const select_questions = res.data.select_questions; // 取出題目清單
         setSelectAnswers(new Array(select_questions.length).fill([null])) // 產生答案空清單
       }, {label: '載入', error: err => err.response.data.detail}
-    ).catch(() => navi('/exam'))
+    ).catch(() => navi('/select/random'))
   }, []);
 
   if (!data) {
@@ -96,6 +96,9 @@ export default function Paper() {
       select_question_ids: data.select_question_ids,
       select_answers: selectAnswers,
       select_score: data.select_score,
+      essay_question_ids: [],
+      essay_answers: [],
+      essay_score: 0
     }
 
     showToast(
@@ -105,7 +108,7 @@ export default function Paper() {
         data: formData,
       }), {error: err => JSON.stringify(err.response.data)}
     )
-      .then(res => navi('/exam/result/' + res.data.id))
+      .then(res => navi('/paper/record/' + res.data.id))
   }
 
   return (
@@ -133,7 +136,7 @@ export default function Paper() {
         {
           data.select_questions.map((q, i) => {
             return (
-              <QsCardForInput key={q.id} q={q} index={i} setAnswers={setSelectAnswers}/>
+              <QsCardForInput key={q.id} q={q} i={i} setAnswers={setSelectAnswers}/>
             )
           })
         }

@@ -1,9 +1,9 @@
-import {SelectQuestionReadData, SelectRecordData} from "@/types/exam-types.ts";
+import {SelectQuestionSimpleData, SelectRecordData} from "@/types/exam-types.ts";
 import {Button} from "@/component";
 import {useState} from "react";
 import {FaArrowRight, FaCheckCircle} from "react-icons/fa";
 import {showToast} from "@/func";
-import {EXAM_API} from "@/lib/config.ts";
+import {EXAM_API, EXAM_API_V2} from "@/lib/config.ts";
 import {useAxios} from "@/hooks";
 import QsCardForInput from "@/features/Select/for-user/Question/for-input/QsCardForInput.tsx";
 import QsCardForView from "@/features/Select/for-user/Question/for-view/QsCardForView.tsx";
@@ -25,11 +25,10 @@ type Props = {
 export default function SelectSingle({formData}: Props) {
 
   const api = useAxios();
-  const [q, setQ] = useState<SelectQuestionReadData>();
+  const [q, setQ] = useState<SelectQuestionSimpleData>();
   const [record, setRecord] = useState<SelectRecordData>();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [answers, setAnswers] = useState<Array<Array<number | null>>>([[null],]);
-
 
   // 出題
   const onStart = () => {
@@ -38,7 +37,7 @@ export default function SelectSingle({formData}: Props) {
     );
     const newParams = new URLSearchParams(cleanData as any);
     showToast(
-      api<SelectQuestionReadData>({
+      api<SelectQuestionSimpleData>({
         method: 'GET',
         url: EXAM_API + '/select_questions/random_single/',
         params: newParams,
@@ -58,9 +57,9 @@ export default function SelectSingle({formData}: Props) {
     showToast(
       api<SelectRecordData>({
         method: 'POST',
-        url: EXAM_API + '/select_records/submit/',
+        url: EXAM_API_V2 + '/select/submit/single',
         data: {
-          question: q?.id,
+          question_id: q?.id,
           user_answer: answers[0],
         },
       }), {label: '提交', error: err => JSON.stringify(err.response?.data)}
@@ -97,7 +96,7 @@ export default function SelectSingle({formData}: Props) {
 
   return (
     <>
-      <QsCardForInput q={q} index={0} setAnswers={setAnswers}/>
+      <QsCardForInput q={q} i={0} setAnswers={setAnswers}/>
       <div className='flex justify-end'>
         <Button color='success' onClick={onSubmit}>
           <FaCheckCircle/>

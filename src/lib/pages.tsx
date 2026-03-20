@@ -7,7 +7,7 @@ import {
   Home,
   SelectQuestionManage,
   SelectPast,
-  SelectRandom
+  SelectRandom, PaperRecordManage
 } from "@/features";
 import {AuthType} from "@/types/auth-types.ts";
 import {AuthLayout} from "@/auth";
@@ -67,7 +67,7 @@ export const SelectPagesForUser = {
   ),
   selectPast: new Page(
     'selectPast',
-    '考古題測驗',
+    '考古題總覽',
     'exam_history.png',
     '/select/past',
     'E',
@@ -152,6 +152,18 @@ export const EssayPagesForManager = {
   ),
 }
 
+/* 試卷 - 管理員介面 */
+export const PaperPagesForManager = {
+  paperRecordManage: new Page(
+    'paperRecordManage',
+    '試卷紀錄',
+    'letters.png',
+    '/paper/manage/list/1?ordering=-id',
+    'EM',
+    <PaperRecordManage/>
+  ),
+}
+
 /* 網站頁面 */
 export const WebPages = {
   home: new Page(
@@ -193,8 +205,8 @@ export const MenuEssay: TSidebarMenu = {
   label: '申論題',
   icon: 'left_handed.png',
   list: [
-    EssayPagesForUser.essayBrowser,
     EssayPagesForUser.essayRandom,
+    EssayPagesForUser.essayBrowser,
     // EssayPagesForUser.essayLogs
   ]
 }
@@ -213,5 +225,13 @@ export const MenuEssayManage: TSidebarMenu = {
   icon: 'exam.png',
   list: [
     EssayPagesForManager.essayManage,
+  ]
+}
+
+export const MenuPaperManage: TSidebarMenu = {
+  label: '試卷管理',
+  icon: 'exam.png',
+  list: [
+    PaperPagesForManager.paperRecordManage,
   ]
 }

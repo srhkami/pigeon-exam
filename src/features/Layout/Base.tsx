@@ -1,7 +1,7 @@
 import {Outlet, useLocation} from "react-router";
 import {ReactNode, useEffect, useState} from "react";
 import {LogoLink} from "@/features";
-import {AllPages, MenuEssay, MenuEssayManage, MenuSelect, MenuSelectManage} from "@/lib/pages.tsx";
+import {AllPages, MenuEssay, MenuEssayManage, MenuPaperManage, MenuSelect, MenuSelectManage} from "@/lib/pages.tsx";
 import SidebarMenu from "@/features/Layout/SidebarMenu.tsx";
 import ThemeToggle from "@/features/Layout/ThemeToggle.tsx";
 import MenuUser from "@/features/User/UserProfile/MenuUser.tsx";
@@ -75,6 +75,9 @@ export default function Base({children}: Props) {
             </AuthComponent>
             <AuthComponent authType='EH'>
               <SidebarMenu menu={MenuEssayManage} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
+            </AuthComponent>
+            <AuthComponent authType='EM'>
+              <SidebarMenu menu={MenuPaperManage} drawerOpen={drawerOpen} onDrawerOpen={() => setDrawerOpen(true)}/>
             </AuthComponent>
           </ul>
         </div>

@@ -1,7 +1,7 @@
 import {RouteObject} from "react-router";
 import {EssayPagesForManager, EssayPagesForUser} from "@/lib/pages.tsx";
 
-export const essayRouter: RouteObject = {
+export const essayRouterForUser: RouteObject = {
   path: 'essay', children: [
     // 隨機測驗
     {path: 'random', element: EssayPagesForUser.random.content},
@@ -9,6 +9,12 @@ export const essayRouter: RouteObject = {
     {
       path: 'questions', children: [
         {path: ':page', element: EssayPagesForUser.questions.content}
+      ]
+    },
+    // 題目詳情
+    {
+      path: 'question', children: [
+        {path: ':id', element: EssayPagesForUser.question.content}
       ]
     },
     // 紀錄列表
@@ -23,35 +29,36 @@ export const essayRouter: RouteObject = {
         {path: ':id', element: EssayPagesForUser.record.content}
       ]
     },
-    // 管理功能
+
+  ]
+}
+
+export const essayRouterForManager: RouteObject = {
+  path: 'essay', children: [
+    // 題目列表
     {
-      path: 'manage', children: [
-        // 題目列表
-        {
-          path: 'questions', children:
-            [
-              {path: ':page', element: EssayPagesForManager.questions.content}
-            ]
-        },
-        // 題目詳情
-        {
-          path: 'question', children:[
-            {path:':id', element: EssayPagesForManager.question.content}
-          ]
-        },
-        // 紀錄列表
-        {
-          path:'records', children:[
-              {path: ':page', element: EssayPagesForManager.records.content}
-          ]
-        },
-        // 紀錄詳情
-        {
-          path:'record', children:[
-            {path: ':id', element: EssayPagesForManager.record.content}
-          ]
-        },
+      path: 'questions', children:
+        [
+          {path: ':page', element: EssayPagesForManager.questions.content}
+        ]
+    },
+    // 題目詳情
+    {
+      path: 'question', children:[
+        {path:':id', element: EssayPagesForManager.question.content}
       ]
-    }
+    },
+    // 紀錄列表
+    {
+      path:'records', children:[
+        {path: ':page', element: EssayPagesForManager.records.content}
+      ]
+    },
+    // 紀錄詳情
+    {
+      path:'record', children:[
+        {path: ':id', element: EssayPagesForManager.record.content}
+      ]
+    },
   ]
 }

@@ -6,7 +6,7 @@
 // import {showToast} from "@/func";
 // import {EXAM_API} from "@/lib/config.ts";
 // import {PageHeader} from "@/features";
-// import QsCardForView from "@/features/Select/for-user/Question/for-view/QsCardForView.tsx";
+// import QsCardForRecord from "@/features/Select/for-user/Question/for-view/QsCardForRecord.tsx";
 //
 // /* 考古題單純顯示題目及解答的組件 */
 // export default function SelectPastPaper(){
@@ -58,7 +58,7 @@
 //         {
 //           data.select_records.map((item, index) => {
 //             return (
-//               <QsCardForView
+//               <QsCardForRecord
 //                 key={item.id}
 //                 i={index}
 //                 q={item.question}

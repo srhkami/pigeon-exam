@@ -1,37 +1,20 @@
-import {ExamSelectData, QuestionsData} from "@/types/exam-types.ts";
-import {useAxios, useModal} from "@/hooks";
-import {useEffect, useRef, useState} from "react";
+import {useModal} from "@/hooks";
+import {useRef} from "react";
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle} from "@/component";
 import {MdOutlineContentCopy} from "react-icons/md";
 import {errorLogger, showToast} from "@/func";
-import {POLICE_API} from "@/lib/config.ts";
+import {PaperData} from "@/types/exam-types.ts";
 
 type Props = {
-  readonly questions: QuestionsData,
+  readonly paper: PaperData,
 }
 
 /* 將題目轉化成純文字 */
-export default function ModalQuestionToText({questions}: Props) {
+export default function ModalQuestionToText({paper}: Props) {
 
-  const api = useAxios();
-  const [selectData, setSelectData] = useState<Array<ExamSelectData>>([]); //選擇題題目清單
   const {isShow, onShow, onHide} = useModal();
   const contentRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (isShow) {
-      showToast(
-        api({
-          method: 'POST',
-          url: POLICE_API + '/exam_select/questions/',
-          data: {
-            id_list: questions.select ?? [],
-            is_read: false,
-          }
-        }), {label: '載入'}
-      ).then(res => setSelectData(res.data))
-    }
-  }, [isShow]);
 
   const onCopy = () => {
     if (!contentRef.current) return;
@@ -77,7 +60,7 @@ export default function ModalQuestionToText({questions}: Props) {
   };
 
 
-  const questionItems = selectData.map((q, i) => {
+  const questionItems = paper.select_questions.map((q, i) => {
 
     let number = (i + 1).toString();
 
@@ -117,7 +100,7 @@ export default function ModalQuestionToText({questions}: Props) {
     )
   })
 
-  const answerItems = selectData.map((q, i) => {
+  const answerItems = paper.select_questions.map((q, i) => {
     const answer = q.answer[0];
 
     let number = (i + 1).toString();

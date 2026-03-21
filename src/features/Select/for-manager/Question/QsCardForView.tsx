@@ -1,4 +1,4 @@
-import {SelectCardConfig, SelectRecordData} from "@/types/exam-types.ts";
+import {SelectCardConfig, SelectQuestionSimpleData} from "@/types/exam-types.ts";
 import {FaRegStickyNote} from "react-icons/fa";
 import ArticleLink from "@/features/Link/ArticleLink/ArticleLink.tsx";
 import FileLink from "@/features/Link/FileLink/FileLink.tsx";
@@ -7,26 +7,22 @@ import {QsCard, QsCardOptionLabel, QsCardSource, QsCardTitle} from "@/features/S
 import {QuestionRating} from "@/features";
 
 type Props = {
-  // readonly q: SelectQuestionSimpleData,
-  // readonly a: Array<number | null>,
-  readonly record: SelectRecordData
+  readonly q: SelectQuestionSimpleData,
+  readonly a: Array<number | null>,
   readonly i: number,
   readonly config?: SelectCardConfig,
 }
 
 /**
- * 顯示選擇題結果的卡片
- // * @param q 選擇題的物件
- // * @param a 使用者答案
+ * 選擇題卡片 - 用來提供管理員預覽
+ * @param q 選擇題的物件
+ * @param a 使用者答案
  * @param record 紀錄物件
  * @param i 索引值
  * @param config 卡片設定
  * @constructor
  */
-export default function QsCardForView({record, i, config}: Props) {
-
-  const q = record.question;
-  const a = record.answer
+export default function QsCardForView({q,a, i, config}: Props) {
 
   const title = q.question.length > 35 ? q.question.slice(0, 35) + "..." : q.question
 
@@ -58,7 +54,6 @@ export default function QsCardForView({record, i, config}: Props) {
         config?.showRating &&
         <div className='flex justify-between'>
           <QuestionRating correct_count={q.correct_count} total_count={q.record_count}/>
-          <span className='text-xs opacity-70'>{record.created_at}</span>
         </div>
       }
       {

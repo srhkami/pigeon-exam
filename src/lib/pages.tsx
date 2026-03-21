@@ -1,14 +1,20 @@
 import {MEDIA_IP} from "@/lib/config.ts";
 import {ReactNode} from "react";
 import {
-  About,
-  EssayBrowser,
+  About, ErrorAlert,
   EssayManage,
+  EssayQuestion,
+  EssayQuestions,
   EssayRandom,
+  EssayRecords,
   FeedbackWeb,
-  Home,
   Paper,
-  PaperRecord, PaperRecordDetail, PaperRecords,
+  PaperDetail,
+  PaperEdit,
+  PaperManage,
+  PaperRecord,
+  PaperRecordDetail,
+  PaperRecords,
   PaperRecordsManage,
   SelectPast,
   SelectQuestionManage,
@@ -68,26 +74,18 @@ export const SelectPagesForUser = {
   ),
   past: new Page(
     '考古題總覽',
-    'exam_history.png',
+    'exam-history_1.png',
     '/select/past',
     'E',
     <SelectPast/>
   ),
   records: new Page(
     '作答紀錄',
-    'exam_a_plus.png',
+    'exam_results_1.png',
     '/select/records/1?ordering=-id',
     'E',
     <SelectRecords/>
   ),
-  // selectStatistics: new Page(
-  //   'selectStatistics',
-  //   '統計與分析',
-  //   'business-report.png',
-  //   '/select/statistics',
-  //   'E',
-  //   <SelectStatistics/>
-  // ),
 }
 
 /* 選擇題 - 管理員頁面 */
@@ -95,14 +93,14 @@ export const SelectPagesForManager = {
   questions: new Page(
     '題目管理',
     'questions.png',
-    '/select/manage/questions/1?ordering=-id',
+    '/manage/select/questions/1?ordering=-id',
     'EH',
     <SelectQuestionManage/>
   ),
   records: new Page(
     '紀錄查閱',
-    'exam_a_plus.png',
-    '/select/manage/records/1?ordering=-id',
+    'exam_results_3.png',
+    '/manage/select/records/1?ordering=-id',
     'EH',
     <SelectRecordManage/>
   ),
@@ -122,28 +120,28 @@ export const EssayPagesForUser = {
     'sign_document.png',
     '/essay/questions/1?ordering=-year',
     'E',
-    <EssayBrowser/>
+    <EssayQuestions/>
   ),
   question: new Page(
     '題目詳情',
-    'sign_document.png',
+    '',
     '/essay/question',
     'E',
-    <EssayBrowser/>
+    <EssayQuestion/>
   ),
   records: new Page(
     '作答紀錄',
-    'sign_document.png',
+    'exam_history_2.png',
     '/essay/records/1?ordering=-id',
     'E',
-    <EssayBrowser/>
+    <EssayRecords/>
   ),
   record: new Page(
     '紀錄詳情',
-    'sign_document.png',
+    '',
     '/essay/record',
     'E',
-    <EssayBrowser/>
+    null
   ),
 }
 
@@ -152,28 +150,28 @@ export const EssayPagesForManager = {
   questions: new Page(
     '題目管理',
     'sign_document.png',
-    '/essay/manage/questions/1?ordering=-year',
+    '/manage/essay/questions/1?ordering=-year',
     'EH',
     <EssayManage/>
   ),
   question: new Page(
     '題目詳情',
-    'sign_document.png',
-    '/essay/manage/question',
+    '',
+    '/manage/essay/question',
     'EH',
     null
   ),
   records: new Page(
     '紀錄查閱',
-    'sign_document.png',
-    '/essay/manage/records/1?ordering=-year',
+    'exam_results_0.png',
+    '/manage/essay/records/1?ordering=-year',
     'EM',
-    null
+    <ErrorAlert errorType='comingSoon'/>
   ),
   record: new Page(
     '紀錄詳情',
-    'sign_document.png',
-    '/essay/manage/record',
+    '',
+    '/manage/essay/record',
     'EM',
     null
   ),
@@ -208,22 +206,36 @@ export const PaperPagesForUser = {
 export const PaperPagesForManager = {
   list: new Page(
     '試卷管理',
-    'letters.png',
-    '/paper/manage/list/1?ordering=-id',
+    'agreement.png',
+    '/manage/paper/list/1?ordering=-id',
     'EM',
-    null
+    <PaperManage/>
+  ),
+  detail: new Page(
+    '試卷詳情',
+    '',
+    '/manage/paper/detail',
+    'EM',
+    <PaperDetail/>
+  ),
+  edit: new Page(
+    '試卷編輯',
+    '',
+    '/manage/paper/edit',
+    'EM',
+    <PaperEdit/>
   ),
   records: new Page(
     '測驗紀錄查閱',
     'letters.png',
-    '/paper/manage/records/1?ordering=-id',
+    '/manage/paper/records/1?ordering=-id',
     'EM',
     <PaperRecordsManage/>
   ),
   record: new Page(
     '測驗紀錄詳情',
-    'letters.png',
-    '/paper/manage/record',
+    '',
+    '/manage/paper/record',
     'EM',
     <PaperRecordDetail/>,
   ),
@@ -231,13 +243,6 @@ export const PaperPagesForManager = {
 
 /* 網站頁面 */
 export const WebPages = {
-  home: new Page(
-    '首頁',
-    'exam_a_plus.png',
-    '/',
-    undefined,
-    <Home/>
-  ),
   about: new Page(
     '關於本網站',
     'about.png',
@@ -251,6 +256,20 @@ export const WebPages = {
     '/feedback',
     undefined,
     <FeedbackWeb/>
+  ),
+  home: new Page(
+    '切換 考生模式',
+    'transfer.png',
+    '/',
+    undefined,
+    null
+  ),
+  manage: new Page(
+    '切換 管理模式',
+    'transfer.png',
+    '/manage',
+    'EH',
+    null
   ),
 }
 
@@ -278,7 +297,7 @@ export const MenuEssay: TSidebarMenu = {
 
 export const MenuPaper: TSidebarMenu = {
   label: '測驗',
-  icon: 'left_handed.png',
+  icon: 'exam_a_plus.png',
   list: [
     PaperPagesForUser.records
   ],
@@ -286,7 +305,7 @@ export const MenuPaper: TSidebarMenu = {
 
 export const MenuSelectManage: TSidebarMenu = {
   label: '選擇題管理',
-  icon: 'exam.png',
+  icon: 'select.png',
   list: [
     SelectPagesForManager.questions,
     SelectPagesForManager.records,
@@ -295,16 +314,16 @@ export const MenuSelectManage: TSidebarMenu = {
 
 export const MenuEssayManage: TSidebarMenu = {
   label: '申論題管理',
-  icon: 'exam.png',
+  icon: 'left_handed.png',
   list: [
     EssayPagesForManager.questions,
-    EssayPagesForManager.record,
+    EssayPagesForManager.records,
   ]
 }
 
 export const MenuPaperManage: TSidebarMenu = {
   label: '試卷管理',
-  icon: 'exam.png',
+  icon: 'exam_a_plus.png',
   list: [
     PaperPagesForManager.list,
     PaperPagesForManager.records,

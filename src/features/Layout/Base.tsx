@@ -18,12 +18,14 @@ import {BsLayoutSidebarInset} from "react-icons/bs";
 import {Toaster} from "react-hot-toast";
 import {AuthComponent} from "@/auth";
 import Footer from "@/features/Layout/Footer.tsx";
+import {Badge} from "@/component";
 
 type Props = {
   readonly children?: ReactNode;
+  readonly manage_mode?: boolean;
 }
 
-export default function Base({children}: Props) {
+export default function Base({children, manage_mode = false}: Props) {
 
   const {pathname} = useLocation();
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
@@ -52,6 +54,7 @@ export default function Base({children}: Props) {
             <BsLayoutSidebarInset className='h-4 w-4'/>
           </label>
           <LogoLink/>
+          {manage_mode && <Badge style='outline' className='ml-1'>管理</Badge>}
           <ThemeToggle/>
           <MenuUser/>
         </nav>
@@ -67,27 +70,32 @@ export default function Base({children}: Props) {
         <div className="flex flex-col min-h-full  items-start bg-base-200 is-drawer-close:w-16 is-drawer-open:w-64">
           {/* Sidebar content here */}
           <ul className="menu w-full grow gap-2 pt-4">
-            {/* List item */}
-            <SidebarMenu menu={MenuSelect} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
-            <SidebarMenu menu={MenuEssay} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
-            <SidebarMenu menu={MenuPaper} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
-            {/* List item */}
-            <SidebarLink page={AllPages.feedback} setDrawerOpen={setDrawerOpen}/>
-            <SidebarLink page={AllPages.about}  setDrawerOpen={setDrawerOpen}/>
-            <AuthComponent authType='EH'>
-              <li>
-                <div className='divider m-0'></div>
-              </li>
-            </AuthComponent>
-            <AuthComponent authType='EH'>
-              <SidebarMenu menu={MenuSelectManage} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
-            </AuthComponent>
-            <AuthComponent authType='EH'>
-              <SidebarMenu menu={MenuEssayManage} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
-            </AuthComponent>
-            <AuthComponent authType='EM'>
-              <SidebarMenu menu={MenuPaperManage} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
-            </AuthComponent>
+            {
+              manage_mode ?
+                <>
+                  <SidebarLink page={AllPages.home} setDrawerOpen={setDrawerOpen}/>
+                  <AuthComponent authType='EH'>
+                    <SidebarMenu menu={MenuSelectManage} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
+                  </AuthComponent>
+                  <AuthComponent authType='EH'>
+                    <SidebarMenu menu={MenuEssayManage} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
+                  </AuthComponent>
+                  <AuthComponent authType='EM'>
+                    <SidebarMenu menu={MenuPaperManage} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
+                  </AuthComponent>
+                </>
+                :
+                <>
+                  <AuthComponent authType='EH'>
+                    <SidebarLink page={AllPages.manage} setDrawerOpen={setDrawerOpen}/>
+                  </AuthComponent>
+                  <SidebarMenu menu={MenuSelect} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
+                  <SidebarMenu menu={MenuEssay} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
+                  <SidebarMenu menu={MenuPaper} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
+                  <SidebarLink page={AllPages.feedback} setDrawerOpen={setDrawerOpen}/>
+                </>
+            }
+            <SidebarLink page={AllPages.about} setDrawerOpen={setDrawerOpen}/>
           </ul>
         </div>
       </div>

@@ -1,11 +1,11 @@
 import {useDataBrowser} from "@/hooks";
 import {Button, DataBrowser, DataBrowserTitle} from "@/component";
 import {PaperRecordData} from "@/types/exam-types.ts";
-import ModalSelectFilter from "@/features/Select/for-manager/Manage/ModalSelectFilter.tsx";
 import {EXAM_API} from "@/lib/config.ts";
 import {useNavigate} from "react-router";
 import {PiExam} from "react-icons/pi";
 import {MdOutlineOpenInNew} from "react-icons/md";
+import {FilterConfig} from "@/types/api-types.ts";
 
 /* 測驗結果管理 */
 export default function PaperRecordsManage() {
@@ -14,8 +14,18 @@ export default function PaperRecordsManage() {
 
   const navi = useNavigate();
 
-  const dataList = data.map(record => {
+  const filterConfigs: Array<FilterConfig> = [
+    {
+      title: '排序',
+      fieldName: 'ordering',
+      options: [
+        {label: '從新到舊', value: '-ud'},
+        {label: '從舊到新', value: 'ud'},
+      ]
+    }
+  ]
 
+  const dataList = data.map(record => {
     return (
       <li className="list-row hover:bg-base-200" key={record.id}>
         <div className='flex items-center justify-center'>
@@ -31,7 +41,7 @@ export default function PaperRecordsManage() {
           </div>
         </div>
         <Button style='ghost' shape='circle'
-                onClick={() => navi('/paper/manage/record/' + record.id)}>
+                onClick={() => navi('/manage/paper/record/' + record.id)}>
           <MdOutlineOpenInNew className='text-xl'/>
         </Button>
       </li>
@@ -40,12 +50,9 @@ export default function PaperRecordsManage() {
 
   return (
     <DataBrowser
-      header={
-        <>
-          <DataBrowserTitle title='測驗紀錄查閱'/>
-          <ModalSelectFilter detailMode={false}/>
-        </>
-      }
+      header={<DataBrowserTitle title='測驗紀錄查閱'/>}
+      filterConfigs={filterConfigs}
+      placeholder='搜尋標題/使用者'
       pageOption={{...pageInfo, show: 2}}
     >
       <ul className="list mx-2">

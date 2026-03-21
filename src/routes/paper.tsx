@@ -1,7 +1,7 @@
 import {RouteObject} from "react-router";
 import {PaperPagesForManager, PaperPagesForUser} from "@/lib/pages.tsx";
 
-export const paperRouter: RouteObject = {
+export const paperRouterForUser: RouteObject = {
   path: 'paper', children: [
     {
       path: 'records', children: [
@@ -13,25 +13,36 @@ export const paperRouter: RouteObject = {
         {path: ':id', element: PaperPagesForUser.record.content},
       ]
     },
+    {path: ':uuid', element: PaperPagesForUser.paper.content}
+  ]
+}
+
+export const paperRouterForManager: RouteObject = {
+  path: 'paper', children: [
     {
-      path: 'manage', children: [
-        {
-          path: 'list', children: [
-            {path: ':page', element: PaperPagesForManager.list.content}
-          ]
-        },
-        {
-          path: 'records', children: [
-            {path: ':page', element: PaperPagesForUser.records.content},
-          ]
-        },
-        {
-          path: 'record', children: [
-            {path: ':id', element: PaperPagesForManager.record.content}
-          ]
-        },
+      path: 'list', children: [
+        {path: ':page', element: PaperPagesForManager.list.content}
       ]
     },
-    {path: ':uuid', element: PaperPagesForUser.paper.content}
+    {
+      path: 'detail', children: [
+        {path: ':id', element: PaperPagesForManager.detail.content}
+      ]
+    },
+    {
+      path: 'edit', children: [
+        {path: ':id', element: PaperPagesForManager.edit.content}
+      ]
+    },
+    {
+      path: 'records', children: [
+        {path: ':page', element: PaperPagesForManager.records.content},
+      ]
+    },
+    {
+      path: 'record', children: [
+        {path: ':id', element: PaperPagesForManager.record.content}
+      ]
+    },
   ]
 }

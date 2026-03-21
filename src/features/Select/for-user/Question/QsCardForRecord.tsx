@@ -1,53 +1,35 @@
-import {SelectQuestionData, SelectCardConfig} from "@/types/exam-types.ts";
-import {FaEdit, FaRegStickyNote} from "react-icons/fa";
+import {SelectCardConfig, SelectRecordData} from "@/types/exam-types.ts";
+import {FaRegStickyNote} from "react-icons/fa";
 import ArticleLink from "@/features/Link/ArticleLink/ArticleLink.tsx";
 import FileLink from "@/features/Link/FileLink/FileLink.tsx";
-import {Badge, Button, RichTextShow} from "@/component";
+import {Badge, RichTextShow} from "@/component";
 import {QsCard, QsCardOptionLabel, QsCardSource, QsCardTitle} from "@/features/Select/for-user/Question/QsCardBase.tsx";
-import {useState} from "react";
-import SelectEdit from "@/features/Select/for-manager/Manage/Edit/SelectEdit.tsx";
 import {QuestionRating} from "@/features";
 
 type Props = {
-  readonly q: SelectQuestionData,
-  readonly a: Array<number | null>,
+  // readonly q: SelectQuestionSimpleData,
+  // readonly a: Array<number | null>,
+  readonly record: SelectRecordData
   readonly i: number,
   readonly config?: SelectCardConfig,
-  readonly onRefetch?: ()=>void,
 }
 
 /**
- * 選擇題卡片 - 用來提供管理員編輯
- * @param q 選擇題的物件
- * @param a 使用者答案
+ * 選擇題卡片 - 用來提供紀錄顯示
+ * @param record 紀錄物件
  * @param i 索引值
  * @param config 卡片設定
- * @param onRefetch 重新整理的函數
  * @constructor
  */
-export default function QsCardForEdit({q, a, i, config, onRefetch}: Props) {
+export default function QsCardForRecord({record, i, config}: Props) {
 
-  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const q = record.question;
+  const a = record.answer
 
   const title = q.question.length > 35 ? q.question.slice(0, 35) + "..." : q.question
 
-  if (isEdit && onRefetch !== undefined) {
-    return (
-      <div className="hover:bg-base-200 card-border border-2 border-error rounded-xl my-1 relative p-2">
-        <SelectEdit obj={q} onRefetch={onRefetch} setIsEdit={setIsEdit}/>
-      </div>
-    )
-  }
-
   return (
-    <QsCard is_correct={undefined}>
-      {/*編輯按鈕*/}
-      {onRefetch !== undefined &&
-        <Button className='absolute top-1 right-1' size='sm' shape='circle'
-                onClick={() => setIsEdit(true)}>
-          <FaEdit/>
-        </Button>
-      }
+    <QsCard is_correct={a.length !== 0 && q.answer[0] === a[0]}>
       <QsCardTitle i={i} title={config?.showOptions ? q.question : title}/>
       {
         config?.showOptions &&
@@ -72,8 +54,9 @@ export default function QsCardForEdit({q, a, i, config, onRefetch}: Props) {
       }
       {
         config?.showRating &&
-        <div className='flex'>
+        <div className='flex justify-between'>
           <QuestionRating correct_count={q.correct_count} total_count={q.record_count}/>
+          <span className='text-xs opacity-70'>{record.created_at}</span>
         </div>
       }
       {

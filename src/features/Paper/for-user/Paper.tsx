@@ -1,7 +1,7 @@
 import {useAxios} from "@/hooks";
 import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
-import {PaperData, PaperSubmitForm} from "@/types/exam-types.ts";
+import {PaperReadData, PaperSubmitForm} from "@/types/exam-types.ts";
 import {showToast} from "@/func";
 import {EXAM_API, EXAM_API_V2} from "@/lib/config.ts";
 import {Alert, Button, Col, DetailRow, Row} from "@/component";
@@ -9,7 +9,7 @@ import {IoWarningOutline} from "react-icons/io5";
 import toast from "react-hot-toast";
 import {PageHeader} from "@/features";
 import {FaCheck} from "react-icons/fa";
-import QsCardForInput from "@/features/Select/for-user/Question/for-input/QsCardForInput.tsx";
+import QsCardForInput from "@/features/Select/for-user/Question/QsCardForInput.tsx";
 
 export default function Paper() {
 
@@ -17,13 +17,13 @@ export default function Paper() {
   const navi = useNavigate();
   const {uuid} = useParams();
 
-  const [data, setData] = useState<PaperData>();
+  const [data, setData] = useState<PaperReadData>();
   const [selectAnswers, setSelectAnswers] = useState<Array<Array<number | null>>>([]);
 
   useEffect(() => {
     showToast(
       async () => {
-        const res = await api<PaperData>({
+        const res = await api<PaperReadData>({
           method: "GET",
           url: EXAM_API + '/papers/uuid/',
           params: {uuid: uuid},

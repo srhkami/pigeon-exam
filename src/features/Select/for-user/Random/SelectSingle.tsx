@@ -5,8 +5,8 @@ import {FaArrowRight, FaCheckCircle} from "react-icons/fa";
 import {showToast} from "@/func";
 import {EXAM_API, EXAM_API_V2} from "@/lib/config.ts";
 import {useAxios} from "@/hooks";
-import QsCardForInput from "@/features/Select/for-user/Question/for-input/QsCardForInput.tsx";
-import QsCardForView from "@/features/Select/for-user/Question/for-view/QsCardForView.tsx";
+import QsCardForInput from "@/features/Select/for-user/Question/QsCardForInput.tsx";
+import QsCardForRecord from "@/features/Select/for-user/Question/QsCardForRecord.tsx";
 
 type Props = {
   readonly formData: {
@@ -36,6 +36,7 @@ export default function SelectSingle({formData}: Props) {
       Object.entries(formData).filter(([_, v]) => v != null && v !== '')
     );
     const newParams = new URLSearchParams(cleanData as any);
+    console.log('newParams', newParams);
     showToast(
       api<SelectQuestionSimpleData>({
         method: 'GET',
@@ -77,7 +78,7 @@ export default function SelectSingle({formData}: Props) {
   if (isSubmitted && record) {
     return (
       <div>
-        <QsCardForView
+        <QsCardForRecord
           record={record}
           i={0}
           config={{

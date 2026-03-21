@@ -1,10 +1,10 @@
 import {useForm} from "react-hook-form";
 import {Dispatch, SetStateAction} from "react";
-import {SelectQuestionSimpleData} from "@/types/exam-types.ts";
+import {SelectQuestionReadData} from "@/types/exam-types.ts";
 import {QsCard, QsCardOptionLabel, QsCardSource, QsCardTitle} from "@/features/Select/for-user/Question/QsCardBase.tsx";
 
 type Props = {
-  readonly q: SelectQuestionSimpleData,
+  readonly q: SelectQuestionReadData,
   readonly i: number,
   readonly setAnswers: Dispatch<SetStateAction<Array<Array<number | null>>>>, // 設定答案
 }
@@ -14,7 +14,7 @@ type FormValues = {
 }
 
 /**
- * 選擇題用來填寫的單一卡片
+ * 選擇題卡片 - 用來提供使用者作答
  * @param q
  * @param i
  * @param setAnswers

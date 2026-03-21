@@ -1,7 +1,7 @@
 import {FaCircleCheck, FaCircleXmark} from "react-icons/fa6";
 import {twMerge} from "tailwind-merge";
 import clsx from "clsx";
-import {SelectQuestionData, SelectQuestionSimpleData} from "@/types/exam-types.ts";
+import {SelectQuestionReadData} from "@/types/exam-types.ts";
 import {FaCheck} from "react-icons/fa";
 import {ReactNode} from "react";
 
@@ -40,7 +40,7 @@ export function QsCardTitle({i, title}: { readonly i: number, readonly title: st
   )
 }
 
-export function QsCardSource({q}: { readonly q: SelectQuestionData | SelectQuestionSimpleData }) {
+export function QsCardSource({q}: { readonly q: SelectQuestionReadData }) {
   return (
     <div className='text-xs flex items-center gap-1'>
       <div className='ml-auto flex gap-1'>

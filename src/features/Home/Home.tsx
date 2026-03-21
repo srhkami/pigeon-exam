@@ -1,12 +1,12 @@
 import {Link} from "react-router";
-import {MEDIA_IP, POLICE_API} from "@/lib/config.ts";
+import {EXAM_API_V2, MEDIA_IP,} from "@/lib/config.ts";
 import {useCacheApi} from "@/hooks";
 
 type ExamInfo = {
   select_count: number,
+  select_record_count: number,
   essay_count: number
-  essay_answer_count: number
-  result_count: number,
+  essay_record_count: number
 }
 
 /**
@@ -15,30 +15,29 @@ type ExamInfo = {
  */
 export default function Home() {
 
-  const {data} = useCacheApi<ExamInfo>({url: POLICE_API + "/exam/home_info/"});
+  const {data} = useCacheApi<ExamInfo>({url: EXAM_API_V2 + "/user_info"});
 
   return (
     <div>
       <img src={MEDIA_IP + '/media/image/小試鴿手.jpg'} alt='無法載入' className='w-full rounded-xl mb-3'/>
-      <div className="stats shadow w-full shadow-lg mb-3">
+      <div className="stats shadow-lg w-full mb-3">
         <div className="stat place-items-center">
-          <div className="stat-title">已蒐錄選擇題</div>
+          <div className="stat-title">蒐錄選擇題</div>
           <div className="stat-value text-primary">
             {data?.select_count}
             <span className='text-lg ml-1'>題</span>
           </div>
-          <div className="stat-desc text-success">提供測驗 {data?.result_count} 次</div>
+          <div className="stat-desc text-success">累積作答 {data?.select_record_count} 題</div>
         </div>
         <div className="stat place-items-center">
-          <div className="stat-title">已蒐錄申論題</div>
+          <div className="stat-title">蒐錄申論題</div>
           <div className="stat-value text-primary">
             {data?.essay_count}
             <span className='text-lg ml-1'>題</span>
           </div>
-          <div className="stat-desc text-success">提供作答 {data?.essay_answer_count} 題</div>
+          <div className="stat-desc text-success">累積作答 {data?.essay_record_count} 題</div>
         </div>
       </div>
-
       <img src={MEDIA_IP + '/media/image/小試鴿手_03.JPG'} alt='無法載入' className='w-full rounded-xl mb-3'/>
       <img src={MEDIA_IP + '/media/image/小試鴿手_04.JPG'} alt='無法載入' className='w-full rounded-xl mb-3'/>
       <img src={MEDIA_IP + '/media/image/小試鴿手_05.JPG'} alt='無法載入' className='w-full rounded-xl mb-3'/>

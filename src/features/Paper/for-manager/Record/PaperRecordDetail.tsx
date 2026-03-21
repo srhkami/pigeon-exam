@@ -7,7 +7,7 @@ import {FaSearch} from "react-icons/fa";
 import {showToast} from "@/func";
 import {EXAM_API} from "@/lib/config.ts";
 import {PageHeader} from "@/features";
-import QsCardForView from "@/features/Select/for-user/Question/for-view/QsCardForView.tsx";
+import QsCardForRecord from "@/features/Select/for-user/Question/QsCardForRecord.tsx";
 
 export default function PaperRecordDetail() {
 
@@ -29,26 +29,11 @@ export default function PaperRecordDetail() {
     ).catch(() => navi('/'))
   }, []);
 
-  // const onSaveAsPaper = () => {
-  //   showToast(
-  //     api<{ id: number }>({
-  //       method: 'POST',
-  //       url: POLICE_API + '/exam_result/sava_as_paper/',
-  //       data: {result_id: id},
-  //     })
-  //   ).then(res => navi('/exam/paper/detail/' + res.data.id))
-  // }
-
   if (!data) return null;
 
   return (
     <div>
       <PageHeader title={data.title}/>
-      {/*<div className='my-2 flex justify-end'>*/}
-      {/*  <Button size='sm' style='outline' onClick={onSaveAsPaper}>*/}
-      {/*    <FaSave/>將結果存成新試卷*/}
-      {/*  </Button>*/}
-      {/*</div>*/}
       <div className='mb-2 flex items-center'>
         <span className='text-6xl italic text-red-500'>{data.score}</span>
         <span className='ml-2 mt-auto text-2xl italic'>分</span>
@@ -59,13 +44,10 @@ export default function PaperRecordDetail() {
           center={data.user_display}
           end={
             <Button size='xs' style='outline'
-                    onClick={() => navi('/paper/manage/list/1?ordering=-id&user_id=' + data.user)}>
+                    onClick={() => navi('/manage/paper/records/1?ordering=-id&user_id=' + data.user)}>
               <FaSearch/>其他結果
             </Button>
           }/>
-        {/*<DetailRow*/}
-        {/*  start='答對題數：'*/}
-        {/*  center={<span>{data.right_count} / {data.total_count}</span>}/>*/}
         <DetailRow
           start='測驗時間：'
           center={data.created_at}/>
@@ -84,7 +66,7 @@ export default function PaperRecordDetail() {
         {
           data.select_records.map((record, index) => {
             return (
-              <QsCardForView
+              <QsCardForRecord
                 key={record.id}
                 record={record}
                 i={index}

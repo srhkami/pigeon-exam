@@ -6,7 +6,7 @@ import {showToast} from "@/func";
 import {EXAM_API} from "@/lib/config.ts";
 import {DetailRow} from "@/component";
 import PageHeader from "@/features/Layout/PageHeader.tsx";
-import QsCardForView from "@/features/Select/for-user/Question/for-view/QsCardForView.tsx";
+import QsCardForRecord from "@/features/Select/for-user/Question/QsCardForRecord.tsx";
 import {ErrorAlert} from "@/features";
 
 export default function PaperRecord() {
@@ -65,7 +65,7 @@ export default function PaperRecord() {
         {
           data.select_records.map((record, index) => {
             return (
-              <QsCardForView
+              <QsCardForRecord
                 key={record.id}
                 record={record}
                 i={index}

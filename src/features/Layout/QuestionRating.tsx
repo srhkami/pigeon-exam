@@ -46,7 +46,7 @@ export default function QuestionRating({
     }
   }
 
-  const tip = `正確率：${correct_count} / ${total_count} `
+  const tip = `正確率：${correct_count ?? 0} / ${total_count ?? 0} `
 
   return (
     <div className='tooltip tooltip-right flex gap-1 items-center font-semibold' data-tip={tip}>

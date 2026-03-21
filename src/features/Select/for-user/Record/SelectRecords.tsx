@@ -3,7 +3,7 @@ import {SelectRecordData} from "@/types/exam-types.ts";
 import {EXAM_API,} from "@/lib/config.ts";
 import {DataBrowser, DataBrowserTitle} from "@/component";
 import {FilterConfig} from "@/types/api-types.ts";
-import QsCardForView from "@/features/Select/for-user/Question/for-view/QsCardForView.tsx";
+import QsCardForRecord from "@/features/Select/for-user/Question/QsCardForRecord.tsx";
 
 export default function SelectRecords() {
 
@@ -32,7 +32,7 @@ export default function SelectRecords() {
   const items = data.map((record) => {
     return (
       <li key={record.id}>
-        <QsCardForView
+        <QsCardForRecord
           record={record}
           i={record.question.id - 1}
           key={record.id}

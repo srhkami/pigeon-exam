@@ -1,6 +1,6 @@
 import {EssayQuestionData} from "@/types/exam-types.ts";
 import {PageHeader} from "@/features";
-import QsCardForView from "@/features/Essay/for-user/Detail/QsCardForView.tsx";
+import QsCardForView from "@/features/Essay/for-user/Question/QsCardForView.tsx";
 import {useState} from "react";
 import {Button, Col, ModalTextEditor, Row} from "@/component";
 import {JSONContent} from "@tiptap/react";
@@ -11,7 +11,7 @@ import {EXAM_API} from "@/lib/config.ts";
 import {useAuth, useAxios, useToastApi} from "@/hooks";
 import {useParams} from "react-router";
 
-export default function EssayDetail() {
+export default function EssayQuestion() {
 
   const title = '申論題題目';
   const api = useAxios();

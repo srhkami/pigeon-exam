@@ -1,40 +1,55 @@
 import {createBrowserRouter} from "react-router";
-import {ErrorAlert} from "@/features";
-import {Base, About, FilePreview, Home, UserProfile, FeedbackWeb} from "@/features";
+import {About, Base, ErrorAlert, FeedbackWeb, FilePreview, Home, Statistics, UserProfile} from "@/features";
 import {AuthLayout} from "@/auth";
-import {selectRouter} from "@/routes/select.tsx";
-import {essayRouter} from "@/routes/essay.tsx";
-import {paperRouter} from "@/routes/paper.tsx";
+import {selectRouterForManager, selectRouterForUser} from "@/routes/select.tsx";
+import {essayRouterForManager, essayRouterForUser} from "@/routes/essay.tsx";
+import {paperRouterForManager, paperRouterForUser} from "@/routes/paper.tsx";
 
 const routes = createBrowserRouter([
   {
-    path: '/',
-    element: <Base/>,
-    errorElement: <Base><ErrorAlert errorType='noPage'/></Base>,
+    path: '',
     children: [
-      {path: '', element: <Home/>},
-      {path: 'index', element: <Home/>},
-      {path: 'about', element: <About/>},
-      {path: 'feedback', element: <FeedbackWeb/>},
       {
-        path: 'l', children: [
-          {path: ':url', element: <FilePreview code='l'/>}
-        ]
-      },
-      {
-        path: 'f', children: [
-          {path: ':url', element: <FilePreview code='f'/>}
-        ]
-      },
-      {
-        path: 'user',
+        path: 'manage',
+        element: <Base manage_mode={true}/>,
+        errorElement: <Base><ErrorAlert errorType='noPage'/></Base>,
         children: [
-          {path: 'profile', element: <AuthLayout><UserProfile/></AuthLayout>},
+          selectRouterForManager,
+          essayRouterForManager,
+          paperRouterForManager
         ]
       },
-      paperRouter,
-      selectRouter,
-      essayRouter,
+      {
+        path: '',
+        element: <Base/>,
+        errorElement: <Base><ErrorAlert errorType='noPage'/></Base>,
+        children: [
+          {path: '', element: <Home/>},
+          {path: 'index', element: <Home/>},
+          {path: 'about', element: <About/>},
+          {path: 'feedback', element: <FeedbackWeb/>},
+          {path: 'statistics', element: <AuthLayout authType='E'><Statistics/></AuthLayout>},
+          {
+            path: 'l', children: [
+              {path: ':url', element: <FilePreview code='l'/>}
+            ]
+          },
+          {
+            path: 'f', children: [
+              {path: ':url', element: <FilePreview code='f'/>}
+            ]
+          },
+          {
+            path: 'user',
+            children: [
+              {path: 'profile', element: <AuthLayout><UserProfile/></AuthLayout>},
+            ]
+          },
+          selectRouterForUser,
+          essayRouterForUser,
+          paperRouterForUser
+        ]
+      }
     ]
   },
 ])

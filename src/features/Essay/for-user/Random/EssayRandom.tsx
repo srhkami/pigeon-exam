@@ -5,7 +5,7 @@ import {useAxios, useCacheApi} from "@/hooks";
 import {showToast} from "@/func";
 import {EXAM_API} from "@/lib/config.ts";
 import {EssayQuestionData} from "@/types/exam-types.ts";
-import EssayPageHeader from "@/features/Essay/for-user/Browser/EssayPageHeader.tsx";
+import EssayPageHeader from "@/features/Essay/for-user/Random/EssayPageHeader.tsx";
 import {useNavigate} from "react-router";
 
 type FormValues = {
@@ -74,7 +74,7 @@ export default function EssayRandom() {
         params: newParams,
       }), {label: '載入', error: err => JSON.stringify(err.response?.data)}
     )
-      .then(res => navi(`/essay/detail/${res.data.id}`))
+      .then(res => navi(`/essay/question/${res.data.id}`))
   }
 
   return (
@@ -83,7 +83,7 @@ export default function EssayRandom() {
       <div>
         <div>
           <Badge size='lg' style='outline'>
-            出題選項
+            出題範圍
           </Badge>
           <div className='flex my-2 items-center'>
             <div className='text-sm'>

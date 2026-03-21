@@ -4,7 +4,6 @@ import {Badge, Button, RichTextShow} from "@/component";
 import ArticleLink from "@/features/Link/ArticleLink/ArticleLink.tsx";
 import FileLink from "@/features/Link/FileLink/FileLink.tsx";
 import ModalExamEssayAnswers from "@/features/Essay/for-user/tools/ModalExamEssayAnswers.tsx";
-import {Dispatch, SetStateAction} from "react";
 import {useNavigate} from "react-router";
 import {RiEdit2Fill} from "react-icons/ri";
 
@@ -12,7 +11,6 @@ type Props = {
   readonly q: EssayQuestionData,
   readonly i: number,
   readonly config?: EssayCardConfig,
-  readonly setReload?: Dispatch<SetStateAction<boolean>>,
 }
 
 /**
@@ -20,10 +18,9 @@ type Props = {
  * @param q 申論題的物件
  * @param i 編號
  * @param config 卡片的設定
- * @param setReload 重新整理的函數
  * @constructor
  */
-export default function QsCardForView({q, i, config, setReload}: Props) {
+export default function QsCardForView({q, i, config}: Props) {
 
   const title = q.question.length > 50 ? q.question.slice(0, 50) + "..." : q.question
   const navi = useNavigate();
@@ -43,13 +40,11 @@ export default function QsCardForView({q, i, config, setReload}: Props) {
             </div>
           </div>
         }
-        { setReload &&
           <div className="flex items-center justify-end">
-            <Button size='xs' color='primary' style='outline' onClick={()=>navi('/exam/essay/detail/' + q.id)}>
+            <Button size='xs' color='primary' style='outline' onClick={()=>navi('/essay/question/' + q.id)}>
               <RiEdit2Fill/>檢視及作答
             </Button>
           </div>
-        }
         {
           (config?.showSample && q.sample_answer) &&
           <div className='mt-1'>

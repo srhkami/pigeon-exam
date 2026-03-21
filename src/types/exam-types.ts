@@ -145,16 +145,13 @@ export type EssayCardConfig = {
 /* 試卷 */
 /*===============*/
 
-// 試卷
-export type PaperData = {
-  id: number,
-  user: number,
+// 試卷（只讀）
+export interface PaperReadData {
   user_display: string, // 建立者
-  created_at: string, // 建立時間
   title: string, // 標題
   subject: string, // 考試科目
   category: string, // 考試類科
-  select_questions: Array<SelectQuestionSimpleData>,
+  select_questions: Array<SelectQuestionReadData>,
   select_question_ids: Array<number>,
   essay_questions: Array<EssayQuestionSimpleData>,
   essay_question_ids: Array<number>,
@@ -163,6 +160,28 @@ export type PaperData = {
   select_score: number,
   essay_score: number,
 }
+
+// 試卷
+export interface PaperData extends PaperReadData {
+  id: number,
+  user: number,
+  created_at: string, // 建立時間
+  select_questions: Array<SelectQuestionSimpleData>,
+  select_question_ids: Array<number>,
+}
+
+// 試卷編輯表單
+export type PaperEditForm = {
+  id?: number|null,
+  title?: string, // 標題
+  subject?: string, // 考試科目
+  category?: string, // 考試類別
+  select_question_ids?: Array<number>,
+  essay_question_ids?: Array<number>,
+  select_score?: number,
+  essay_score?: number,
+}
+
 
 // 試卷提交表單
 export type PaperSubmitForm = {
@@ -192,12 +211,15 @@ export type PaperRecordData = {
   remark: string,
 }
 
+export type RatioData = {
+  label: string,
+  correct_count: number,
+  total_count: number,
+}
 
 // 個人記錄
-export type ExamLogData = {
-  total_count: number,
-  right_count: number,
-  paper_count: number,
+export type LogData = {
+  select_logs: Array<RatioData>,
 }
 
 // 考古題資料

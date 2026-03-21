@@ -3,12 +3,12 @@ import {EssayQuestionData} from "@/types/exam-types.ts";
 import {EXAM_API} from "@/lib/config.ts";
 import {DataBrowser, DataBrowserTitle} from "@/component";
 import ModalEssayFilter from "@/features/Essay/for-user/tools/ModalEssayFilter.tsx";
-import QsCardForView from "@/features/Essay/for-user/Detail/QsCardForView.tsx";
-import EssayPageHeader from "@/features/Essay/for-user/Browser/EssayPageHeader.tsx";
+import QsCardForView from "@/features/Essay/for-user/Question/QsCardForView.tsx";
+import EssayPageHeader from "@/features/Essay/for-user/Random/EssayPageHeader.tsx";
 
-export default function EssayBrowser() {
+export default function EssayQuestions() {
 
-  const {data, pageInfo, setReload} = useDataBrowser<EssayQuestionData>({
+  const {data, pageInfo} = useDataBrowser<EssayQuestionData>({
     url: EXAM_API + '/essay_questions/',
     pageSize: 10,
     defaultParams: {is_public: 'true'}
@@ -17,9 +17,12 @@ export default function EssayBrowser() {
 
   const dataList = data.map(q => {
     return (
-      <QsCardForView key={q.id} q={q} i={q.id - 1}
-                     config={{showDetail: true, showSample: false, showLinks: false}}
-                     setReload={setReload}/>
+      <QsCardForView
+        key={q.id}
+        q={q}
+        i={q.id - 1}
+        config={{showDetail: true, showSample: false, showLinks: false}}
+      />
     )
   })
 
@@ -28,7 +31,7 @@ export default function EssayBrowser() {
       <EssayPageHeader tab={2}/>
       <DataBrowser
         header={<>
-          <DataBrowserTitle title='題目列表'/>
+          <DataBrowserTitle title='題目總覽'/>
           <ModalEssayFilter/>
         </>}
         pageOption={{...pageInfo, show: 2}}

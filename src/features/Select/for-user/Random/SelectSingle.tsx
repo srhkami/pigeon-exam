@@ -63,7 +63,7 @@ export default function SelectSingle({formData}: Props) {
           user_answer: answers[0],
         },
       }), {label: '提交', error: err => JSON.stringify(err.response?.data)}
-    ).then(res=>setRecord(res.data))
+    ).then(res => setRecord(res.data))
 
   }
 
@@ -77,13 +77,15 @@ export default function SelectSingle({formData}: Props) {
   if (isSubmitted && record) {
     return (
       <div>
-        <QsCardForView q={record.question} a={answers[0]} i={0}
-                          config={{
-                            showOptions: true, // 顯示選項及來源
-                            showRating: true, // 顯示題目評級
-                            showLinks: true, // 顯示關聯
-                            showComment: true, // 顯示註解
-                          }}
+        <QsCardForView
+          record={record}
+          i={0}
+          config={{
+            showOptions: true, // 顯示選項及來源
+            showRating: true, // 顯示題目評級
+            showLinks: true, // 顯示關聯
+            showComment: true, // 顯示註解
+          }}
         />
         <div className='flex justify-end'>
           <Button size='sm' color='primary' onClick={onStart}>

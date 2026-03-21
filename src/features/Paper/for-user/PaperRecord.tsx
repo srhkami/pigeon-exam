@@ -63,13 +63,12 @@ export default function PaperRecord() {
       </div>
       <ul className='list'>
         {
-          data.select_records.map((item, index) => {
+          data.select_records.map((record, index) => {
             return (
               <QsCardForView
-                key={item.id}
+                key={record.id}
+                record={record}
                 i={index}
-                q={item.question}
-                a={item.answer}
                 config={{
                   showOptions: true,
                   showComment: false,

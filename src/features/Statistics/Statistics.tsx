@@ -11,6 +11,7 @@ export default function Statistics() {
   const title = '個人統計與分析';
 
   const data = useToastApi<LogData>({url: EXAM_API_V2 + '/get_self_log'})
+
   if (!data.data) return null;
 
   const select_log_list = data.data?.select_logs.map((item, index) => {

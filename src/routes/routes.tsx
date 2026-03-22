@@ -5,6 +5,7 @@ import {selectRouterForManager, selectRouterForUser} from "@/routes/select.tsx";
 import {essayRouterForManager, essayRouterForUser} from "@/routes/essay.tsx";
 import {paperRouterForManager, paperRouterForUser} from "@/routes/paper.tsx";
 import {AllPages} from "@/lib/pages.tsx";
+import TestPage from "@/features/Layout/TestPage.tsx";
 
 const routes = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const routes = createBrowserRouter([
           {path: 'about', element: <About/>},
           {path: 'feedback', element: <FeedbackWeb/>},
           {path: 'statistics', element: AllPages.statistics.content},
+          {path:'test', element: <TestPage/>},
           {
             path: 'l', children: [
               {path: ':url', element: <FilePreview code='l'/>}

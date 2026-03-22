@@ -10,13 +10,13 @@ type Props = {
 export default function PageHeader({title, as = 'h3', divider = true}: Props) {
 
   const classes = twMerge(
-    'font-bold mb-3 border-l-4 border-l-primary pl-4',
+    'font-bold mb-3 pl-4 border-l-4 border-l-primary',
     clsx({
       'text-4xl': as === 'h1',
       'text-3xl': as === 'h2',
       'text-2xl': as === 'h3',
       'text-xl': as === 'h4',
-      'text-lg': as === 'h5',
+      'text-lg border-l-secondary': as === 'h5',
     })
   )
 
@@ -26,7 +26,7 @@ export default function PageHeader({title, as = 'h3', divider = true}: Props) {
       <div className={classes}>
         {title}
       </div>
-      {divider && <div className='divider'></div>}
+      {divider && <div className='divider border-secondary'></div>}
     </>
   )
 

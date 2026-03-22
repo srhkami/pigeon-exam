@@ -18,7 +18,7 @@ import {
   PaperRecordsManage,
   SelectPast,
   SelectQuestionManage,
-  SelectRandom
+  SelectRandom, Statistics
 } from "@/features";
 import {AuthType} from "@/types/auth-types.ts";
 import {AuthLayout} from "@/auth";
@@ -243,6 +243,13 @@ export const PaperPagesForManager = {
 
 /* 網站頁面 */
 export const WebPages = {
+  statistics: new Page(
+    '統計與分析',
+    'business_report.png',
+    '/statistics',
+    'E',
+    <Statistics/>
+  ),
   about: new Page(
     '關於本網站',
     'about.png',

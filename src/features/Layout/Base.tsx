@@ -92,6 +92,7 @@ export default function Base({children, manage_mode = false}: Props) {
                   <SidebarMenu menu={MenuSelect} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
                   <SidebarMenu menu={MenuEssay} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
                   <SidebarMenu menu={MenuPaper} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen}/>
+                  <SidebarLink page={AllPages.statistics} setDrawerOpen={setDrawerOpen}/>
                   <SidebarLink page={AllPages.feedback} setDrawerOpen={setDrawerOpen}/>
                 </>
             }

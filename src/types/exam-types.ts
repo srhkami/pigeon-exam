@@ -223,9 +223,20 @@ export type LogData = {
 }
 
 // 考古題資料
-export type ExamPastData = {
+export  type ExamPastData = {
   year: string,
   source: string,
   category: string,
   subject: string,
+}
+
+
+export type StatsData = {
+  period: string,
+  correct_rate: number,
+}
+export type TrendData = {
+  total_count: number,
+  correct_count: number,
+  stats: Array<StatsData>
 }

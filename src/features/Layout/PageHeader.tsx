@@ -5,11 +5,13 @@ type Props = {
   readonly title: string,
   readonly as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5',
   readonly divider?: boolean,
+  readonly className?:string
 }
 
-export default function PageHeader({title, as = 'h3', divider = true}: Props) {
+export default function PageHeader({title, as = 'h3', divider = true, className}: Props) {
 
   const classes = twMerge(
+    className,
     'font-bold mb-3 pl-4 border-l-4 border-l-primary',
     clsx({
       'text-4xl': as === 'h1',

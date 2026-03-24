@@ -23,7 +23,7 @@ export default function Statistics() {
 
 
       </div>
-      <PageHeader title='易錯題統計' as='h5' divider={false}/>
+
       <Row>
 
         {/*<Col xs={12} md={6} className='p-2'>*/}

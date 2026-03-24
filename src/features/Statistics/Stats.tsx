@@ -1,4 +1,4 @@
-import {useAxios, useToastApi} from "@/hooks";
+import {useAxios} from "@/hooks";
 import {EXAM_API_V2} from "@/lib/config.ts";
 import {TrendData} from "@/types/exam-types.ts";
 import {CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
@@ -6,17 +6,19 @@ import {Button, Loading} from "@/component";
 import {useQuery} from "@tanstack/react-query";
 import PageHeader from "../Layout/PageHeader.tsx";
 import {useNavigate} from "react-router";
+import Analyze from "@/features/Statistics/Analyze.tsx";
 
 type Props = {
   readonly subject: string | null,
   readonly defaultChecked?: boolean,
 }
 
-export default function Stats({subject, defaultChecked= false}: Props) {
+export default function Stats({subject, defaultChecked = false}: Props) {
 
   const api = useAxios();
   const navi = useNavigate();
   const label = subject ?? '全部科目'
+
 
   // 請求資料的函數
   const fetchData: () => Promise<TrendData> = async () => {
@@ -29,14 +31,7 @@ export default function Stats({subject, defaultChecked= false}: Props) {
   }
 
   // 使用useQuery
-  const {
-    data,
-    isLoading,
-    isFetching,
-    isError,
-    error,
-    refetch,
-  } = useQuery({
+  const {data,} = useQuery({
     // 當這些變數改變時，自動重新觸發請求
     queryKey: ['trend', subject],
     // 請求的函數
@@ -101,7 +96,7 @@ export default function Stats({subject, defaultChecked= false}: Props) {
         <div className='flex justify-end'>
           <Button style='outline' size='sm' onClick={onNavi}>查看作答紀錄</Button>
         </div>
-        <PageHeader title='近90日正確率' as='h5' divider={false} className='mt-4'/>
+        <PageHeader title='近90日正確率趨勢' as='h5' divider={false} className='mt-4'/>
         <ResponsiveContainer width="100%" height={400}>
           <LineChart data={data.stats} margin={{top: 5, right: 30, left: 20, bottom: 5}}>
             <CartesianGrid strokeDasharray="3 3"/>
@@ -112,6 +107,15 @@ export default function Stats({subject, defaultChecked= false}: Props) {
             <Line type="monotone" dataKey="correct_rate" stroke="#8884d8" strokeWidth={2} label name='正確率(%)'/>
           </LineChart>
         </ResponsiveContainer>
+        <PageHeader title='弱項分析' as='h5' divider={false} className='mt-4'/>
+        <p>透過 AI 分析最近50題的作答情形，找出個人弱項（每次執行需要消耗 AI 點數 1 點）</p>
+        {/*<p>此功能由 Gemini3-Flash 提供結果，僅供參考，請對內容進行查證</p>*/}
+        {subject ?
+          <Analyze subject={subject}/>
+          :
+          <div className='text-error italic text-sm'>請指定科目才能進行分析</div>
+        }
+
       </div>
     </>
   )

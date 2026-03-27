@@ -1,8 +1,8 @@
 import {Dispatch, SetStateAction} from "react";
 import {Button, Col} from "@/component";
 import {IoClose} from "react-icons/io5";
-import {HappyFileLink} from "@/types/enforcement-types.ts";
 import ModalSelectFile from "@/features/Link/FileLink/ModalSelectFile.tsx";
+import {HappyFileLink} from "@/types/happywork-types.ts";
 
 type Props = {
   readonly fileLink: Array<HappyFileLink>;

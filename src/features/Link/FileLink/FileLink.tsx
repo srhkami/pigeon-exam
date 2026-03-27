@@ -1,6 +1,7 @@
-import {HappyFileLink} from "@/types/enforcement-types.ts";
+
 import {Link} from "react-router";
 import {RiLinkM} from "react-icons/ri";
+import {HappyFileLink} from "@/types/happywork-types.ts";
 
 type Props = {
   readonly fileLink: Array<HappyFileLink>,

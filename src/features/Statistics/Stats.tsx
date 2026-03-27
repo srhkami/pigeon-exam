@@ -81,7 +81,7 @@ export default function Stats({subject, defaultChecked = false}: Props) {
           </div>
           <div className="stat place-items-center">
             <div className="stat-title"></div>
-            <div className="radial-progress bg-info text-info-content border-info border-4" style={{"--value": ratio}}
+            <div className="radial-progress bg-info text-info-content border-info border-4" style={{"--value": ratio} as React.CSSProperties}
                  aria-valuenow={ratio} role="progressbar">{ratio}%
             </div>
           </div>

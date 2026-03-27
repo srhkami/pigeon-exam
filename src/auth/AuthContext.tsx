@@ -20,7 +20,8 @@ const noLoginUser: UserInfo = {
   expiry_days: null,
   bookmark: '["bk"]',
   options: {},
-  name: '訪客'
+  name: '訪客',
+  ai_point:0,
 }
 
 // 定義一個安全的初始 Context 狀態

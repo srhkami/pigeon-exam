@@ -9,7 +9,9 @@ export {default as EssayQuestion} from '@/features/Essay/for-user/Question/Essay
 export {default as EssayRandom} from '@/features/Essay/for-user/Random/EssayRandom.tsx'
 export {default as EssayRecords} from '@/features/Essay/for-user/Record/EssayRecords.tsx'
 
-export {default as EssayManage} from '@/features/Essay/for-manager/EssayManage.tsx'
+export {default as EssayQuestionsManage} from '@/features/Essay/for-manager/Question/EssayQuestionsManage.tsx'
+export {default as EssayRecordsManage} from '@/features/Essay/for-manager/Record/EssayRecordsManage.tsx'
+
 
 export {default as Paper} from '@/features/Paper/for-user/Paper.tsx'
 export {default as PaperRecord} from '@/features/Paper/for-user/PaperRecord.tsx'

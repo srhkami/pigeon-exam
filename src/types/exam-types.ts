@@ -97,9 +97,12 @@ export interface EssayRecordSimpleData {
   id: number,
   user: number,
   user_display: string,
+  created_at: string,
   content: string,
   is_public: boolean,
   is_anonymous: boolean,
+  score: number,
+  comment: string,
 }
 
 // 申論題題目
@@ -117,7 +120,6 @@ export interface EssayQuestionData extends EssayQuestionSimpleData {
 
 // 申論題作答紀錄
 export interface EssayRecordData extends EssayRecordSimpleData {
-  created_at: string,
   question: EssayQuestionSimpleData,
   question_id: number,
 }
@@ -174,7 +176,7 @@ export interface PaperData extends PaperReadData {
 
 // 試卷編輯表單
 export type PaperEditForm = {
-  id?: number|null,
+  id?: number | null,
   title?: string, // 標題
   subject?: string, // 考試科目
   category?: string, // 考試類別

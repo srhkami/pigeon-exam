@@ -57,6 +57,7 @@ export default function Stats({subject, defaultChecked = false}: Props) {
   }
 
 
+
   return (
     <>
       <input type="radio" name="my_tabs_2" className="tab" aria-label={label} defaultChecked={defaultChecked}/>

@@ -3,12 +3,10 @@ import {ReactNode} from "react";
 import {
   About,
   AnalyzeReport,
-  ErrorAlert,
-  EssayManage,
   EssayQuestion,
-  EssayQuestions,
+  EssayQuestions, EssayQuestionsManage,
   EssayRandom,
-  EssayRecords,
+  EssayRecords, EssayRecordsManage,
   FeedbackWeb,
   Paper,
   PaperDetail,
@@ -155,7 +153,7 @@ export const EssayPagesForManager = {
     'sign_document.png',
     '/manage/essay/questions/1?ordering=-year',
     'EH',
-    <EssayManage/>
+    <EssayQuestionsManage/>
   ),
   question: new Page(
     '題目詳情',
@@ -169,7 +167,7 @@ export const EssayPagesForManager = {
     'exam_results_0.png',
     '/manage/essay/records/1?ordering=-year',
     'EM',
-    <ErrorAlert errorType='comingSoon'/>
+    <EssayRecordsManage/>
   ),
   record: new Page(
     '紀錄詳情',

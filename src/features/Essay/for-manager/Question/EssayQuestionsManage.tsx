@@ -4,13 +4,13 @@ import {EXAM_API} from "@/lib/config.ts";
 import {DataBrowser, DataBrowserTitle, FloatingActionButton} from "@/component";
 import {RiEdit2Fill} from "react-icons/ri";
 import {useForm} from "react-hook-form";
-import QsCardForEdit from "@/features/Essay/for-manager/QsCardForEdit.tsx";
-import ModalEssayEdit from "@/features/Essay/for-manager/Edit/ModalEssayEdit.tsx";
+import QsCardForEdit from "@/features/Essay/for-manager/Question/QsCardForEdit.tsx";
+import ModalEssayQuestionEdit from "@/features/Essay/for-manager/Question/ModalEssayQuestionEdit.tsx";
 import ModalEssayFilter from "@/features/Essay/for-manager/tools/ModalEssayFilter.tsx";
 
-export default function EssayManage() {
+export default function EssayQuestionsManage() {
 
-  const title = '申論題管理';
+  const title = '申論題 - 題目管理';
   const {data, pageInfo, onRefetch} = useDataBrowser<EssayQuestionData>({url: EXAM_API + '/essay_questions/'});
   const {register, watch} = useForm<EssayCardConfig>();
   const config = watch();
@@ -56,7 +56,7 @@ export default function EssayManage() {
         color='primary'
         closeButton
       >
-        <ModalEssayEdit onRefetch={onRefetch}/>
+        <ModalEssayQuestionEdit onRefetch={onRefetch}/>
       </FloatingActionButton>
     </>
   )

@@ -30,7 +30,7 @@ type Props = {
 }
 
 /* 新增申論題目的彈出視窗 */
-export default function ModalEssayEdit({onRefetch, q}: Props) {
+export default function ModalEssayQuestionEdit({onRefetch, q}: Props) {
 
   const api = useAxios();
   const {isShow, onShow, onHide} = useModal();

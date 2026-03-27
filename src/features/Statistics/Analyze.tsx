@@ -41,7 +41,7 @@ export default function Analyze({subject}: Props) {
           透過 AI 分析近期的作答情形，找出個人弱項。
         </li>
         <li>
-          執行此功能會消耗AI點數，您現有 {userInfo.ai_point} 點。
+          執行此功能會消耗 AI 點數，您現有 {userInfo.ai_point} 點。
         </li>
         <li>
           此功能由 Gemini3-Flash 提供結果，僅供參考，請對內容進行查證。

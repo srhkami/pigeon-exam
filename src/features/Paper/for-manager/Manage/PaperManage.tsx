@@ -75,7 +75,7 @@ export default function PaperManage() {
         closeButton
       >
         <FabAction color='primary' label='新增試卷'
-                   onClick={() => navi('/exam/paper/add')}>
+                   onClick={() => navi('/manage/paper/add')}>
           <BsFileEarmarkPlusFill/>
         </FabAction>
       </FloatingActionButton>

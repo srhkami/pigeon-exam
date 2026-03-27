@@ -70,22 +70,14 @@ export default function Stats({subject, defaultChecked = false}: Props) {
               {data.total_count}
               <span className='text-lg ml-1'>題</span>
             </div>
-            <div className="stat-actions">
-              {/*<Button size='xs' style='outline' onClick={() => onNavi()}>查看紀錄</Button>*/}
-            </div>
           </div>
-
           <div className="stat place-items-center">
             <div className="stat-title">正確作答</div>
             <div className="stat-value text-success">
               {data.correct_count}
               <span className='text-lg ml-1'>題</span>
             </div>
-            <div className="stat-actions">
-              {/*<Button size='xs' style='outline' color='error' onClick={() => onNavi(true)}>錯誤紀錄</Button>*/}
-            </div>
           </div>
-
           <div className="stat place-items-center">
             <div className="stat-title"></div>
             <div className="radial-progress bg-info text-info-content border-info border-4" style={{"--value": ratio}}
@@ -93,8 +85,8 @@ export default function Stats({subject, defaultChecked = false}: Props) {
             </div>
           </div>
         </div>
-        <div className='flex justify-end'>
-          <Button style='outline' size='sm' onClick={onNavi}>查看作答紀錄</Button>
+        <div className='mt-2'>
+          <Button style='outline' size='sm' onClick={onNavi}>查看此科目的作答紀錄</Button>
         </div>
         <PageHeader title='近90日正確率趨勢' as='h5' divider={false} className='mt-4'/>
         <ResponsiveContainer width="100%" height={400}>

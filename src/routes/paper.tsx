@@ -19,6 +19,7 @@ export const paperRouterForUser: RouteObject = {
 
 export const paperRouterForManager: RouteObject = {
   path: 'paper', children: [
+    {path: 'add', element: PaperPagesForManager.edit.content},
     {
       path: 'list', children: [
         {path: ':page', element: PaperPagesForManager.list.content}

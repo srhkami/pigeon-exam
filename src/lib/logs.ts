@@ -4,9 +4,17 @@ import {TVersion} from "@/types/about-types.ts";
 export const CHANGE_LOGS: Array<TVersion> = [
   {
     version: '1.0.0',
-    date: '1150302',
+    date: '1150327',
     logs: [
-      {type: 'new', text: '【全站】將本功能從鴿手網站中獨立。'},
+      {type: 'new', text: '【全站】將所有功能從鴿手網站中遷移過來。'},
+      {type: 'new', text: '【選擇題】【學生】出題加入「排除作答過的題目」及「只選曾作錯的題目」進階選項。'},
+      {type: 'new', text: '【選擇題】【學生】現在單題作答也會儲存紀錄。'},
+      {type: 'new', text: '【選擇題】【學生】加入作答紀錄瀏覽功能。'},
+      {type: 'new', text: '【申論題】【學生】回答加入「公開」及「匿名」的選項。'},
+      {type: 'info', text: '【申論題】【學生】回答格式改為純文字，並支援 MD 格式預覽。'},
+      {type: 'delete', text: '【申論題】【學生】移除按讚功能。'},
+      {type: 'delete', text: '【測驗】【學生】之前的紀錄因格式不共通，無法續用，所有紀錄轉移至選擇題。'},
+      {type: 'new', text: '【統計分析】【學生】加入作答統計、答題趨勢、AI 分析功能。'},
     ]
   }
 ]

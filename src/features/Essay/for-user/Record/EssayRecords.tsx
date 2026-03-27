@@ -29,13 +29,14 @@ export default function EssayRecords() {
     return (
       <EssayRecordCard key={record.id} record={record} setReload={setReload}/>
     )
-  })
+  }
+  )
 
   return (
     <div>
       <DataBrowser
         header={
-          <DataBrowserTitle title='申論題作答紀錄'/>
+          <DataBrowserTitle title='申論題 - 我作答過的題目'/>
         }
         filterConfigs={filterConfigs}
         pageOption={{...pageInfo, show: 2}}

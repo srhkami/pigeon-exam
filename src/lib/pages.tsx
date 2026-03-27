@@ -1,7 +1,9 @@
 import {MEDIA_IP} from "@/lib/config.ts";
 import {ReactNode} from "react";
 import {
-  About, ErrorAlert,
+  About,
+  AnalyzeReport,
+  ErrorAlert,
   EssayManage,
   EssayQuestion,
   EssayQuestions,
@@ -18,7 +20,8 @@ import {
   PaperRecordsManage,
   SelectPast,
   SelectQuestionManage,
-  SelectRandom, Statistics
+  SelectRandom,
+  Statistics
 } from "@/features";
 import {AuthType} from "@/types/auth-types.ts";
 import {AuthLayout} from "@/auth";
@@ -249,6 +252,13 @@ export const WebPages = {
     '/statistics',
     'E',
     <Statistics/>
+  ),
+  analyze: new Page(
+    'AI分析結果',
+    '',
+    '/analyze',
+    "L",
+    <AnalyzeReport/>
   ),
   about: new Page(
     '關於本網站',

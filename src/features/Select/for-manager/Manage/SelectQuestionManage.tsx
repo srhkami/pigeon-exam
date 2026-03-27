@@ -5,7 +5,7 @@ import {RiEdit2Fill} from "react-icons/ri";
 import {TbReload} from "react-icons/tb";
 import {useForm} from "react-hook-form";
 import ModalSelectFilter from "@/features/Select/for-manager/Manage/ModalSelectFilter.tsx";
-import ModalSelectAdd from "@/features/Select/for-manager/Manage/Edit/ModalSelectAdd.tsx";
+import ModalSelectEdit from "@/features/Select/for-manager/Manage/Edit/ModalSelectEdit.tsx";
 import {EXAM_API} from "@/lib/config.ts";
 import QsCardForEdit from "@/features/Select/for-manager/Question/QsCardForEdit.tsx";
 
@@ -66,7 +66,7 @@ export default function SelectQuestionManage() {
         color='primary'
         closeButton
       >
-        <ModalSelectAdd onRefetch={onRefetch}/>
+        <ModalSelectEdit onRefetch={onRefetch}/>
         <FabAction color='neutral' label='更新資料'
                    onClick={() => onRefetch()}>
           <TbReload/>

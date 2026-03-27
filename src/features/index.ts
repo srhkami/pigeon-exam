@@ -22,6 +22,7 @@ export {default as PaperRecordsManage} from '@/features/Paper/for-manager/Record
 export {default as PaperRecordDetail} from '@/features/Paper/for-manager/Record/PaperRecordDetail.tsx'
 
 export {default as Statistics} from './Statistics/Statistics.tsx'
+export {default as AnalyzeReport} from './Statistics/AnalyzeReport.tsx'
 export {default as FeedbackWeb} from './Feedback/FeedbackWeb.tsx'
 export {default as FilePreview} from './FilePreview/FilePreview.tsx'
 export {default as Logo} from './Logo/Logo.tsx'

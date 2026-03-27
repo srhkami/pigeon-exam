@@ -3,7 +3,6 @@ import {FaRegStickyNote} from "react-icons/fa";
 import {Badge, Button, RichTextShow} from "@/component";
 import ArticleLink from "@/features/Link/ArticleLink/ArticleLink.tsx";
 import FileLink from "@/features/Link/FileLink/FileLink.tsx";
-import ModalExamEssayAnswers from "@/features/Essay/for-user/tools/ModalExamEssayAnswers.tsx";
 import {useNavigate} from "react-router";
 import {RiEdit2Fill} from "react-icons/ri";
 
@@ -51,7 +50,6 @@ export default function QsCardForView({q, i, config}: Props) {
             <div className='divider m-0'></div>
             <div className='flex justify-between items-center mb-2'>
               <Badge color='info'><FaRegStickyNote/>擬答</Badge>
-              <ModalExamEssayAnswers q={q}/>
             </div>
             <RichTextShow jsonContent={q.sample_answer}/>
           </div>

@@ -107,15 +107,8 @@ export default function Stats({subject, defaultChecked = false}: Props) {
             <Line type="monotone" dataKey="correct_rate" stroke="#8884d8" strokeWidth={2} label name='正確率(%)'/>
           </LineChart>
         </ResponsiveContainer>
-        <PageHeader title='弱項分析' as='h5' divider={false} className='mt-4'/>
-        <p>透過 AI 分析最近50題的作答情形，找出個人弱項（每次執行需要消耗 AI 點數 1 點）</p>
-        {/*<p>此功能由 Gemini3-Flash 提供結果，僅供參考，請對內容進行查證</p>*/}
-        {subject ?
-          <Analyze subject={subject}/>
-          :
-          <div className='text-error italic text-sm'>請指定科目才能進行分析</div>
-        }
-
+        <PageHeader title='AI 弱項分析' as='h5' divider={false} className='mt-4'/>
+        <Analyze subject={subject}/>
       </div>
     </>
   )

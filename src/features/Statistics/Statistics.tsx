@@ -1,4 +1,3 @@
-import {Row} from "@/component";
 import PageHeader from "@/features/Layout/PageHeader.tsx";
 import Stats from "@/features/Statistics/Stats.tsx";
 
@@ -20,47 +19,9 @@ export default function Statistics() {
       <PageHeader title='選擇題' as='h4' divider={false}/>
       <div className="tabs tabs-border">
         {select_log_list}
-
-
       </div>
-
-      <Row>
-
-        {/*<Col xs={12} md={6} className='p-2'>*/}
-        {/*  <div className="stats shadow w-full">*/}
-        {/*    <div className="stat place-items-center">*/}
-        {/*      <div className="stat-title">已完成測驗</div>*/}
-        {/*      <div className="stat-value text-success">*/}
-        {/*        {log.data?.paper_count}*/}
-        {/*        <span className='text-lg ml-1'>次</span>*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*    <div className="stat place-items-center">*/}
-        {/*      <div className="stat-title">平均正確率</div>*/}
-        {/*      <div className="stat-value text-error">*/}
-        {/*        {log.data && Math.round(log.data?.right_count / log.data?.total_count * 100)}*/}
-        {/*        <span className='text-lg ml-1'>%</span>*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</Col>*/}
-        {/*<Col xs={12} md={6} className='p-2'>*/}
-        {/*  <div className="stats shadow w-full">*/}
-        {/*    <div className="stat place-items-center">*/}
-        {/*      <div className="stat-title">正確答題</div>*/}
-        {/*      <div className="stat-value">{log.data?.right_count}*/}
-        {/*        <span className='text-lg ml-1'>題</span></div>*/}
-        {/*    </div>*/}
-        {/*    <div className="stat place-items-center">*/}
-        {/*      <div className="stat-title">答題總數</div>*/}
-        {/*      <div className="stat-value">{log.data?.total_count}*/}
-        {/*        <span className='text-lg ml-1'>題</span></div>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</Col>*/}
-      </Row>
       <div className='text-sm italic text-secondary mt-2 text-center'>
-        詳細分析功能開發中，敬請期待......
+        更多分析功能開發中，敬請期待......
       </div>
     </div>
   )

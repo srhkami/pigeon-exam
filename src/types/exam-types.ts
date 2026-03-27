@@ -97,7 +97,9 @@ export interface EssayRecordSimpleData {
   id: number,
   user: number,
   user_display: string,
-  content: JSONContent | null,
+  content: string,
+  is_public: boolean,
+  is_anonymous: boolean,
 }
 
 // 申論題題目

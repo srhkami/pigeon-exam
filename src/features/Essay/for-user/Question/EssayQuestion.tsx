@@ -1,102 +1,53 @@
 import {EssayQuestionData} from "@/types/exam-types.ts";
 import {PageHeader} from "@/features";
-import QsCardForView from "@/features/Essay/for-user/Question/QsCardForView.tsx";
 import {useState} from "react";
-import {Button, Col, ModalTextEditor, Row} from "@/component";
-import {JSONContent} from "@tiptap/react";
-import {FaCheck, FaDoorClosed, FaDoorOpen} from "react-icons/fa";
-import toast from "react-hot-toast";
-import {showToast} from "@/func";
+import {Button} from "@/component";
+import {FaDoorClosed, FaDoorOpen} from "react-icons/fa";
 import {EXAM_API} from "@/lib/config.ts";
-import {useAuth, useAxios, useToastApi} from "@/hooks";
+import {useToastApi} from "@/hooks";
 import {useParams} from "react-router";
+import RecordsForQs from "@/features/Essay/for-user/Question/RecordsForQs.tsx";
+import ModalRecordEdit from "@/features/Essay/for-user/Record/ModalRecordEdit.tsx";
 
 export default function EssayQuestion() {
 
   const title = '申論題題目';
-  const api = useAxios();
   const {id} = useParams();
-  const {userInfo} = useAuth();
-  const {data} = useToastApi<EssayQuestionData>({url: `${EXAM_API}/essay_questions/${id}/`})
-
+  const [reload, setReload] = useState<boolean>(false);
+  const {data: q} = useToastApi<EssayQuestionData>({url: `${EXAM_API}/essay_questions/${id}/`, reload:reload})
   const [showSample, setShowSample] = useState<boolean>(false);
-  const [answer, setAnswer] = useState<JSONContent | null>(null);
 
-  const onCheckSubmit = () => {
-    if (!answer) {
-      toast.error('答案請勿留空')
-      return
-    }
-    toast((t) => (
-      <div className='w-52'>
-        <div className='font-semibold'>
-          是否確定提交答案？答案提交後，會分享給其他同學參考，您亦可隨時刪除作答內容。
-        </div>
-        <Row className='flex justify-between mt-2'>
-          <Col xs={5}>
-            <Button size='sm' color='primary' shape='block' onClick={() => {
-              toast.dismiss(t.id);
-              onSubmit();
-            }}>
-              確定提交
-            </Button>
-          </Col>
-          <Col xs={5}>
-            <Button size='sm' color='neutral' style='outline' shape='block'
-                    onClick={() => toast.dismiss(t.id)}>
-              取消
-            </Button>
-          </Col>
-        </Row>
-      </div>
-    ))
-  }
-
-  const onSubmit = () => {
-    showToast(
-      api<EssayQuestionData>({
-        method: 'POST',
-        url: EXAM_API + '/essay_records/create/',
-        data: {
-          user: userInfo.id,
-          question: id,
-          content: answer,
-        },
-      }),
-      {
-        label: '處理',
-        success: '提交成功',
-        error:
-          err => JSON.stringify(err.response?.data)
-      }
-    )
-      .then(() => {
-        setAnswer(null);
-        setShowSample(true)
-      })
-  }
-
-  if (!data) {
+  if (!q) {
     return null
   }
 
   return (
     <>
       <PageHeader title={title}/>
-      <QsCardForView q={data} i={data.id - 1} config={{showDetail: true, showLinks: true, showSample: showSample}}/>
-      <div className='label mt-4'>
-        我的回答
+      <PageHeader title='問題' divider={false} as='h5'/>
+      <div>
+        {q.question}
       </div>
-      <ModalTextEditor content={answer} setContent={setAnswer}/>
-      <div className='flex mt-4'>
-        {!showSample &&
-          <Button size='sm' color='warning' onClick={() => setShowSample(true)}><FaDoorOpen/>參考別人答案</Button>
-        }
-        {showSample &&
-          <Button size='sm' color='warning' onClick={() => setShowSample(false)}><FaDoorClosed/>我要靠自己！</Button>
-        }
-        <Button size='sm' color='primary' className='ml-auto' onClick={onCheckSubmit}><FaCheck/>提交我的答案</Button>
+      <div className='flex justify-end mt-2'>
+        <ModalRecordEdit q={q} setReload={setReload}/>
       </div>
+      <div className='divider'/>
+      <div className='mt-4 font-bold mb-3 pl-4 border-l-4 text-lg border-l-secondary flex gap-2'>
+        <div>
+          所有回答
+        </div>
+        <div>
+          {!showSample &&
+            <Button size='sm' color='warning' onClick={() => setShowSample(true)}><FaDoorOpen/>參考一下</Button>
+          }
+          {showSample &&
+            <Button size='sm' color='warning' onClick={() => setShowSample(false)}><FaDoorClosed/>我要靠自己！</Button>
+          }
+        </div>
+      </div>
+      {showSample &&
+        <RecordsForQs q={q} setReload={setReload}/>
+      }
     </>
   )
 }

@@ -5,7 +5,7 @@ import {DataBrowser, DataBrowserTitle, FloatingActionButton} from "@/component";
 import {RiEdit2Fill} from "react-icons/ri";
 import {useForm} from "react-hook-form";
 import QsCardForEdit from "@/features/Essay/for-manager/QsCardForEdit.tsx";
-import ModalEssayAdd from "@/features/Essay/for-manager/Edit/ModalEssayAdd.tsx";
+import ModalEssayEdit from "@/features/Essay/for-manager/Edit/ModalEssayEdit.tsx";
 import ModalEssayFilter from "@/features/Essay/for-manager/tools/ModalEssayFilter.tsx";
 
 export default function EssayManage() {
@@ -56,7 +56,7 @@ export default function EssayManage() {
         color='primary'
         closeButton
       >
-        <ModalEssayAdd onRefetch={onRefetch}/>
+        <ModalEssayEdit onRefetch={onRefetch}/>
       </FloatingActionButton>
     </>
   )

@@ -1,11 +1,10 @@
 import {EssayCardConfig, EssayQuestionData} from "@/types/exam-types.ts";
-import {FaEdit, FaRegStickyNote} from "react-icons/fa";
-import {Badge, Button, RichTextShow} from "@/component";
-import {useState} from "react";
-import EssayEdit from "@/features/Essay/for-manager/Edit/EssayEdit.tsx";
+import {FaRegStickyNote} from "react-icons/fa";
+import {Badge, RichTextShow} from "@/component";
 import ModalExamEssayAnswers from "@/features/Essay/for-manager/tools/ModalExamEssayAnswers.tsx";
 import ArticleLink from "@/features/Link/ArticleLink/ArticleLink.tsx";
 import FileLink from "@/features/Link/FileLink/FileLink.tsx";
+import ModalEssayEdit from "@/features/Essay/for-manager/Edit/ModalEssayEdit.tsx";
 
 type Props = {
   readonly q: EssayQuestionData,
@@ -25,24 +24,12 @@ type Props = {
 export default function QsCardForEdit({q, i, config, onRefetch}: Props) {
 
   const title = q.question.length > 50 ? q.question.slice(0, 50) + "..." : q.question
-  const [isEdit, setIsEdit] = useState<boolean>(false);
-
-  if (isEdit && onRefetch !== undefined) {
-    return (
-      <div className="hover:bg-base-200 card-border border-2 border-error rounded-xl my-1 relative p-2">
-        <EssayEdit obj={q} onRefetch={onRefetch} setIsEdit={setIsEdit}/>
-      </div>
-    )
-  }
 
   return (
     <div className='hover:bg-base-200 card card-border border-base-300 my-1 relative'>
       {/*編輯按鈕*/}
       {onRefetch !== undefined &&
-        <Button className='absolute top-1 right-1' size='sm' shape='circle'
-                onClick={() => setIsEdit(true)}>
-          <FaEdit/>
-        </Button>
+        <ModalEssayEdit q={q} onRefetch={onRefetch}/>
       }
       <div className='p-5'>
         <div className='font-bold'>

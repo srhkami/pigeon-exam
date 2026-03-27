@@ -10,6 +10,7 @@ export type UserInfo = {
   bookmark: string | null,
   name: string | null,
   options: UserOptions,
+  ai_point:number,
 }
 
 // 會員個人選項
@@ -44,6 +45,8 @@ export type UserDetailData = {
   accredited_at: string,
   community_join_at: string,
   community_log: Array<string>,
+  ai_point:number,
+  ai_daily_quota: number,
 }
 
 // 登入表單

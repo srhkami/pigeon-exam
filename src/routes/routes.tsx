@@ -31,7 +31,12 @@ const routes = createBrowserRouter([
           {path: 'about', element: <About/>},
           {path: 'feedback', element: <FeedbackWeb/>},
           {path: 'statistics', element: AllPages.statistics.content},
-          {path:'test', element: <TestPage/>},
+          {
+            path: 'analyze', children: [
+              {path: ':id', element: AllPages.analyze.content}
+            ]
+          },
+          {path: 'test', element: <TestPage/>},
           {
             path: 'l', children: [
               {path: ':url', element: <FilePreview code='l'/>}

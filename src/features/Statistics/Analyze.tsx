@@ -50,30 +50,30 @@ export default function Analyze({subject}: Props) {
           分析結果除了即時顯示外，會寄送一份包含報告網址的電子郵件至您的信箱。
         </li>
       </ul>
-
       {
         !subject &&
-        <Button disabled className='mt-2'>請先指定科目</Button>
+        <Button size='sm' disabled className='mt-2'>請先指定科目</Button>
       }
       {
         (!isLoading && subject) &&
-        <div className='flex gap-2'>
-          <Button style='outline' onClick={() => onSubmit(false)}>
+        <div className='my-2'>
+          <Button size='sm' style='outline' className='m-1' onClick={() => onSubmit(false)}>
             分析最近100題，不論對錯
             <Badge size='xs' color='error'>2點</Badge>
           </Button>
-          <Button style='outline' onClick={() => onSubmit(true)}>
+          <Button size='sm' style='outline' className='m-1' onClick={() => onSubmit(true)}>
             分析最近50題，答錯的題目
             <Badge size='xs' color='error'>1點</Badge>
           </Button>
         </div>
       }
       {
-        isLoading && <div>
+        isLoading &&
+        <Badge color='info' style='outline' className='mt-2 p-5'>
           <Loading style='bars'/>
-          內容生成中，請稍候
+          <span className='mx-1'>內容生成中，請稍候</span>
           <Loading style='dots'/>
-        </div>
+        </Badge>
       }
       <article className="prose max-w-full px-1 md:px-6 mt-2">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>

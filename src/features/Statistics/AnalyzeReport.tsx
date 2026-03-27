@@ -7,7 +7,6 @@ import {useAxios} from "@/hooks";
 import {AI_API_V2} from "@/lib/config.ts";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import MDEditor from '@uiw/react-md-editor';
 
 type AnalyzeData = {
   created_at: string,
@@ -21,7 +20,6 @@ export default function AnalyzeReport(){
   const {id} = useParams()
 
   const [data, setData] = useState<AnalyzeData>()
-  const [text, setText] = useState<string>()
 
   useEffect(() => {
     showToast(
@@ -32,7 +30,6 @@ export default function AnalyzeReport(){
       {label:'載入', error:err=>JSON.stringify(err.response.data)}
     ).then(res=> {
       setData(res.data)
-      setText(res.data.response_text)
     })
   }, []);
 
@@ -54,9 +51,6 @@ export default function AnalyzeReport(){
           {data?.response_text}
         </ReactMarkdown>
       </article>
-      <div className="not-prose h-96">
-        <MDEditor value={text} onChange={setText}/>
-      </div>
     </div>
   )
 }

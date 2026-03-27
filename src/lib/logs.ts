@@ -12,6 +12,7 @@ export const CHANGE_LOGS: Array<TVersion> = [
       {type: 'new', text: '【選擇題】【學生】加入作答紀錄瀏覽功能。'},
       {type: 'new', text: '【申論題】【學生】回答加入「公開」及「匿名」的選項。'},
       {type: 'info', text: '【申論題】【學生】回答格式改為純文字，並支援 MD 格式預覽。'},
+      {type: 'info', text: '【申論題】【老師】對學生的作答紀錄加入評分及評語功能。'},
       {type: 'delete', text: '【申論題】【學生】移除按讚功能。'},
       {type: 'delete', text: '【測驗】【學生】之前的紀錄因格式不共通，無法續用，所有紀錄轉移至選擇題。'},
       {type: 'new', text: '【統計分析】【學生】加入作答統計、答題趨勢、AI 分析功能。'},

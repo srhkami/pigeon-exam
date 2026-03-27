@@ -1,16 +1,18 @@
 import {useDataBrowser} from "@/hooks";
-import {Button, DataBrowser, DataBrowserTitle} from "@/component";
+import {Button, DataBrowser, DataBrowserTitle, FabAction, FloatingActionButton} from "@/component";
 import {PaperRecordData} from "@/types/exam-types.ts";
 import {EXAM_API} from "@/lib/config.ts";
 import {useNavigate} from "react-router";
 import {PiExam} from "react-icons/pi";
 import {MdOutlineOpenInNew} from "react-icons/md";
 import {FilterConfig} from "@/types/api-types.ts";
+import {RiEdit2Fill} from "react-icons/ri";
+import {TbReload} from "react-icons/tb";
 
 /* 測驗結果管理 */
 export default function PaperRecordsManage() {
 
-  const {data, pageInfo} = useDataBrowser<PaperRecordData>({url: EXAM_API + '/paper_records/'});
+  const {data, pageInfo, onRefetch} = useDataBrowser<PaperRecordData>({url: EXAM_API + '/paper_records/'});
 
   const navi = useNavigate();
 
@@ -58,6 +60,16 @@ export default function PaperRecordsManage() {
       <ul className="list mx-2">
         {dataList}
       </ul>
+      <FloatingActionButton
+        buttonContent={<RiEdit2Fill/>}
+        color='primary'
+        closeButton
+      >
+        <FabAction color='neutral' label='更新資料'
+                   onClick={() => onRefetch()}>
+          <TbReload/>
+        </FabAction>
+      </FloatingActionButton>
     </DataBrowser>
   )
 }

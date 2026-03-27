@@ -30,10 +30,11 @@ export default function EssayRecordCard({record, setReload}: Props) {
             <FaCircleUser className='text-2xl'/>
             <div>
               <h2
-                className="card-title">{record.user_display}{record.is_anonymous && '（匿名）'}{record.is_public && '（不公開）'}</h2>
+                className="card-title">{record.user_display}{record.is_anonymous && '（匿名）'}{!record.is_public && '（不公開）'}</h2>
               <p className='text-xs opacity-50'>{record.created_at}</p>
             </div>
             <ModalScoreEdit record={record} setReload={setReload}/>
+            {/*<ModalRecordEdit record={record} q={record.question} setReload={setReload} />*/}
           </div>
           <article className="prose max-w-full px-1 md:px-6 mt-2">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>

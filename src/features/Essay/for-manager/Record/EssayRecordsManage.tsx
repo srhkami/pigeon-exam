@@ -1,16 +1,17 @@
 import {useDataBrowser} from "@/hooks";
 import {EssayRecordData} from "@/types/exam-types.ts";
 import {EXAM_API} from "@/lib/config.ts";
-import {DataBrowser, DataBrowserTitle, FloatingActionButton} from "@/component";
+import {DataBrowser, DataBrowserTitle, FabAction, FloatingActionButton} from "@/component";
 import {RiEdit2Fill} from "react-icons/ri";
 import ModalEssayQuestionEdit from "@/features/Essay/for-manager/Question/ModalEssayQuestionEdit.tsx";
 import {FilterConfig} from "@/types/api-types.ts";
 import EssayRecordCard from "@/features/Essay/for-manager/Record/EssayRecordCard.tsx";
+import {TbReload} from "react-icons/tb";
 
 export default function EssayRecordsManage() {
 
   const title = '申論題 - 作答紀錄管理';
-  const {data, pageInfo, onRefetch, setReload} = useDataBrowser<EssayRecordData>({url: EXAM_API + '/essay_records/'});
+  const {data, pageInfo, onRefetch, setReload} = useDataBrowser<EssayRecordData>({url: EXAM_API + '/essay_records/', pageSize:10});
 
   const filterConfigs: Array<FilterConfig> = [
     {
@@ -45,6 +46,10 @@ export default function EssayRecordsManage() {
         closeButton
       >
         <ModalEssayQuestionEdit onRefetch={onRefetch}/>
+        <FabAction color='neutral' label='更新資料'
+                   onClick={() => onRefetch()}>
+          <TbReload/>
+        </FabAction>
       </FloatingActionButton>
     </>
   )

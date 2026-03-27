@@ -9,12 +9,13 @@ import {FilterConfig} from "@/types/api-types.ts";
 import {twMerge} from "tailwind-merge";
 import clsx from "clsx";
 import {MdOutlineOpenInNew} from "react-icons/md";
+import {TbReload} from "react-icons/tb";
 
 /* 試卷管理 */
 export default function PaperManage() {
 
   const navi = useNavigate();
-  const {data, pageInfo} = useDataBrowser<PaperData>({url: EXAM_API + '/papers/'});
+  const {data, pageInfo, onRefetch} = useDataBrowser<PaperData>({url: EXAM_API + '/papers/'});
 
   const filterConfigs: Array<FilterConfig> = [
     {
@@ -77,6 +78,10 @@ export default function PaperManage() {
         <FabAction color='primary' label='新增試卷'
                    onClick={() => navi('/manage/paper/add')}>
           <BsFileEarmarkPlusFill/>
+        </FabAction>
+        <FabAction color='neutral' label='更新資料'
+                   onClick={() => onRefetch()}>
+          <TbReload/>
         </FabAction>
       </FloatingActionButton>
     </>

@@ -165,7 +165,7 @@ export const EssayPagesForManager = {
   records: new Page(
     '紀錄查閱',
     'exam_results_0.png',
-    '/manage/essay/records/1?ordering=-year',
+    '/manage/essay/records/1?ordering=-id',
     'EM',
     <EssayRecordsManage/>
   ),

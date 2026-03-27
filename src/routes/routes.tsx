@@ -1,5 +1,5 @@
 import {createBrowserRouter} from "react-router";
-import {About, Base, ErrorAlert, FeedbackWeb, FilePreview, Home, UserProfile} from "@/features";
+import {About, Base, ErrorAlert, FeedbackWeb, FilePreview, Home, Manage, UserProfile} from "@/features";
 import {AuthLayout} from "@/auth";
 import {selectRouterForManager, selectRouterForUser} from "@/routes/select.tsx";
 import {essayRouterForManager, essayRouterForUser} from "@/routes/essay.tsx";
@@ -16,6 +16,7 @@ const routes = createBrowserRouter([
         element: <Base manage_mode={true}/>,
         errorElement: <Base><ErrorAlert errorType='noPage'/></Base>,
         children: [
+          {path: '', element: <Manage/>},
           selectRouterForManager,
           essayRouterForManager,
           paperRouterForManager
@@ -27,7 +28,6 @@ const routes = createBrowserRouter([
         errorElement: <Base><ErrorAlert errorType='noPage'/></Base>,
         children: [
           {path: '', element: <Home/>},
-          {path: 'index', element: <Home/>},
           {path: 'about', element: <About/>},
           {path: 'feedback', element: <FeedbackWeb/>},
           {path: 'statistics', element: AllPages.statistics.content},

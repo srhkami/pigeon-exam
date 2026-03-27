@@ -1,12 +1,13 @@
 import {useDataBrowser} from "@/hooks";
 import {EssayCardConfig, EssayQuestionData} from "@/types/exam-types.ts";
 import {EXAM_API} from "@/lib/config.ts";
-import {DataBrowser, DataBrowserTitle, FloatingActionButton} from "@/component";
+import {DataBrowser, DataBrowserTitle, FabAction, FloatingActionButton} from "@/component";
 import {RiEdit2Fill} from "react-icons/ri";
 import {useForm} from "react-hook-form";
 import QsCardForEdit from "@/features/Essay/for-manager/Question/QsCardForEdit.tsx";
 import ModalEssayQuestionEdit from "@/features/Essay/for-manager/Question/ModalEssayQuestionEdit.tsx";
 import ModalEssayFilter from "@/features/Essay/for-manager/tools/ModalEssayFilter.tsx";
+import {TbReload} from "react-icons/tb";
 
 export default function EssayQuestionsManage() {
 
@@ -57,6 +58,10 @@ export default function EssayQuestionsManage() {
         closeButton
       >
         <ModalEssayQuestionEdit onRefetch={onRefetch}/>
+        <FabAction color='neutral' label='更新資料'
+                   onClick={() => onRefetch()}>
+          <TbReload/>
+        </FabAction>
       </FloatingActionButton>
     </>
   )

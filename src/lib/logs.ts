@@ -3,6 +3,13 @@ import {TVersion} from "@/types/about-types.ts";
 
 export const CHANGE_LOGS: Array<TVersion> = [
   {
+    version: '1.0.1',
+    date: '1150331',
+    logs: [
+      {type: 'fix', text: '【測驗】修復測驗儲存後，作答選項與儲存結果不符合的問題。'},
+    ]
+  },
+  {
     version: '1.0.0',
     date: '1150327',
     logs: [

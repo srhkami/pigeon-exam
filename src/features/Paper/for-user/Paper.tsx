@@ -55,6 +55,9 @@ export default function Paper() {
     )
   }
 
+  // 取得題目的所有ID
+  const select_question_ids = data.select_questions.map(q=>q.id)
+
   // 確認提交
   const onCheck = () => {
     const nullIndex = selectAnswers.findIndex(i => i[0] === null)
@@ -93,14 +96,13 @@ export default function Paper() {
       title: data.title,
       subject: data.subject,
       category: data.category,
-      select_question_ids: data.select_question_ids,
+      select_question_ids: select_question_ids,
       select_answers: selectAnswers,
       select_score: data.select_score,
       essay_question_ids: [],
       essay_answers: [],
       essay_score: 0
     }
-
     showToast(
       api({
         method: "POST",

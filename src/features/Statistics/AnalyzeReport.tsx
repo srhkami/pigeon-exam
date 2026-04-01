@@ -4,7 +4,7 @@ import {useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {showToast} from "@/func";
 import {useAxios} from "@/hooks";
-import {AI_API_V2} from "@/lib/config.ts";
+import {EXAM_API_V2} from "@/lib/config.ts";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -24,7 +24,7 @@ export default function AnalyzeReport(){
   useEffect(() => {
     showToast(
       async()=> api<AnalyzeData>({
-        url: AI_API_V2 + '/exam/select_analyze/' + id,
+        url: EXAM_API_V2 + '/select/analyze_reports/' + id,
         method:'GET',
       }),
       {label:'載入', error:err=>JSON.stringify(err.response.data)}

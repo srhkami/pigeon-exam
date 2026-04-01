@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {useAuth, useAxios} from "@/hooks";
 import {showToast} from "@/func";
-import {AI_API_V2} from "@/lib/config.ts";
+import {EXAM_API_V2} from "@/lib/config.ts";
 
 type Props = {
   readonly subject: string | null,
@@ -21,7 +21,7 @@ export default function Analyze({subject}: Props) {
     setIsLoading(true);
     showToast(
       async () => api({
-        url: AI_API_V2 + '/exam/select_analyze',
+        url: EXAM_API_V2 + '/select/analyze',
         method: 'GET',
         params: {
           subject: subject,

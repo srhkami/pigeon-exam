@@ -156,9 +156,7 @@ export interface PaperReadData {
   subject: string, // 考試科目
   category: string, // 考試類科
   select_questions: Array<SelectQuestionReadData>,
-  select_question_ids: Array<number>,
   essay_questions: Array<EssayQuestionSimpleData>,
-  essay_question_ids: Array<number>,
   uuid: string,// 識別碼
   is_public: boolean, // 是否開放
   select_score: number,

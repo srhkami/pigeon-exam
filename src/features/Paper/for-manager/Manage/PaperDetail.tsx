@@ -7,7 +7,7 @@ import {MdDelete, MdOutlineContentCopy, MdOutlinePublishedWithChanges} from "rea
 import {FaEdit} from "react-icons/fa";
 import toast from "react-hot-toast";
 import {EXAM_API} from "@/lib/config.ts";
-import {copyText, showToast} from "@/func";
+import {copy, showToast} from "@/func";
 import ModalQuestionToText from "@/features/Paper/for-manager/Manage/ModalQuestionToText.tsx";
 import QsCardForView from "@/features/Select/for-manager/Question/QsCardForView.tsx";
 
@@ -83,7 +83,7 @@ export default function PaperDetail() {
           <FaEdit/>編輯試卷
         </Button>
         <Button size='sm' style='outline'
-                onClick={() => copyText('https://exam.pigeonhand.tw/paper/' + data.uuid)}>
+                onClick={() => copy('https://exam.pigeonhand.tw/paper/' + data.uuid)}>
           <MdOutlineContentCopy/>複製網址
         </Button>
         <ModalQuestionToText paper={data}/>

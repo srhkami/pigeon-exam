@@ -5,7 +5,7 @@ import {MEDIA_IP, WEB_API} from "@/lib/config.ts";
 import {IoArrowBackOutline, IoShareSocial} from "react-icons/io5";
 import {FaArrowRightToBracket} from "react-icons/fa6";
 import {IoMdDownload} from "react-icons/io";
-import {copyText, errorLogger, showToast} from "@/func";
+import {copy, errorLogger, showToast} from "@/func";
 import {BottomBar, BottomButton, BottomMainButton} from '@/component';
 import CountdownTimer from "./tools/CountdownTimer.tsx";
 import ShowFile from "./tools/ShowFile.tsx";
@@ -53,7 +53,7 @@ export default function FilePreview({code}: Props): ReactNode {
     // 組合文字
     const textToCopy = `${currentUrl}\n${customText}`;
     // 複製到剪貼簿
-    copyText(textToCopy);
+    copy(textToCopy);
   }
 
   return (

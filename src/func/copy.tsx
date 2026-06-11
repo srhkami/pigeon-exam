@@ -1,7 +1,7 @@
 import {showToast} from "@/func";
 import {errorLogger} from "@/func/index.ts";
 
-export default function copyText(text: string) {
+export default function copy(text: string) {
   showToast(
     navigator.clipboard.writeText(text),
     {

@@ -1,27 +1,31 @@
 import {Editor} from "@tiptap/react";
-import {MdFormatListBulleted, MdFormatListNumbered} from "react-icons/md";
-import {LuTextQuote} from "react-icons/lu";
-import EditorButton from "./EditorButton.tsx";
+import {Button} from "@/component";
+import {useCallback} from "react";
+import {BiImageAdd} from "react-icons/bi";
 
 type Props = {
   readonly editor: Editor,
 }
 
-export default function BtnList({editor}: Props) {
+/* 復原操作的元件 */
+export default function BtnImage({editor}: Props) {
+
+  const addImage = useCallback(() => {
+    const url = window.prompt('請輸入圖片網址（外部連結或先上傳資料庫）')
+
+    if (url) {
+      editor.chain().focus().setImage({src: url}).run()
+    }
+  }, [editor])
+
+  if (!editor) {
+    return null
+  }
+
   return (
-    <div className='join'>
-      <EditorButton className='' title='無序清單' editor={editor}
-                    onClick={() => editor.chain().focus().toggleBulletList().run()}>
-        <MdFormatListBulleted className='text-lg'/>
-      </EditorButton>
-      <EditorButton className='' title='有序清單' editor={editor}
-                    onClick={() => editor.chain().focus().toggleOrderedList().run()}>
-        <MdFormatListNumbered className='text-lg'/>
-      </EditorButton>
-      <EditorButton className='' title='引用' editor={editor}
-                    onClick={() => editor.chain().focus().toggleBlockquote().run()}>
-        <LuTextQuote className='text-lg'/>
-      </EditorButton>
-    </div>
+    <Button size='xs' color='neutral' style='soft' className='join-item text-base-content' title='插入圖片'
+            onClick={addImage}>
+      <BiImageAdd className='text-lg'/>
+    </Button>
   )
 }

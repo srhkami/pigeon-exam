@@ -28,7 +28,7 @@ const noLoginUser: UserInfo = {
 const initialContext: TypeAuthContext = {
   isAuthenticated: false,
   onReload: ()=>{},
-  setIsAuthenticated: (_: boolean) => {},
+  setIsAuthenticated: () => {},
   userInfo: noLoginUser, // 關鍵：這裡必須放入 noLoginUser，確保 userInfo 永遠不為 undefined
 
 };

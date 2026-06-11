@@ -1,10 +1,15 @@
-import toast, {type Renderable, type ValueOrFunction} from "react-hot-toast";
+import toast, {Renderable, ValueOrFunction} from "react-hot-toast";
 
-type TOption = {
+export type ToastError = {
+  response: { data: { detail: string } & Record<string, string> },
+  respose: { data: { detail: string } },
+}
+
+export type ToastConfig = {
   label?: string,
   loading?: string,
   success?: string,
-  error?: ValueOrFunction<Renderable, any>,
+  error?: ValueOrFunction<Renderable, ToastError>,
 }
 
 /* 自定義封裝toast Promise組件
@@ -13,13 +18,13 @@ type TOption = {
 * */
 export default async function showToast<T>(
   func: Promise<T> | (() => Promise<T>),
-  option?: TOption | null,
+  option?: ToastConfig,
 ) {
 
-  const baseText = option?.label ?? '處理';
-  const loadingText = option?.loading ?? baseText + '中...';
-  const successText = option?.success ?? null;
-  const errorText = option?.error ?? baseText + '失敗，請重試';
+  const label = option?.label ? option.label : '處理';
+  const loadingText = option?.loading ? option.loading : label + '中...';
+  const successText = option?.success ? option.success : null;
+  const errorText = option?.error ? option.error : label + '失敗，請重試';
 
   return await toast.promise(
     func,

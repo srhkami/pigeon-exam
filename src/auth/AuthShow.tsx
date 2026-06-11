@@ -56,29 +56,29 @@ const authList: Array<{ type: AuthType, label: string, tip: string }> = [
   },
 ]
 
+type Props = {
+  readonly auth?: string,
+}
+
 /* 權限顯示的組件 */
-export default function AuthShow() {
+export default function AuthShow({auth: externalAuth}: Props) {
 
   const {userInfo} = useAuth();
-  const auth = userInfo.auth;
+  const auth = externalAuth ?? userInfo.auth;
 
-  const items = authList.map(item => {
-    if (handleHasAuth(auth, item.type)) {
-      return (
-          <div className="tooltip cursor-pointer flex m-1" data-tip={item.tip} key={item.type}>
-            <Badge size='xs' color='info'>{item.label}</Badge>
-          </div>
-      )
-    } else {
-      return null
-    }
-  })
+  const items = authList
+    .filter(item => handleHasAuth(auth, item.type))
+    .map(item => (
+      <div className="tooltip cursor-pointer flex m-1" data-tip={item.tip} key={item.type}>
+        <Badge size='xs' color='info'>{item.label}</Badge>
+      </div>
+    ))
 
   return (
     <div className='flex flex-wrap items-center justify-center'>
       {items.length ?
         items :
-          '無權限'
+        '無權限'
       }
     </div>
   )

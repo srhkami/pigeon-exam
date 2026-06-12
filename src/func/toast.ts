@@ -12,6 +12,30 @@ export type ToastConfig = {
   error?: ValueOrFunction<Renderable, ToastError>,
 }
 
+function formatToastError(err: unknown, fallback: Renderable) {
+  const error = err as { response?: { data?: unknown }, respose?: { data?: unknown } };
+  const data = error?.response?.data ?? error?.respose?.data;
+  if (!data) return fallback;
+
+  if (typeof data === 'string') return data;
+  const payload = data as { detail?: unknown, code?: unknown };
+  if (typeof payload.detail === 'string') return payload.detail;
+  if (typeof payload.code === 'string') return payload.code;
+
+  if (data && typeof data === 'object') {
+    const firstMessage = Object.values(data).find((value) => typeof value === 'string' && value.trim().length > 0);
+    if (typeof firstMessage === 'string') return firstMessage;
+
+    try {
+      return JSON.stringify(data);
+    } catch {
+      return fallback;
+    }
+  }
+
+  return fallback;
+}
+
 /* 自定義封裝toast Promise組件
 *  可傳入簡易預設文字，或自訂每個值
 *  若無傳入其他狀態文字，則預設生成預計的載入中與錯誤提示，而成功不顯示
@@ -31,7 +55,9 @@ export default async function showToast<T>(
     {
       loading: loadingText,
       success: successText,
-      error: errorText,
+      error: (err) => typeof errorText === 'function'
+        ? errorText(err as ToastError)
+        : formatToastError(err, errorText),
     }
   )
 }

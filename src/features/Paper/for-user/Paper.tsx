@@ -33,7 +33,7 @@ export default function Paper() {
         setSelectAnswers(new Array(select_questions.length).fill([null])) // 產生答案空清單
       }, {label: '載入', error: err => err.response.data.detail}
     ).catch(() => navi('/select/random'))
-  }, []);
+  }, [api, navi, uuid]);
 
   if (!data) {
     return null;

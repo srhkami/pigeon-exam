@@ -1,6 +1,6 @@
 import {MdError} from "react-icons/md";
 import {Button} from "@/component";
-import {showToast} from "@/func";
+import {getApiErrorMessage, showToast} from "@/func";
 import axios from "axios";
 import {WEB_API} from "@/lib/config.ts";
 import toast from "react-hot-toast";
@@ -9,18 +9,19 @@ import {useAuth} from "@/hooks";
 type FormValues = {
   error_type: string,
   user_email: string | null,
-  content: Error,
+  content: unknown,
 }
 
 type Props = {
   readonly toastId: string,
-  readonly error: any,
+  readonly error: unknown,
   readonly errorType: string,
 }
 
 export default function ErrorLogToast({toastId, error, errorType}: Props) {
 
   const {userInfo} = useAuth();
+  const errorMessage = getApiErrorMessage(error, "發生未知錯誤，請稍後再試。");
 
   const onReport = () => {
     const data: FormValues = {
@@ -46,6 +47,7 @@ export default function ErrorLogToast({toastId, error, errorType}: Props) {
     <div className='flex items-center'>
       <MdError className='text-error text-lg'/>
       <span className='font-semibold mx-2'>哎呀！出現錯誤了！</span>
+      <span className='text-sm opacity-80 mr-2'>{errorMessage}</span>
       <Button size='xs' color='neutral' onClick={onReport} >
         回報作者
       </Button>

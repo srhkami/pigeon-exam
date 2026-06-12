@@ -2,7 +2,7 @@ import {SelectQuestionSimpleData, SelectRecordData} from "@/types/exam-types.ts"
 import {Button} from "@/component";
 import {useState} from "react";
 import {FaArrowRight, FaCheckCircle} from "react-icons/fa";
-import {showToast} from "@/func";
+import {getApiErrorMessage, showToast} from "@/func";
 import {EXAM_API, EXAM_API_V2} from "@/lib/config.ts";
 import {useAxios} from "@/hooks";
 import QsCardForInput from "@/features/Select/for-user/Question/QsCardForInput.tsx";
@@ -33,16 +33,15 @@ export default function SelectSingle({formData}: Props) {
   // 出題
   const onStart = () => {
     const cleanData = Object.fromEntries(
-      Object.entries(formData).filter(([_, v]) => v != null && v !== '')
-    );
-    const newParams = new URLSearchParams(cleanData as any);
-    console.log('newParams', newParams);
+      Object.entries(formData).filter(([, value]) => value != null && value !== '')
+    ) as Record<string, string | Array<string>>;
+    console.log('newParams', cleanData);
     showToast(
       api<SelectQuestionSimpleData>({
         method: 'GET',
         url: EXAM_API + '/select_questions/random_single/',
-        params: newParams,
-      }), {label: '載入', error: err => JSON.stringify(err.response?.data)}
+        params: cleanData,
+      }), {label: '載入', error: err => getApiErrorMessage(err, '載入出題失敗，請稍後再試。')}
     )
       .then(res => setQ(res.data))
       .finally(() => {
@@ -63,7 +62,7 @@ export default function SelectSingle({formData}: Props) {
           question_id: q?.id,
           user_answer: answers[0],
         },
-      }), {label: '提交', error: err => JSON.stringify(err.response?.data)}
+      }), {label: '提交', error: err => getApiErrorMessage(err, '提交失敗，請稍後再試。')}
     ).then(res => setRecord(res.data))
 
   }

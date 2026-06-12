@@ -4,10 +4,11 @@ import {useEffect, useState} from "react";
 import {PaperRecordData} from "@/types/exam-types.ts";
 import {Button, DetailRow} from "@/component";
 import {FaSearch} from "react-icons/fa";
-import {showToast} from "@/func";
+import {getApiErrorMessage, showToast} from "@/func";
 import {EXAM_API} from "@/lib/config.ts";
 import {PageHeader} from "@/features";
 import QsCardForRecord from "@/features/Select/for-user/Question/QsCardForRecord.tsx";
+import {ErrorAlert} from "@/features";
 
 export default function PaperRecordDetail() {
 
@@ -15,6 +16,7 @@ export default function PaperRecordDetail() {
   const navi = useNavigate();
   const {id} = useParams();
   const [data, setData] = useState<PaperRecordData>();
+  const [loadError, setLoadError] = useState<string>();
 
   useEffect(() => {
     showToast(
@@ -25,9 +27,21 @@ export default function PaperRecordDetail() {
         })
         setData(res.data);
       }
-      , {label: '載入', error: (err) => err.response.data.detail}
-    ).catch(() => navi('/'))
-  }, []);
+      , {label: '載入', error: (err) => getApiErrorMessage(err, '讀取測驗紀錄失敗，請稍後再試。')}
+    ).catch((err) => {
+      setLoadError(getApiErrorMessage(err, '讀取測驗紀錄失敗，請稍後再試。'));
+    })
+  }, [api, id]);
+
+  if (loadError) {
+    return (
+      <ErrorAlert option={{
+        color: 'error',
+        header: '無法讀取測驗紀錄',
+        message: loadError,
+      }}/>
+    )
+  }
 
   if (!data) return null;
 

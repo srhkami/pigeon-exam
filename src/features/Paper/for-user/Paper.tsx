@@ -2,7 +2,7 @@ import {useAxios} from "@/hooks";
 import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {PaperReadData, PaperSubmitForm} from "@/types/exam-types.ts";
-import {showToast} from "@/func";
+import {getApiErrorMessage, showToast} from "@/func";
 import {EXAM_API, EXAM_API_V2} from "@/lib/config.ts";
 import {Alert, Button, Col, DetailRow, Row} from "@/component";
 import {IoWarningOutline} from "react-icons/io5";
@@ -31,7 +31,7 @@ export default function Paper() {
         setData(res.data)
         const select_questions = res.data.select_questions; // 取出題目清單
         setSelectAnswers(new Array(select_questions.length).fill([null])) // 產生答案空清單
-      }, {label: '載入', error: err => err.response.data.detail}
+      }, {label: '載入', error: err => getApiErrorMessage(err, '載入試卷失敗，請稍後再試。')}
     ).catch(() => navi('/select/random'))
   }, [api, navi, uuid]);
 
@@ -108,7 +108,7 @@ export default function Paper() {
         method: "POST",
         url: EXAM_API_V2 + '/paper/submit',
         data: formData,
-      }), {error: err => JSON.stringify(err.response.data)}
+      }), {error: err => getApiErrorMessage(err, '交卷失敗，請稍後再試。')}
     )
       .then(res => navi('/paper/record/' + res.data.id))
   }

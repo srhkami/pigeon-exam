@@ -1,4 +1,4 @@
-import {useAuth, useAxios, useModal} from "@/hooks";
+import {useAxios, useModal} from "@/hooks";
 import {
   Button,
   Col,
@@ -19,7 +19,7 @@ import ArticleLinkEdit from "@/features/Link/ArticleLink/ArticleLinkEdit.tsx";
 import FileLinkEdit from "@/features/Link/FileLink/FileLinkEdit.tsx";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {EXAM_API} from "@/lib/config.ts";
-import {showFormError, showToast} from "@/func";
+import {getApiErrorMessage, showFormError, showToast} from "@/func";
 import {useState} from "react";
 import {HappyFileLink} from "@/types/happywork-types.ts";
 import {JSONContent} from "@tiptap/react";
@@ -34,7 +34,6 @@ export default function ModalSelectEdit({obj, onRefetch}: Props) {
 
   const api = useAxios();
   const {isShow, onShow, onHide} = useModal();
-  const {userInfo} = useAuth();
 
   const [options, setOptions] = useState<Array<string>>(obj ? obj.options : []);
   const [answer, setAnswer] = useState<Array<number>>(obj ? obj.answer : []);
@@ -86,7 +85,7 @@ export default function ModalSelectEdit({obj, onRefetch}: Props) {
           method: 'PATCH',
           url: EXAM_API + '/select_questions/' + obj.id + '/',
           data: formData
-        }), {label: '處理', success: '儲存成功'}
+        }), {label: '處理', success: '儲存成功', error: err => getApiErrorMessage(err, '儲存失敗，請稍後再試。')}
       )
         .then(() => {
           onRefetch();
@@ -100,9 +99,8 @@ export default function ModalSelectEdit({obj, onRefetch}: Props) {
           url: EXAM_API + '/select_questions/',
           data: {
             ...formData,
-            user: userInfo.id,
           }
-        }), {label: '處理', success: '新增成功'}
+        }), {label: '處理', success: '新增成功', error: err => getApiErrorMessage(err, '新增失敗，請稍後再試。')}
       )
         .then(() => {
           onRefetch();

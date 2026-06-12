@@ -1,9 +1,9 @@
 import {EssayQuestionSimpleData, EssayRecordSimpleData} from "@/types/exam-types.ts";
 import {Dispatch, SetStateAction} from "react";
-import {useAuth, useAxios, useModal} from "@/hooks";
+import {useAxios, useModal} from "@/hooks";
 import {Button, Col, Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle, Row} from "@/component";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {showToast} from "@/func";
+import {getApiErrorMessage, showToast} from "@/func";
 import {EXAM_API} from "@/lib/config.ts";
 import {RiEdit2Fill} from "react-icons/ri";
 import {FaSave, FaTrash} from "react-icons/fa";
@@ -23,7 +23,6 @@ type FormValues = {
 export default function ModalRecordEdit({record, q, setReload}: Props) {
 
   const api = useAxios();
-  const {userInfo} = useAuth();
   const {isShow, onShow, onHide} = useModal();
   const {register, handleSubmit} = useForm<FormValues>({
     defaultValues: {
@@ -40,7 +39,7 @@ export default function ModalRecordEdit({record, q, setReload}: Props) {
           method: 'PATCH',
           url: EXAM_API + '/essay_records/' + record.id + '/',
           data: formData
-        }), {label: '儲存', success: '儲存成功', error: err => JSON.stringify(err.response.data)}
+        }), {label: '儲存', success: '儲存成功', error: err => getApiErrorMessage(err, '儲存失敗，請稍後再試。')}
       )
         .then(() => {
           setReload(p => !p);
@@ -50,13 +49,12 @@ export default function ModalRecordEdit({record, q, setReload}: Props) {
       showToast(
         api({
           method: 'POST',
-          url: EXAM_API + '/essay_records/',
+          url: EXAM_API + '/essay_records/create_for_student/',
           data: {
             ...formData,
             question_id: q.id,
-            user: userInfo.id,
           }
-        }), {label: '儲存', success: '儲存成功', error: err => JSON.stringify(err.response.data)}
+        }), {label: '儲存', success: '儲存成功', error: err => getApiErrorMessage(err, '儲存失敗，請稍後再試。')}
       )
         .then(() => {
           setReload(p => !p);
@@ -92,11 +90,11 @@ export default function ModalRecordEdit({record, q, setReload}: Props) {
   }
 
   const onDelete = () => {
-    showToast(
-      api({
-        method: 'DELETE',
-        url: EXAM_API + '/essay_records/' + record?.id + '/',
-      }), {label: '處理', success: '刪除成功', error: err => JSON.stringify(err.response.data)}
+      showToast(
+        api({
+          method: 'DELETE',
+          url: EXAM_API + '/essay_records/' + record?.id + '/',
+      }), {label: '處理', success: '刪除成功', error: err => getApiErrorMessage(err, '刪除失敗，請稍後再試。')}
     ).then(() => {
       setReload(p => !p);
       onHide();

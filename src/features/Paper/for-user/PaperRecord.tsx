@@ -1,39 +1,60 @@
-import {useAuth, useAxios} from "@/hooks";
-import {useNavigate, useParams} from "react-router";
+import {useAxios} from "@/hooks";
+import {useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {PaperRecordData} from "@/types/exam-types.ts";
-import {showToast} from "@/func";
+import {getApiErrorMessage, showToast} from "@/func";
 import {EXAM_API} from "@/lib/config.ts";
 import {DetailRow} from "@/component";
 import PageHeader from "@/features/Layout/PageHeader.tsx";
 import QsCardForRecord from "@/features/Select/for-user/Question/QsCardForRecord.tsx";
 import {ErrorAlert} from "@/features";
+import {ApiResData} from "@/types/api-types.ts";
 
 export default function PaperRecord() {
 
   const api = useAxios();
-  const {userInfo} = useAuth();
-  const navi = useNavigate();
   const {id} = useParams();
   const [data, setData] = useState<PaperRecordData>();
+  const [loadError, setLoadError] = useState<string>();
 
   useEffect(() => {
+    if (!id) {
+      setLoadError('資料不存在或無權查看此資料。');
+      return;
+    }
+
     showToast(
       async () => {
-        const res = await api<PaperRecordData>({
+        const res = await api<ApiResData<Array<PaperRecordData>>>({
           method: 'GET',
-          url: EXAM_API + '/paper_records/' + id + '/',
+          url: EXAM_API + '/paper_records/self/',
+          params: {id},
         })
-        setData(res.data);
+        const record = res.data.results.find(item => String(item.id) === String(id));
+        if (!record) {
+          setLoadError('資料不存在或無權查看此資料。');
+          return;
+        }
+        setData(record);
       }
-      , {label: '載入', error: (err) => err.response.data.detail}
-    ).catch(() => navi('/'))
-  }, []);
+      , {label: '載入', error: (err) => getApiErrorMessage(err, '讀取測驗紀錄失敗，請稍後再試。')}
+    ).catch((err) => {
+      setLoadError(getApiErrorMessage(err, '讀取測驗紀錄失敗，請稍後再試。'));
+    })
+  }, [api, id]);
 
-  if (!data) return null;
+  if (loadError) {
+    return (
+      <ErrorAlert option={{
+        color: 'error',
+        header: '無法讀取測驗紀錄',
+        message: loadError,
+      }}/>
+    )
+  }
 
-  if (data.user !== userInfo.id){
-    return <ErrorAlert errorType='noAuth'/>
+  if (!data) {
+    return null;
   }
 
   return (

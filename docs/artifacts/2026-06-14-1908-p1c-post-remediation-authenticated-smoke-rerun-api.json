@@ -1,0 +1,588 @@
+{
+  "run_id": "2026-06-14-1908-p1c-post-remediation-authenticated-smoke-rerun",
+  "executed_at": "2026-06-14T11:19:45.530382+00:00",
+  "runner": "Hermes manual API/static smoke",
+  "base_url": "http://127.0.0.1:8000",
+  "auth_source": "short-lived local DEBUG DB smoke users; tokens/passwords redacted and not persisted",
+  "marker": "p1c_rerun_smoke_20260614_1908",
+  "service_provenance": {
+    "backend_health": {
+      "status": 401,
+      "body": {
+        "detail": "Authentication credentials were not provided."
+      }
+    },
+    "frontend_health": {
+      "status": 200,
+      "length": 1382
+    },
+    "frontend_process_session_id": "proc_2db5c2f1f343"
+  },
+  "created_ids": {
+    "users": {
+      "E": 11203,
+      "OTHER_E": 11204,
+      "EH": 11205,
+      "EM": 11206,
+      "AM": 11207
+    },
+    "select_questions": [
+      7054,
+      7055
+    ],
+    "essay_questions": [
+      513
+    ],
+    "select_records": [
+      4247,
+      4248,
+      4249
+    ],
+    "essay_records": [
+      20,
+      21,
+      22
+    ],
+    "paper_records": [
+      7,
+      8
+    ],
+    "papers": []
+  },
+  "auth_results": {
+    "E": {
+      "login_status": 200,
+      "login_body_keys": [
+        "access",
+        "refresh"
+      ],
+      "verify_status": 200,
+      "verify_keys": [
+        "ai_point",
+        "auth",
+        "bookmark",
+        "email",
+        "expiry_days",
+        "id",
+        "name",
+        "options",
+        "wait_accredit"
+      ]
+    },
+    "OTHER_E": {
+      "login_status": 200,
+      "login_body_keys": [
+        "access",
+        "refresh"
+      ],
+      "verify_status": 200,
+      "verify_keys": [
+        "ai_point",
+        "auth",
+        "bookmark",
+        "email",
+        "expiry_days",
+        "id",
+        "name",
+        "options",
+        "wait_accredit"
+      ]
+    },
+    "EH": {
+      "login_status": 200,
+      "login_body_keys": [
+        "access",
+        "refresh"
+      ],
+      "verify_status": 200,
+      "verify_keys": [
+        "ai_point",
+        "auth",
+        "bookmark",
+        "email",
+        "expiry_days",
+        "id",
+        "name",
+        "options",
+        "wait_accredit"
+      ]
+    },
+    "EM": {
+      "login_status": 200,
+      "login_body_keys": [
+        "access",
+        "refresh"
+      ],
+      "verify_status": 200,
+      "verify_keys": [
+        "ai_point",
+        "auth",
+        "bookmark",
+        "email",
+        "expiry_days",
+        "id",
+        "name",
+        "options",
+        "wait_accredit"
+      ]
+    },
+    "AM": {
+      "login_status": 200,
+      "login_body_keys": [
+        "access",
+        "refresh"
+      ],
+      "verify_status": 200,
+      "verify_keys": [
+        "ai_point",
+        "auth",
+        "bookmark",
+        "email",
+        "expiry_days",
+        "id",
+        "name",
+        "options",
+        "wait_accredit"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "name": "environment safety gate",
+      "passed": true,
+      "debug": true,
+      "db_host": "127.0.0.1",
+      "db_port": "5432",
+      "db_name": "pigeonhand"
+    },
+    {
+      "name": "pre-run marker residual cleanup",
+      "passed": true,
+      "cleanup": {
+        "deleted": {
+          "paper_records_deleted": 0,
+          "essay_records_deleted": 0,
+          "select_records_deleted": 0,
+          "papers_deleted": 0,
+          "select_questions_deleted": 0,
+          "essay_questions_deleted": 0,
+          "users_deleted": 0
+        },
+        "residuals": {
+          "users": 0,
+          "select_questions": 0,
+          "essay_questions": 0,
+          "select_records": 0,
+          "essay_records": 0,
+          "paper_records": 0,
+          "papers": 0
+        },
+        "residual_zero": true
+      }
+    },
+    {
+      "name": "auth preflight E",
+      "passed": true,
+      "login_status": 200,
+      "verify_status": 200,
+      "verify_keys": [
+        "ai_point",
+        "auth",
+        "bookmark",
+        "email",
+        "expiry_days",
+        "id",
+        "name",
+        "options",
+        "wait_accredit"
+      ]
+    },
+    {
+      "name": "auth preflight OTHER_E",
+      "passed": true,
+      "login_status": 200,
+      "verify_status": 200,
+      "verify_keys": [
+        "ai_point",
+        "auth",
+        "bookmark",
+        "email",
+        "expiry_days",
+        "id",
+        "name",
+        "options",
+        "wait_accredit"
+      ]
+    },
+    {
+      "name": "auth preflight EH",
+      "passed": true,
+      "login_status": 200,
+      "verify_status": 200,
+      "verify_keys": [
+        "ai_point",
+        "auth",
+        "bookmark",
+        "email",
+        "expiry_days",
+        "id",
+        "name",
+        "options",
+        "wait_accredit"
+      ]
+    },
+    {
+      "name": "auth preflight EM",
+      "passed": true,
+      "login_status": 200,
+      "verify_status": 200,
+      "verify_keys": [
+        "ai_point",
+        "auth",
+        "bookmark",
+        "email",
+        "expiry_days",
+        "id",
+        "name",
+        "options",
+        "wait_accredit"
+      ]
+    },
+    {
+      "name": "auth preflight AM",
+      "passed": true,
+      "login_status": 200,
+      "verify_status": 200,
+      "verify_keys": [
+        "ai_point",
+        "auth",
+        "bookmark",
+        "email",
+        "expiry_days",
+        "id",
+        "name",
+        "options",
+        "wait_accredit"
+      ]
+    },
+    {
+      "name": "E select_records self",
+      "passed": true,
+      "status": 200,
+      "total": 1,
+      "found_marker_ids": [
+        4247
+      ]
+    },
+    {
+      "name": "E essay_records self",
+      "passed": true,
+      "status": 200,
+      "total": 1,
+      "found_marker_ids": [
+        20
+      ]
+    },
+    {
+      "name": "E paper_records self",
+      "passed": true,
+      "status": 200,
+      "total": 1,
+      "found_marker_ids": [
+        7
+      ]
+    },
+    {
+      "name": "E select_records management list",
+      "passed": true,
+      "status": 200,
+      "total": 0,
+      "found_other": false
+    },
+    {
+      "name": "E essay_records management list",
+      "passed": true,
+      "status": 200,
+      "total": 0,
+      "found_other": false
+    },
+    {
+      "name": "E select_records other detail denied",
+      "passed": true,
+      "status": 404,
+      "body": {
+        "detail": "No SelectRecord matches the given query."
+      }
+    },
+    {
+      "name": "E essay_records other detail denied",
+      "passed": true,
+      "status": 404,
+      "body": {
+        "detail": "No EssayRecord matches the given query."
+      }
+    },
+    {
+      "name": "E paper_records other detail denied",
+      "passed": true,
+      "status": 404,
+      "body": {
+        "detail": "No PaperRecord matches the given query."
+      }
+    },
+    {
+      "name": "E owner spoof select submit",
+      "passed": true,
+      "status": 200,
+      "created_id": 4249,
+      "owner_id": 11203,
+      "expected_owner_id": 11203
+    },
+    {
+      "name": "E owner spoof essay create",
+      "passed": true,
+      "status": 201,
+      "created_id": 22,
+      "owner_id": 11203,
+      "expected_owner_id": 11203
+    },
+    {
+      "name": "stale create_for_student endpoint probe non-blocking",
+      "passed": true,
+      "status": 405,
+      "body": {
+        "detail": "不被允許的方法 \"POST\"。"
+      },
+      "note": "non-blocking; frontend static contract is acceptance criterion"
+    },
+    {
+      "name": "EH select_records management",
+      "passed": true,
+      "status": 200,
+      "total": 4242,
+      "found_marker_ids": [],
+      "note": "must_list"
+    },
+    {
+      "name": "EH essay_records acceptable deny",
+      "passed": true,
+      "status": 403,
+      "total": null,
+      "found_marker_ids": [],
+      "note": "deny_or_empty"
+    },
+    {
+      "name": "EH paper_records acceptable deny",
+      "passed": true,
+      "status": 403,
+      "total": null,
+      "found_marker_ids": [],
+      "note": "deny_or_empty"
+    },
+    {
+      "name": "EM essay_records management",
+      "passed": true,
+      "status": 200,
+      "total": 7,
+      "found_marker_ids": [
+        20,
+        21,
+        22
+      ],
+      "note": "must_list"
+    },
+    {
+      "name": "EM paper_records management",
+      "passed": true,
+      "status": 200,
+      "total": 4,
+      "found_marker_ids": [
+        7,
+        8
+      ],
+      "note": "must_list"
+    },
+    {
+      "name": "EM select_records acceptable deny",
+      "passed": true,
+      "status": 403,
+      "total": null,
+      "found_marker_ids": [],
+      "note": "deny_or_empty"
+    },
+    {
+      "name": "AM select_records management",
+      "passed": true,
+      "status": 200,
+      "total": 4242,
+      "found_marker_ids": [],
+      "note": "must_200"
+    },
+    {
+      "name": "AM essay_records management",
+      "passed": true,
+      "status": 200,
+      "total": 7,
+      "found_marker_ids": [
+        20,
+        21,
+        22
+      ],
+      "note": "must_200"
+    },
+    {
+      "name": "AM paper_records management",
+      "passed": true,
+      "status": 200,
+      "total": 4,
+      "found_marker_ids": [
+        7,
+        8
+      ],
+      "note": "must_200"
+    },
+    {
+      "name": "static essay create endpoint",
+      "passed": true,
+      "note": "ModalRecordEdit uses create endpoint and no stale name"
+    },
+    {
+      "name": "static essay create payload question_id",
+      "passed": true,
+      "note": "question_id present"
+    },
+    {
+      "name": "static user create/submit payload no owner fields",
+      "passed": true,
+      "note": "checked ModalRecordEdit and SelectSingle submit payloads"
+    },
+    {
+      "name": "static self list endpoints",
+      "passed": true,
+      "note": "user record lists/detail workaround use self endpoint"
+    },
+    {
+      "name": "static paper detail workaround risk",
+      "passed": true,
+      "note": "PaperRecord.tsx uses /paper_records/self/ with params id; no self-safe detail endpoint observed"
+    },
+    {
+      "name": "error shape 403 sample",
+      "passed": true,
+      "status": 403,
+      "keys": [
+        "detail"
+      ],
+      "body": {
+        "detail": "你沒有執行此操作的權限。"
+      }
+    },
+    {
+      "name": "error shape 404 sample",
+      "passed": true,
+      "status": 404,
+      "keys": [
+        "detail"
+      ],
+      "body": {
+        "detail": "No SelectRecord matches the given query."
+      }
+    },
+    {
+      "name": "error shape 400 sample",
+      "passed": true,
+      "status": 400,
+      "keys": [
+        "question_id"
+      ],
+      "body": {
+        "question_id": [
+          "此為必需欄位。"
+        ]
+      }
+    },
+    {
+      "name": "E paper_records self page_size=1 bounded probe",
+      "passed": true,
+      "status": 200,
+      "total": 1,
+      "next": false,
+      "note": "design risk remains regardless of bounded next"
+    },
+    {
+      "name": "verification frontend scoped eslint",
+      "passed": true,
+      "status": 0
+    },
+    {
+      "name": "verification frontend build",
+      "passed": true,
+      "status": 0
+    },
+    {
+      "name": "verification git diff check",
+      "passed": true,
+      "status": 0
+    },
+    {
+      "name": "verification backend targeted permission tests",
+      "passed": true,
+      "status": 0
+    }
+  ],
+  "error_count": 0,
+  "errors": [],
+  "cleanup": {
+    "deleted": {
+      "paper_records_deleted": 6,
+      "essay_records_deleted": 3,
+      "select_records_deleted": 3,
+      "papers_deleted": 0,
+      "select_questions_deleted": 2,
+      "essay_questions_deleted": 1,
+      "users_deleted": 5
+    },
+    "residuals": {
+      "users": 0,
+      "select_questions": 0,
+      "essay_questions": 0,
+      "select_records": 0,
+      "essay_records": 0,
+      "paper_records": 0,
+      "papers": 0
+    },
+    "residual_zero": true
+  },
+  "paper_self_detail_pagination_risk": true,
+  "verification_commands": [
+    {
+      "name": "frontend scoped eslint",
+      "command": "pnpm exec eslint src/features/Essay/for-manager/Question/ModalEssayQuestionEdit.tsx src/features/Essay/for-user/Record/ModalRecordEdit.tsx src/features/Layout/ErrorLogToast.tsx src/features/Paper/for-manager/Record/PaperRecordDetail.tsx src/features/Paper/for-user/Paper.tsx src/features/Paper/for-user/PaperRecord.tsx src/features/Select/for-manager/Manage/Edit/ModalSelectEdit.tsx src/features/Select/for-user/Random/SelectSingle.tsx src/func/form.ts src/func/index.ts src/func/api-error.ts",
+      "cwd": "/Users/cksai/Desktop/Coding/piegon-hand-projects/pigeon-exam",
+      "exit_code": 0,
+      "output_tail": ""
+    },
+    {
+      "name": "frontend build",
+      "command": "pnpm build",
+      "cwd": "/Users/cksai/Desktop/Coding/piegon-hand-projects/pigeon-exam",
+      "exit_code": 0,
+      "output_tail": "$ tsc -b && vite build\nvite v6.4.3 building for production...\ntransforming...\n/*! 🌼 daisyUI 5.5.23 */\n✓ 1446 modules transformed.\nnode_modules/.pnpm/pdfjs-dist@3.11.174/node_modules/pdfjs-dist/build/pdf.js (1982:23): Use of eval in \"node_modules/.pnpm/pdfjs-dist@3.11.174/node_modules/pdfjs-dist/build/pdf.js\" is strongly discouraged as it poses security risks and may cause issues with minification.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                     1.38 kB │ gzip:   0.73 kB\ndist/assets/.pnpm-BcMAg_Zp.css     56.03 kB │ gzip:   6.99 kB\ndist/assets/index-B4-NSMGq.css    153.40 kB │ gzip:  23.73 kB\ndist/assets/index-BjMZAcfE.js     233.13 kB │ gzip:  65.35 kB\ndist/assets/.pnpm-DDLmXG5Y.js   2,309.07 kB │ gzip: 663.27 kB\n\n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n✓ built in 4.83s\n"
+    },
+    {
+      "name": "frontend git diff check",
+      "command": "git diff --check",
+      "cwd": "/Users/cksai/Desktop/Coding/piegon-hand-projects/pigeon-exam",
+      "exit_code": 0,
+      "output_tail": ""
+    },
+    {
+      "name": "backend targeted permission tests",
+      "command": "set -a; . ../.env; set +a; SQL_HOST=127.0.0.1 SQL_PORT=5432 uv run python manage.py test exam.tests.PaperRecordPermissionTestCase exam.tests.ExamScopePermissionTestCase -v 2",
+      "cwd": "/Users/cksai/Desktop/Coding/piegon-hand-projects/pigeon-hand-api/core",
+      "exit_code": 0,
+      "output_tail": "ser_ai_point_limit... OK\n  Applying user.0014_alter_user_auth... OK\n  Applying web.0001_initial... OK\n  Applying web.0002_rename_unitfirst_feedbackcommunity_unit_first_and_more... OK\n  Applying web.0003_alter_feedbackcommunity_name... OK\n  Applying web.0004_appshare... OK\n  Applying web.0005_appshare_tags... OK\n  Applying web.0006_rename_app_ver_appshare_app_version... OK\n  Applying web.0007_errorlog...test_create_forces_owner_to_request_user (exam.tests.PaperRecordPermissionTestCase.test_create_forces_owner_to_request_user) ... /Users/cksai/Desktop/Coding/piegon-hand-projects/pigeon-hand-api/.venv/lib/python3.12/site-packages/django/core/handlers/base.py:61: UserWarning: No directory at: /Users/cksai/Desktop/Coding/piegon-hand-projects/pigeon-hand-api/core/staticfiles/\n  mw_instance = middleware(adapted_handler)\nok\ntest_e_only_sees_own_records_and_cannot_use_other_user_id (exam.tests.PaperRecordPermissionTestCase.test_e_only_sees_own_records_and_cannot_use_other_user_id) ... /Users/cksai/Desktop/Coding/piegon-hand-projects/pigeon-hand-api/.venv/lib/python3.12/site-packages/rest_framework/pagination.py:207: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'exam.models.PaperRecord'> QuerySet.\n  paginator = self.django_paginator_class(queryset, page_size)\nok\ntest_em_and_am_can_see_all_records (exam.tests.PaperRecordPermissionTestCase.test_em_and_am_can_see_all_records) ... ok\ntest_essay_question_scope (exam.tests.ExamScopePermissionTestCase.test_essay_question_scope) ... /Users/cksai/Desktop/Coding/piegon-hand-projects/pigeon-hand-api/.venv/lib/python3.12/site-packages/rest_framework/pagination.py:207: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'exam.models.EssayQuestion'> QuerySet.\n  paginator = self.django_paginator_class(queryset, page_size)\nok\ntest_essay_record_scope_and_create_for_student_owner (exam.tests.ExamScopePermissionTestCase.test_essay_record_scope_and_create_for_student_owner) ... /Users/cksai/Desktop/Coding/piegon-hand-projects/pigeon-hand-api/.venv/lib/python3.12/site-packages/rest_framework/pagination.py:207: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'exam.models.EssayRecord'> QuerySet.\n  paginator = self.django_paginator_class(queryset, page_size)\nok\ntest_paper_scope_and_private_uuid_block (exam.tests.ExamScopePermissionTestCase.test_paper_scope_and_private_uuid_block) ... /Users/cksai/Desktop/Coding/piegon-hand-projects/pigeon-hand-api/.venv/lib/python3.12/site-packages/rest_framework/pagination.py:207: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'exam.models.Paper'> QuerySet.\n  paginator = self.django_paginator_class(queryset, page_size)\nok\ntest_select_question_scope (exam.tests.ExamScopePermissionTestCase.test_select_question_scope) ... /Users/cksai/Desktop/Coding/piegon-hand-projects/pigeon-hand-api/.venv/lib/python3.12/site-packages/rest_framework/pagination.py:207: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'exam.models.SelectQuestion'> QuerySet.\n  paginator = self.django_paginator_class(queryset, page_size)\nok\ntest_select_record_scope_and_submit_owner (exam.tests.ExamScopePermissionTestCase.test_select_record_scope_and_submit_owner) ... /Users/cksai/Desktop/Coding/piegon-hand-projects/pigeon-hand-api/.venv/lib/python3.12/site-packages/rest_framework/pagination.py:207: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'exam.models.SelectRecord'> QuerySet.\n  paginator = self.django_paginator_class(queryset, page_size)\nok\n\n----------------------------------------------------------------------\nRan 8 tests in 2.778s\n\nOK\nDestroying test database for alias 'default' ('test_pigeonhand')...\n OK\nSystem check identified no issues (0 silenced).\n"
+    }
+  ],
+  "acceptance_decision": "ACCEPTED_WITH_RISK"
+}

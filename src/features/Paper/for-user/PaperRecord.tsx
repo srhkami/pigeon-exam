@@ -8,7 +8,6 @@ import {DetailRow} from "@/component";
 import PageHeader from "@/features/Layout/PageHeader.tsx";
 import QsCardForRecord from "@/features/Select/for-user/Question/QsCardForRecord.tsx";
 import {ErrorAlert} from "@/features";
-import {ApiResData} from "@/types/api-types.ts";
 
 export default function PaperRecord() {
 
@@ -25,17 +24,11 @@ export default function PaperRecord() {
 
     showToast(
       async () => {
-        const res = await api<ApiResData<Array<PaperRecordData>>>({
+        const res = await api<PaperRecordData>({
           method: 'GET',
-          url: EXAM_API + '/paper_records/self/',
-          params: {id},
+          url: EXAM_API + `/paper_records/self/${id}/`,
         })
-        const record = res.data.results.find(item => String(item.id) === String(id));
-        if (!record) {
-          setLoadError('資料不存在或無權查看此資料。');
-          return;
-        }
-        setData(record);
+        setData(res.data);
       }
       , {label: '載入', error: (err) => getApiErrorMessage(err, '讀取測驗紀錄失敗，請稍後再試。')}
     ).catch((err) => {

@@ -1,0 +1,432 @@
+{
+  "run_id": "p1c_smoke_20260612_1634",
+  "executed_at": "2026-06-12T16:52:45",
+  "runner": "Hermes manual API/static smoke",
+  "base_url": "http://127.0.0.1:8000",
+  "auth_source": "temporary local smoke users created in local DEBUG DB and deleted; no tokens/passwords persisted",
+  "created_ids": {
+    "users": [
+      11193,
+      11194,
+      11195,
+      11196,
+      11197
+    ],
+    "select_questions": [
+      7050,
+      7051
+    ],
+    "select_records": [
+      4241,
+      4242,
+      4243
+    ],
+    "essay_questions": [
+      511
+    ],
+    "essay_records": [
+      14,
+      15,
+      16
+    ],
+    "papers": [],
+    "paper_records": [
+      3,
+      4
+    ]
+  },
+  "checks": [
+    {
+      "name": "environment_is_local_test_like",
+      "ok": true,
+      "debug": true,
+      "db_host": "127.0.0.1",
+      "db_port": "5432",
+      "db_name": "pigeonhand"
+    },
+    {
+      "name": "preclean_prior_smoke_markers",
+      "ok": true,
+      "deleted": {
+        "paper_records": 0,
+        "essay_records": 0,
+        "select_records": 0,
+        "papers": 0,
+        "essay_questions": 0,
+        "select_questions": 0,
+        "users": 0
+      }
+    },
+    {
+      "name": "auth_login_E",
+      "ok": true,
+      "status": 200,
+      "body_keys": [
+        "access",
+        "refresh"
+      ],
+      "account_alias": "smoke_e"
+    },
+    {
+      "name": "auth_verify_E",
+      "ok": true,
+      "status": 200,
+      "auth": "0000000000001000",
+      "account_alias": "smoke_e"
+    },
+    {
+      "name": "auth_login_EH",
+      "ok": true,
+      "status": 200,
+      "body_keys": [
+        "access",
+        "refresh"
+      ],
+      "account_alias": "smoke_eh"
+    },
+    {
+      "name": "auth_verify_EH",
+      "ok": true,
+      "status": 200,
+      "auth": "0000010000000000",
+      "account_alias": "smoke_eh"
+    },
+    {
+      "name": "auth_login_EM",
+      "ok": true,
+      "status": 200,
+      "body_keys": [
+        "access",
+        "refresh"
+      ],
+      "account_alias": "smoke_em"
+    },
+    {
+      "name": "auth_verify_EM",
+      "ok": true,
+      "status": 200,
+      "auth": "0000100000000000",
+      "account_alias": "smoke_em"
+    },
+    {
+      "name": "auth_login_AM",
+      "ok": true,
+      "status": 200,
+      "body_keys": [
+        "access",
+        "refresh"
+      ],
+      "account_alias": "smoke_am"
+    },
+    {
+      "name": "auth_verify_AM",
+      "ok": true,
+      "status": 200,
+      "auth": "1000000000000000",
+      "account_alias": "smoke_am"
+    },
+    {
+      "name": "E_select_self_only",
+      "ok": true,
+      "path": "/exam/select_records/self/",
+      "status": 200,
+      "result_count": 1,
+      "total_count": 1,
+      "next": false
+    },
+    {
+      "name": "E_select_generic_list_empty",
+      "ok": true,
+      "path": "/exam/select_records/",
+      "status": 200,
+      "result_count": 0,
+      "total_count": 0,
+      "next": false
+    },
+    {
+      "name": "E_select_generic_other_detail_404",
+      "ok": true,
+      "path": "/exam/select_records/4242/",
+      "status": 404,
+      "result_count": null,
+      "total_count": null,
+      "next": false
+    },
+    {
+      "name": "E_essay_self_only",
+      "ok": true,
+      "path": "/exam/essay_records/self/",
+      "status": 200,
+      "result_count": 1,
+      "total_count": 1,
+      "next": false
+    },
+    {
+      "name": "E_essay_generic_list_empty",
+      "ok": true,
+      "path": "/exam/essay_records/",
+      "status": 200,
+      "result_count": 0,
+      "total_count": 0,
+      "next": false
+    },
+    {
+      "name": "E_essay_generic_other_detail_404",
+      "ok": true,
+      "path": "/exam/essay_records/15/",
+      "status": 404,
+      "result_count": null,
+      "total_count": null,
+      "next": false
+    },
+    {
+      "name": "E_paper_self_only",
+      "ok": true,
+      "path": "/exam/paper_records/self/",
+      "status": 200,
+      "result_count": 1,
+      "total_count": 1,
+      "next": false
+    },
+    {
+      "name": "E_paper_generic_own_detail_200_backend_allows_own",
+      "ok": true,
+      "path": "/exam/paper_records/3/",
+      "status": 200,
+      "result_count": null,
+      "total_count": null,
+      "next": false
+    },
+    {
+      "name": "E_paper_generic_other_detail_404",
+      "ok": true,
+      "path": "/exam/paper_records/4/",
+      "status": 404,
+      "result_count": null,
+      "total_count": null,
+      "next": false
+    },
+    {
+      "name": "E_v2_select_submit_ignores_owner_spoof",
+      "ok": true,
+      "path": "/v2/exam/select/submit/single",
+      "status": 200,
+      "db_owner_matches_e": true,
+      "request_payload_keys": [
+        "question_id",
+        "user_answer",
+        "user",
+        "user_id"
+      ]
+    },
+    {
+      "name": "E_essay_create_action_ignores_owner_spoof",
+      "ok": true,
+      "path": "/exam/essay_records/create/",
+      "status": 201,
+      "db_owner_matches_e": true,
+      "request_payload_keys": [
+        "question_id",
+        "content",
+        "user",
+        "user_id"
+      ]
+    },
+    {
+      "name": "frontend_declared_essay_create_for_student_endpoint_exists",
+      "ok": false,
+      "path": "/exam/essay_records/create_for_student/",
+      "status": 405,
+      "note": "ModalRecordEdit.tsx uses this path"
+    },
+    {
+      "name": "EH_select_records_list_allowed",
+      "ok": true,
+      "role": "EH",
+      "path": "/exam/select_records/",
+      "status": 200,
+      "result_count": 1000,
+      "total_count": 4242
+    },
+    {
+      "name": "EH_essay_records_list_denied_empty",
+      "ok": false,
+      "role": "EH",
+      "path": "/exam/essay_records/",
+      "status": 403,
+      "result_count": null,
+      "total_count": null
+    },
+    {
+      "name": "EH_paper_records_list_forbidden",
+      "ok": true,
+      "role": "EH",
+      "path": "/exam/paper_records/",
+      "status": 403,
+      "result_count": null,
+      "total_count": null
+    },
+    {
+      "name": "EM_select_records_list_denied_empty",
+      "ok": false,
+      "role": "EM",
+      "path": "/exam/select_records/",
+      "status": 403,
+      "result_count": null,
+      "total_count": null
+    },
+    {
+      "name": "EM_essay_records_list_allowed",
+      "ok": true,
+      "role": "EM",
+      "path": "/exam/essay_records/",
+      "status": 200,
+      "result_count": 7,
+      "total_count": 7
+    },
+    {
+      "name": "EM_paper_records_list_allowed",
+      "ok": true,
+      "role": "EM",
+      "path": "/exam/paper_records/",
+      "status": 200,
+      "result_count": 4,
+      "total_count": 4
+    },
+    {
+      "name": "AM_select_records_list_allowed",
+      "ok": true,
+      "role": "AM",
+      "path": "/exam/select_records/",
+      "status": 200,
+      "result_count": 1000,
+      "total_count": 4242
+    },
+    {
+      "name": "AM_essay_records_list_allowed",
+      "ok": true,
+      "role": "AM",
+      "path": "/exam/essay_records/",
+      "status": 200,
+      "result_count": 7,
+      "total_count": 7
+    },
+    {
+      "name": "AM_paper_records_list_allowed",
+      "ok": true,
+      "role": "AM",
+      "path": "/exam/paper_records/",
+      "status": 200,
+      "result_count": 4,
+      "total_count": 4
+    },
+    {
+      "name": "api_403_error_shape",
+      "ok": true,
+      "status": 403,
+      "body_keys": [
+        "detail"
+      ]
+    },
+    {
+      "name": "api_404_error_shape",
+      "ok": true,
+      "status": 404,
+      "body_keys": [
+        "detail"
+      ]
+    },
+    {
+      "name": "api_400_error_shape",
+      "ok": true,
+      "status": 400,
+      "body_keys": [
+        "question_id"
+      ]
+    },
+    {
+      "name": "paper_records_self_pagination_probe",
+      "ok": true,
+      "status": 200,
+      "result_count": 1,
+      "total_count": 1,
+      "next": false,
+      "pagination_risk": false
+    },
+    {
+      "name": "frontend_select_submit_payload_has_no_owner",
+      "ok": true,
+      "file": "SelectSingle.tsx"
+    },
+    {
+      "name": "frontend_essay_create_payload_has_no_owner",
+      "ok": true,
+      "file": "ModalRecordEdit.tsx"
+    },
+    {
+      "name": "frontend_user_record_lists_use_self_endpoints",
+      "ok": true,
+      "files": [
+        "SelectSingle.tsx",
+        "ModalRecordEdit.tsx",
+        "PaperRecord.tsx",
+        "PaperRecords.tsx",
+        "EssayRecords.tsx",
+        "SelectRecords.tsx"
+      ]
+    },
+    {
+      "name": "frontend_paper_record_detail_uses_self_endpoint_with_id_param",
+      "ok": true,
+      "file": "PaperRecord.tsx"
+    }
+  ],
+  "error_count": 3,
+  "errors": [
+    {
+      "name": "frontend_declared_essay_create_for_student_endpoint_exists",
+      "ok": false,
+      "path": "/exam/essay_records/create_for_student/",
+      "status": 405,
+      "note": "ModalRecordEdit.tsx uses this path"
+    },
+    {
+      "name": "EH_essay_records_list_denied_empty",
+      "ok": false,
+      "role": "EH",
+      "path": "/exam/essay_records/",
+      "status": 403,
+      "result_count": null,
+      "total_count": null
+    },
+    {
+      "name": "EM_select_records_list_denied_empty",
+      "ok": false,
+      "role": "EM",
+      "path": "/exam/select_records/",
+      "status": 403,
+      "result_count": null,
+      "total_count": null
+    }
+  ],
+  "cleanup": {
+    "deleted": {
+      "paper_records": 6,
+      "essay_records": 3,
+      "select_records": 3,
+      "papers": 0,
+      "essay_questions": 1,
+      "select_questions": 2,
+      "users": 5
+    },
+    "residual": {
+      "users": 0,
+      "select_questions": 0,
+      "essay_questions": 0,
+      "paper_records": 0
+    },
+    "errors": []
+  },
+  "exception_summary": null,
+  "acceptance_decision": "FAILED_PERMISSION_REGRESSION"
+}

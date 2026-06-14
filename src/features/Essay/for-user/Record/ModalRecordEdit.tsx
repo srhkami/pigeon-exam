@@ -49,7 +49,7 @@ export default function ModalRecordEdit({record, q, setReload}: Props) {
       showToast(
         api({
           method: 'POST',
-          url: EXAM_API + '/essay_records/create_for_student/',
+          url: EXAM_API + '/essay_records/create/',
           data: {
             ...formData,
             question_id: q.id,

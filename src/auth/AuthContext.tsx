@@ -14,7 +14,7 @@ type Props = {
 
 const noLoginUser: UserInfo = {
   id: 0,
-  auth: '00000000',
+  auth: '0000000000000000',
   email: '',
   wait_accredit: 0,
   expiry_days: null,

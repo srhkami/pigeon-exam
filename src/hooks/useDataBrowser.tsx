@@ -3,7 +3,7 @@ import {useQuery, keepPreviousData} from '@tanstack/react-query';
 import {ApiResData, ApiResInfo} from "@/types/api-types.ts";
 import {useAxios} from "@/hooks/index.ts";
 import {Method} from "axios";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import toast from "react-hot-toast";
 import {errorLogger} from "@/func";
 
@@ -38,6 +38,7 @@ export default function useDataBrowser<T extends TWithId>(config: Config) {
   const {page} = useParams();
   const [searchParams] = useSearchParams();
   const [reload, setReload] = useState<boolean>(false);
+  const loadingToastIdRef = useRef<string | null>(null);
 
   const params = Object.fromEntries(searchParams);   // 解析params，轉換為物件
   const pageNumber = Number(page) || 1;
@@ -80,16 +81,17 @@ export default function useDataBrowser<T extends TWithId>(config: Config) {
 
   // 載入中及錯誤提示
   useEffect(() => {
-    if (isFetching) {
-      toast.loading('資料載入中')
+    if (isFetching && !loadingToastIdRef.current) {
+      loadingToastIdRef.current = toast.loading('資料載入中')
     }
-    if (!isFetching) {
-      toast.dismiss()
+    if (!isFetching && loadingToastIdRef.current) {
+      toast.dismiss(loadingToastIdRef.current)
+      loadingToastIdRef.current = null
     }
     if (isError && error) {
       errorLogger(error, '取得資料錯誤')
     }
-  }, [isFetching, isError, error, reload]);
+  }, [isFetching, isError, error]);
 
   // 整理回傳的變數
   const data = apiRes?.results ?? []

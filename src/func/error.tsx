@@ -1,9 +1,6 @@
 import toast from "react-hot-toast";
-import {ErrorLogToast} from "@/features";
+import {getUserFacingErrorMessage, UserFacingErrorOptions} from "./api-error.ts";
 
-export default function errorLogger(error: any, errorType: string = '未分類錯誤') {
-  console.log(errorType, error);
-  toast((t) => (
-    <ErrorLogToast toastId={t.id} error={error} errorType={errorType}/>
-  ))
+export function showUserFacingError(error: unknown, options: UserFacingErrorOptions = {}) {
+  toast.error(getUserFacingErrorMessage(error, options));
 }

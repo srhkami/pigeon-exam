@@ -10,7 +10,7 @@ scope:
 parent_state: ../STATE.md
 canonical: true
 governance_mode: project-state-v1
-last_reconciled: 2026-07-27
+last_reconciled: 2026-08-12
 parent_workstream: workstream.pigeon-exam.project-state-migration.2026-07-27
 legacy_sources:
   - path: docs/plans/2026-06-12-1124-p1b-permission-frontend-compat.md
@@ -37,8 +37,12 @@ legacy_sources:
   - path: docs/artifacts/2026-06-*.json
     classification: historical-machine-evidence
     status: retained
-workstreams: []
+workstreams:
 recent_results:
+  - id: result.pigeon-exam.errorlog-frontend-retirement.2026-08-12
+    path: docs/result/2026-08-12-errorlog-frontend-retirement-result.md
+    status: completed_source_build_verified_review_pass
+    completed_at: 2026-08-12
   - id: result.pigeon-exam.project-state-migration.2026-07-27
     path: docs/result/2026-07-27-pigeon-exam-project-state-migration-result.md
     status: completed
@@ -50,6 +54,8 @@ recent_results:
 ## 目前摘要
 
 `pigeon-exam` 已由 `legacy` 原子切換至 Project-State v1。專案本身目前沒有已知的大型功能修改；既有 5 份 P1-B/P1-C 計畫保留為歷史來源，不重新啟動，也不在本次遷移中宣告為已完成或已失效。日後任何新工作都必須從本檔建立新的工作線與正式計畫。
+
+`errorlog-retirement` 已完成來源／建置驗證與最終聚焦複審 PASS；舊錯誤上傳已退役，未執行 browser、正式切換或 Git。
 
 ## 歷史來源分類
 

@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import localforage from 'localforage'
 import {useAxios} from "@/hooks";
 import toast from "react-hot-toast";
-import {errorLogger} from "@/func";
+
 
 type Config = {
   readonly url: string,
@@ -55,8 +55,8 @@ export default function useCacheApi<T>(config: Config) {
           setData(newData)
           await localforage.setItem(config.url, newData)
         }
-      } catch (error) {
-        errorLogger(error, '緩存API錯誤')
+      } catch {
+        // 快取更新失敗時保留既有資料並結束 loading。
       } finally {
         if (isMounted) setLoading(false)
         toast.dismiss(t)

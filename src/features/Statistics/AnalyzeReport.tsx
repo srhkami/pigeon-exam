@@ -27,7 +27,7 @@ export default function AnalyzeReport(){
         url: EXAM_API_V2 + '/select/analyze_reports/' + id,
         method:'GET',
       }),
-      {label:'載入', error:err=>JSON.stringify(err.response.data)}
+      {label:'載入', error:'AI 分析報告載入失敗，請稍後再試。'}
     ).then(res=> {
       setData(res.data)
     })

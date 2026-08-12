@@ -1,78 +1,69 @@
+type ApiResponse = {
+  readonly status?: unknown,
+  readonly data?: unknown,
+}
+
 type ApiErrorLike = {
-  response?: {
-    status?: number,
-    data?: unknown,
-  },
-  respose?: {
-    status?: number,
-    data?: unknown,
-  },
+  readonly response?: ApiResponse,
 }
 
-function collectMessages(value: unknown): Array<string> {
-  if (typeof value === "string") {
-    return value.trim() ? [value] : [];
-  }
+type ServerMessageMap = {
+  readonly [status: number]: {
+    readonly [key: string]: {
+      readonly [context: string]: Readonly<Record<string, string>>,
+    },
+  },
+};
 
-  if (Array.isArray(value)) {
-    return value.flatMap(item => collectMessages(item));
-  }
-
-  if (value && typeof value === "object") {
-    return Object.values(value as Record<string, unknown>).flatMap(item => collectMessages(item));
-  }
-
-  return [];
+export type UserFacingErrorOptions = {
+  readonly fallback?: string,
+  readonly context?: string,
+  readonly codeMessages?: Readonly<Record<string, string>>,
+  readonly serverMessages?: ServerMessageMap,
 }
 
-export default function getApiErrorMessage(error: unknown, fallback = "操作失敗，請稍後再試"): string {
+function getResponse(error: unknown): ApiResponse | undefined {
+  if (!error || typeof error !== "object") {
+    return undefined;
+  }
+
   const apiError = error as ApiErrorLike;
-  const response = apiError?.response ?? apiError?.respose;
+  return apiError.response;
+}
+
+function getRecord(value: unknown): Readonly<Record<string, unknown>> | undefined {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? value as Readonly<Record<string, unknown>>
+    : undefined;
+}
+
+export function getUserFacingErrorMessage(error: unknown, options: UserFacingErrorOptions = {}): string {
+  const fallback = options.fallback ?? "操作失敗，請稍後再試。";
+  const response = getResponse(error);
   const status = response?.status;
-  const data = response?.data;
 
-  if (status === 403) {
-    return "權限不足，請確認帳號權限或重新登入。";
+  if (status === 401) return "登入已逾期，請重新登入。";
+  if (status === 403) return "權限不足，請確認帳號權限或重新登入。";
+  if (status === 404) return "資料不存在或無權查看此資料。";
+  if (status === 429) return "操作太頻繁，請稍後再試。";
+  if (status === 500) return "伺服器暫時無法處理，請稍後再試。";
+
+  const data = getRecord(response?.data);
+  const code = data?.code;
+  if (typeof code === "string" && options.codeMessages?.[code]) {
+    return options.codeMessages[code];
   }
 
-  if (status === 404) {
-    return "資料不存在或無權查看此資料。";
-  }
-
-  if (status === 429) {
-    const detail = data && typeof data === "object" && "detail" in data
-      ? (data as { detail?: unknown }).detail
-      : undefined;
-    return typeof detail === "string" && detail.trim().length > 0
-      ? `操作太頻繁，請稍後再試。${detail}`
-      : "操作太頻繁，請稍後再試。";
-  }
-
-  if (status === 400) {
-    const messages = collectMessages(data);
-    if (messages.length > 0) {
-      return messages.join("、");
-    }
-  }
-
-  if (typeof data === "string" && data.trim().length > 0) {
-    return data;
-  }
-
-  if (data && typeof data === "object") {
-    const payload = data as Record<string, unknown>;
-    if (typeof payload.detail === "string" && payload.detail.trim().length > 0) {
-      return payload.detail;
-    }
-    if (typeof payload.code === "string" && payload.code.trim().length > 0) {
-      return payload.code;
-    }
-
-    const messages = collectMessages(payload);
-    if (messages.length > 0) {
-      return messages.join("、");
-    }
+  const key = typeof code === "string" ? "code" : "detail";
+  const value = data?.[key];
+  if (typeof status === "number" && typeof value === "string" && options.context) {
+    const message = options.serverMessages?.[status]?.[key]?.[options.context]?.[value];
+    if (message) return message;
   }
 
   return fallback;
+}
+
+export default function getApiErrorMessage(error: unknown, fallback = "操作失敗，請稍後再試。"): string {
+  return getUserFacingErrorMessage(error, {fallback});
 }

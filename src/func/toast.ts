@@ -1,8 +1,8 @@
 import toast, {Renderable, ValueOrFunction} from "react-hot-toast";
+import {getUserFacingErrorMessage} from "./api-error.ts";
 
 export type ToastError = {
   response: { data: { detail: string } & Record<string, string> },
-  respose: { data: { detail: string } },
 }
 
 export type ToastConfig = {
@@ -12,29 +12,6 @@ export type ToastConfig = {
   error?: ValueOrFunction<Renderable, ToastError>,
 }
 
-function formatToastError(err: unknown, fallback: Renderable) {
-  const error = err as { response?: { data?: unknown }, respose?: { data?: unknown } };
-  const data = error?.response?.data ?? error?.respose?.data;
-  if (!data) return fallback;
-
-  if (typeof data === 'string') return data;
-  const payload = data as { detail?: unknown, code?: unknown };
-  if (typeof payload.detail === 'string') return payload.detail;
-  if (typeof payload.code === 'string') return payload.code;
-
-  if (data && typeof data === 'object') {
-    const firstMessage = Object.values(data).find((value) => typeof value === 'string' && value.trim().length > 0);
-    if (typeof firstMessage === 'string') return firstMessage;
-
-    try {
-      return JSON.stringify(data);
-    } catch {
-      return fallback;
-    }
-  }
-
-  return fallback;
-}
 
 /* 自定義封裝toast Promise組件
 *  可傳入簡易預設文字，或自訂每個值
@@ -57,7 +34,7 @@ export default async function showToast<T>(
       success: successText,
       error: (err) => typeof errorText === 'function'
         ? errorText(err as ToastError)
-        : formatToastError(err, errorText),
+        : getUserFacingErrorMessage(err, {fallback: String(errorText)}),
     }
   )
 }

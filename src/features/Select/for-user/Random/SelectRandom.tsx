@@ -76,7 +76,7 @@ export default function SelectRandom() {
         method: 'GET',
         url: EXAM_API + '/select_questions/random_multi/',
         params: newParams,
-      }), {label: '題目生成', error: err => JSON.stringify(err.response?.data)},
+      }), {label: '題目生成', error: '題目生成失敗，請稍後再試。'},
     ).then(res => navi('/paper/' + res.data))
   }
 

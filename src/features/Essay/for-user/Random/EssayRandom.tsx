@@ -72,7 +72,7 @@ export default function EssayRandom() {
         method: 'GET',
         url: EXAM_API + '/essay_questions/random_single/',
         params: newParams,
-      }), {label: '載入', error: err => JSON.stringify(err.response?.data)}
+      }), {label: '載入', error: '申論題載入失敗，請稍後再試。'}
     )
       .then(res => navi(`/essay/question/${res.data.id}`))
   }

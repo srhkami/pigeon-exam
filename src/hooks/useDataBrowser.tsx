@@ -5,7 +5,7 @@ import {useAxios} from "@/hooks/index.ts";
 import {Method} from "axios";
 import {useEffect, useRef, useState} from "react";
 import toast from "react-hot-toast";
-import {errorLogger} from "@/func";
+import {showUserFacingError} from "@/func";
 
 type TWithId = { id: number };
 
@@ -89,7 +89,7 @@ export default function useDataBrowser<T extends TWithId>(config: Config) {
       loadingToastIdRef.current = null
     }
     if (isError && error) {
-      errorLogger(error, '取得資料錯誤')
+      showUserFacingError(error, {fallback: "資料載入失敗，請稍後再試。"})
     }
   }, [isFetching, isError, error]);
 

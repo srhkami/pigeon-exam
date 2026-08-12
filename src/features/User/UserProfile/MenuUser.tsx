@@ -1,6 +1,6 @@
 import {Dropdown, DropdownContent, DropdownToggle} from "@/component";
 import {Link} from "react-router";
-import {errorLogger, showToast} from "@/func";
+import {showToast, showUserFacingError} from "@/func";
 import {handleLogout} from "@/auth/handleUser.ts";
 import BadgeAccredit from "./BadgeAccredit.tsx";
 import AuthShow from "@/auth/AuthShow.tsx";
@@ -15,7 +15,7 @@ export default function MenuUser() {
     showToast(
       handleLogout()
     )
-      .catch((err) => errorLogger(err, '登出錯誤'))
+      .catch((err) => showUserFacingError(err, {fallback: "登出失敗，請稍後再試。"}))
       .finally(() => onReload())
   }
 

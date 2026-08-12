@@ -47,7 +47,7 @@ export default function useToastApi<T = unknown>(config: Config) {
       {
         label: config.label ?? '載入',
         success: config.successText,
-        error: (err) => JSON.stringify(err.response.data),
+        error: "載入失敗，請稍後再試。",
       }
     )
       .then(res => setData(res.data))

@@ -27,7 +27,7 @@
 //         })
 //         setData(res1.data);
 //       }
-//       , {label: '載入', error:(err)=>JSON.stringify(err.response?.data)}
+//       , {label: '載入', error: '考古題載入失敗，請稍後再試。'}
 //     )
 //   }, []);
 //

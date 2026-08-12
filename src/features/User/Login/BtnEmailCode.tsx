@@ -1,7 +1,7 @@
 import {Dispatch, ReactNode, SetStateAction, useEffect, useState} from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {errorLogger, showToast} from "@/func";
+import {showToast, showUserFacingError} from "@/func";
 import {USER_API} from "@/lib/config.ts";
 import {Button} from "@/component";
 
@@ -58,7 +58,7 @@ export default function BtnEmailCode({email, setIsUser, size = null}: Props): Re
         setIsDisable(true);
       })
       .catch(err => {
-          errorLogger(err, '取得驗證碼錯誤')
+          showUserFacingError(err, {fallback: "驗證碼寄送失敗，請稍後再試。"})
           setIsDisable(false);
           setIsUser(null);
         }

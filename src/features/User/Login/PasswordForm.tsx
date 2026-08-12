@@ -1,6 +1,6 @@
 import {Button} from "@/component";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {errorLogger, showFormError, showToast} from "@/func";
+import {showFormError, showToast, showUserFacingError} from "@/func";
 import {handleLogin} from "@/auth/handleUser.ts";
 import {UserLoginForm} from "@/types/user-types.ts";
 import toast from "react-hot-toast";
@@ -24,7 +24,7 @@ export default function PasswordForm() {
         } else if (status === 500) {
           toast.error('伺服器臨時維護中，請稍後再試');
         } else {
-          errorLogger(err, '未知登入錯誤')
+          showUserFacingError(err, {fallback: "登入失敗，請稍後再試。"})
         }
       })
   }

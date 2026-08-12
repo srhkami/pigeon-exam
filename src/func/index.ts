@@ -1,5 +1,6 @@
 export {default as showToast} from './toast.ts'
 export {default as showFormError} from './form.ts'
-export {default as errorLogger} from './error.tsx'
 export {default as copy} from './copy.tsx'
 export {default as getApiErrorMessage} from './api-error.ts'
+export {getUserFacingErrorMessage} from './api-error.ts'
+export {showUserFacingError} from './error.tsx'

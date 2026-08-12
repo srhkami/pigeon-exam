@@ -2,7 +2,7 @@ import {useModal} from "@/hooks";
 import {useRef} from "react";
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle} from "@/component";
 import {MdOutlineContentCopy} from "react-icons/md";
-import {errorLogger, showToast} from "@/func";
+import {showToast, showUserFacingError} from "@/func";
 import {PaperData} from "@/types/exam-types.ts";
 
 type Props = {
@@ -56,7 +56,7 @@ export default function ModalQuestionToText({paper}: Props) {
 
         await navigator.clipboard.write([clipboardItem]);
       }, {success: '複製成功'}
-    ).catch(err => errorLogger(err, '複製失敗'))
+    ).catch(err => showUserFacingError(err, {fallback: "題目複製失敗，請確認瀏覽器已允許剪貼簿權限。"}))
   };
 
 

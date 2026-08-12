@@ -1,5 +1,4 @@
 import {showToast} from "@/func";
-import {errorLogger} from "@/func/index.ts";
 
 export default function copy(text: string) {
   showToast(
@@ -8,5 +7,5 @@ export default function copy(text: string) {
       success: '複製成功',
       error: '複製失敗'
     }
-  ).catch(err => errorLogger(err,'複製文字錯誤'));
+  ).catch(() => undefined);
 }

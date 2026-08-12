@@ -34,7 +34,7 @@ export {default as ModalLogin} from './User/Login/ModalLogin.tsx'
 export {default as UserProfile} from './User/UserProfile/UserProfile.tsx'
 export {default as About} from './About/About.tsx'
 export {default as Base} from './Layout/Base.tsx'
-export {default as ErrorLogToast} from './Layout/ErrorLogToast.tsx'
+
 export {default as Home} from './Home/Home.tsx'
 export {default as Manage} from './Home/Manage.tsx'
 export {default as ErrorAlert} from './Layout/ErrorAlert.tsx'

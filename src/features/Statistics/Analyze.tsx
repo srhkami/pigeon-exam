@@ -27,7 +27,7 @@ export default function Analyze({subject}: Props) {
           subject: subject,
           incorrect_mode: incorrect_mode,
         }
-      }), {label: '生成結果', error: err => err.response.data.text}
+      }), {label: '生成結果', error: '分析結果生成失敗，請稍後再試。'}
     ).then(res => {
       setMessage(res.data.text)
     }).finally(() => setIsLoading(false))

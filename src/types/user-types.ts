@@ -130,7 +130,7 @@ export type UserManageData = {
   wait_accredit_users_count: number,
   feedback_web_count: number,
   feedback_community_count: number,
-  error_log_count: number,
+
   unit_statistics: UnitStatisticsData,
   seven_days_users: number,
   thirty_days_users: number,

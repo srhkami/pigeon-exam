@@ -4,7 +4,7 @@ import {IoArrowBackOutline, IoShareSocial} from "react-icons/io5";
 import {FaArrowRightToBracket} from "react-icons/fa6";
 import {IoMdDownload} from "react-icons/io";
 import {WEB_API} from "@/lib/config.ts";
-import {copy, errorLogger, showToast} from "@/func";
+import {copy, showToast} from "@/func";
 import {BottomBar, BottomButton, BottomMainButton} from "@/component";
 import CountdownTimer from "./tools/CountdownTimer.tsx";
 import ShowFile from "./tools/ShowFile.tsx";
@@ -95,7 +95,7 @@ export default function FilePreview({code}: Props): ReactNode {
         }
 
         setLoadErrorStatus(getHappyWorkHttpStatus(err) ?? 0);
-        errorLogger(err, "檔案預覽錯誤");
+
       })
       .finally(() => {
         if (active) {
@@ -119,7 +119,7 @@ export default function FilePreview({code}: Props): ReactNode {
         label: "下載",
         error: (err) => getHappyWorkFileAccessMessage(getHappyWorkHttpStatus(err)),
       }
-    ).catch(err => errorLogger(err, "檔案下載錯誤"));
+    ).catch(() => undefined);
   }
 
   const onCopy = () => {

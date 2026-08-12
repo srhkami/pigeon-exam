@@ -38,7 +38,7 @@ function ModalArticleLink({item}: { readonly item: [string, string] }) {
           law_name: item[0],
           article: item[1],
         }
-      }), {label: '載入', error: err => err.response?.data.detail}
+      }), {label: '載入', error: '法規條文載入失敗，請稍後再試。'}
     ).then(res => {
       setText(res.data);
       onShow();

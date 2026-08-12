@@ -2,7 +2,7 @@ import {DetailRow} from "@/component";
 import {useAxios} from "@/hooks";
 import {useEffect, useState} from "react";
 import {USER_API} from "@/lib/config.ts";
-import {errorLogger, showToast} from "@/func";
+import {showToast, showUserFacingError} from "@/func";
 import BadgeAccredit from "./BadgeAccredit.tsx";
 import ModalChangePassword from "./ModalChangePassword.tsx";
 import {UserDetailData} from "@/types/user-types.ts";
@@ -26,7 +26,7 @@ export default function UserProfile() {
   useEffect(() => {
     showToast(requestData, {label: '載入'})
       .then(data => setUser(data))
-      .catch(err => errorLogger(err, '載入會員詳情錯誤'))
+      .catch(err => showUserFacingError(err, {fallback: "會員資料載入失敗，請稍後再試。"}))
   }, []);
 
   return (

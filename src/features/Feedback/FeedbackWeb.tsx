@@ -3,7 +3,7 @@ import axios from "axios";
 import {useNavigate, useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import {WEB_API} from "@/lib/config.ts";
-import {errorLogger, showToast} from "@/func";
+import {showToast, showUserFacingError} from "@/func";
 import {Button, Col, FormInputCol, Row} from "@/component";
 import {FaCircleCheck} from "react-icons/fa6";
 import ModalLine from "@/features/Feedback/ModalLine.tsx";
@@ -78,7 +78,7 @@ export default function FeedbackWeb() {
     )
 
       .then(() => navi('/'))
-      .catch(err => errorLogger(err, '網站回報送出錯誤'))
+      .catch(err => showUserFacingError(err, {fallback: "網站回報送出失敗，請稍後再試。"}))
   }
 
   return (

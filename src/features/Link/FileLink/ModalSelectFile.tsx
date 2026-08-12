@@ -4,7 +4,7 @@ import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {useAxios, useModal} from "@/hooks";
 import {ApiKeywordForm} from "@/types/api-types.ts";
 import {POLICE_API} from "@/lib/config.ts";
-import {errorLogger, showToast} from "@/func";
+import {showToast, showUserFacingError} from "@/func";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {FileDetailData, HappyFileLink, HappyworkSearchResultData} from "@/types/happywork-types.ts";
 import {FaCirclePlus, FaDeleteLeft} from "react-icons/fa6";
@@ -42,7 +42,7 @@ export default function ModalSelectFile({setList, small = false,}: Props) {
       }), {label: '搜尋'}
     )
       .then(res => setData(res.data.files))
-      .catch(err => errorLogger(err, '開心上班搜尋錯誤'))
+      .catch(err => showUserFacingError(err, {fallback: "檔案搜尋失敗，請稍後再試。"}))
   }
 
   const dataList = data.map(file => {

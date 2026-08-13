@@ -1,11 +1,18 @@
+import {lazy, type ReactNode, Suspense} from "react";
 import {createBrowserRouter} from "react-router";
-import {About, Base, ErrorAlert, FeedbackWeb, FilePreview, Home, Manage, UserProfile} from "@/features";
+import {About, Base, ErrorAlert, FeedbackWeb, Home, Manage, UserProfile} from "@/features";
 import {AuthLayout} from "@/auth";
 import {selectRouterForManager, selectRouterForUser} from "@/routes/select.tsx";
 import {essayRouterForManager, essayRouterForUser} from "@/routes/essay.tsx";
 import {paperRouterForManager, paperRouterForUser} from "@/routes/paper.tsx";
 import {AllPages} from "@/lib/pages.tsx";
 import TestPage from "@/features/Layout/TestPage.tsx";
+
+const FilePreview = lazy(() => import("@/features/FilePreview/FilePreview.tsx"));
+
+function RouteFallback({children}: {children: ReactNode}) {
+  return <Suspense fallback={null}>{children}</Suspense>;
+}
 
 const routes = createBrowserRouter([
   {
@@ -39,12 +46,12 @@ const routes = createBrowserRouter([
           {path: 'test', element: <TestPage/>},
           {
             path: 'l', children: [
-              {path: ':url', element: <FilePreview code='l'/>}
+              {path: ':url', element: <RouteFallback><FilePreview code='l'/></RouteFallback>}
             ]
           },
           {
             path: 'f', children: [
-              {path: ':url', element: <FilePreview code='f'/>}
+              {path: ':url', element: <RouteFallback><FilePreview code='f'/></RouteFallback>}
             ]
           },
           {

@@ -10,7 +10,7 @@ scope:
 parent_state: ../STATE.md
 canonical: true
 governance_mode: project-state-v1
-last_reconciled: 2026-08-12
+last_reconciled: 2026-08-13
 parent_workstream: workstream.pigeon-exam.project-state-migration.2026-07-27
 legacy_sources:
   - path: docs/plans/2026-06-12-1124-p1b-permission-frontend-compat.md
@@ -38,6 +38,38 @@ legacy_sources:
     classification: historical-machine-evidence
     status: retained
 workstreams:
+  - id: frontend-chunk-optimization
+    title: Exam 最小 chunk 效能優化
+    status: scope_change_required
+    affected_projects:
+      - pigeon-exam
+    affected_areas:
+      - vite.config.ts
+      - src/routes/routes.tsx
+      - src/lib/pages.tsx
+    plans:
+      - id: plan.pigeon-exam.frontend-chunk-optimization.2026-08-13
+        path: docs/plans/2026-08-13-frontend-chunk-optimization.md
+        role: implementation
+        execution_status: scope_change_required
+        current_checkpoints:
+          - C0-C5 已執行；管理端與 FilePreview 已隔離，但 gzip 未達 15% 門檻
+    blockers:
+      - 達成 15% gzip 門檻需擴張到使用者端、Statistics／Analyze 或 protected route 範圍
+    approval_gates:
+      planning_docs: approved_consumed_2026-08-13
+      frontend_source_write: approved_consumed_2026-08-13
+      browser_uat: closed
+      frontend_cutover: closed
+      production: closed
+      commit: approved_consumed_2026-08-13
+      push: closed
+    next_action: 如需繼續，先建立新計畫與範圍核准；不得以提高 warning limit 取代驗收。
+    shared_paths:
+      - vite.config.ts
+      - src/routes/routes.tsx
+      - src/lib/pages.tsx
+    conflicts_with: []
 recent_results:
   - id: result.pigeon-exam.errorlog-frontend-retirement.2026-08-12
     path: docs/result/2026-08-12-errorlog-frontend-retirement-result.md

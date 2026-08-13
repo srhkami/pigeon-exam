@@ -1,30 +1,41 @@
 import {MEDIA_IP} from "@/lib/config.ts";
-import {ReactNode} from "react";
+import {lazy, type ReactNode, Suspense} from "react";
 import {
   About,
   AnalyzeReport,
   EssayQuestion,
-  EssayQuestions, EssayQuestionsManage,
+  EssayQuestions,
   EssayRandom,
-  EssayRecords, EssayRecordsManage,
+  EssayRecords,
   FeedbackWeb,
   Paper,
-  PaperDetail,
-  PaperEdit,
-  PaperManage,
+
   PaperRecord,
-  PaperRecordDetail,
+
   PaperRecords,
-  PaperRecordsManage,
+
   SelectPast,
-  SelectQuestionManage,
+
   SelectRandom,
   Statistics
 } from "@/features";
 import {AuthType} from "@/types/auth-types.ts";
 import {AuthLayout} from "@/auth";
-import SelectRecordManage from "@/features/Select/for-manager/Manage/SelectRecordManage.tsx";
 import SelectRecords from "@/features/Select/for-user/Record/SelectRecords.tsx";
+
+const EssayQuestionsManage = lazy(() => import("@/features/Essay/for-manager/Question/EssayQuestionsManage.tsx"));
+const EssayRecordsManage = lazy(() => import("@/features/Essay/for-manager/Record/EssayRecordsManage.tsx"));
+const PaperDetail = lazy(() => import("@/features/Paper/for-manager/Manage/PaperDetail.tsx"));
+const PaperEdit = lazy(() => import("@/features/Paper/for-manager/Manage/PaperEdit.tsx"));
+const PaperManage = lazy(() => import("@/features/Paper/for-manager/Manage/PaperManage.tsx"));
+const PaperRecordDetail = lazy(() => import("@/features/Paper/for-manager/Record/PaperRecordDetail.tsx"));
+const PaperRecordsManage = lazy(() => import("@/features/Paper/for-manager/Record/PaperRecordsManage.tsx"));
+const SelectQuestionManage = lazy(() => import("@/features/Select/for-manager/Manage/SelectQuestionManage.tsx"));
+const SelectRecordManage = lazy(() => import("@/features/Select/for-manager/Manage/SelectRecordManage.tsx"));
+
+function LazyPage({children}: {children: ReactNode}) {
+  return <Suspense fallback={null}>{children}</Suspense>;
+}
 
 
 export class Page {
@@ -96,14 +107,14 @@ export const SelectPagesForManager = {
     'questions.png',
     '/manage/select/questions/1?ordering=-id',
     'EH',
-    <SelectQuestionManage/>
+    <LazyPage><SelectQuestionManage/></LazyPage>
   ),
   records: new Page(
     '紀錄查閱',
     'exam_results_3.png',
     '/manage/select/records/1?ordering=-id',
     'EH',
-    <SelectRecordManage/>
+    <LazyPage><SelectRecordManage/></LazyPage>
   ),
 }
 
@@ -153,7 +164,7 @@ export const EssayPagesForManager = {
     'sign_document.png',
     '/manage/essay/questions/1?ordering=-year',
     'EH',
-    <EssayQuestionsManage/>
+    <LazyPage><EssayQuestionsManage/></LazyPage>
   ),
   question: new Page(
     '題目詳情',
@@ -167,7 +178,7 @@ export const EssayPagesForManager = {
     'exam_results_0.png',
     '/manage/essay/records/1?ordering=-id',
     'EM',
-    <EssayRecordsManage/>
+    <LazyPage><EssayRecordsManage/></LazyPage>
   ),
   record: new Page(
     '紀錄詳情',
@@ -210,35 +221,35 @@ export const PaperPagesForManager = {
     'agreement.png',
     '/manage/paper/list/1?ordering=-id',
     'EM',
-    <PaperManage/>
+    <LazyPage><PaperManage/></LazyPage>
   ),
   detail: new Page(
     '試卷詳情',
     '',
     '/manage/paper/detail',
     'EM',
-    <PaperDetail/>
+    <LazyPage><PaperDetail/></LazyPage>
   ),
   edit: new Page(
     '試卷編輯',
     '',
     '/manage/paper/edit',
     'EM',
-    <PaperEdit/>
+    <LazyPage><PaperEdit/></LazyPage>
   ),
   records: new Page(
     '測驗紀錄查閱',
     'letters.png',
     '/manage/paper/records/1?ordering=-id',
     'EM',
-    <PaperRecordsManage/>
+    <LazyPage><PaperRecordsManage/></LazyPage>
   ),
   record: new Page(
     '測驗紀錄詳情',
     '',
     '/manage/paper/record',
     'EM',
-    <PaperRecordDetail/>,
+    <LazyPage><PaperRecordDetail/></LazyPage>,
   ),
 }
 

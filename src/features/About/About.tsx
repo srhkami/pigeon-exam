@@ -27,7 +27,7 @@ export default function About() {
           </div>
           <div className='divider m-0'></div>
           <h4 className='text-xl'>蔡智楷 C.K.SAI</h4>
-          <h5 className='opacity-70'>嘉義縣警察局民雄分局</h5>
+          <h5 className='opacity-70'>警政署資訊室（嘉義縣警察局借調）</h5>
         </div>
       </section>
       <section id='題庫維護' className='scroll-mt-20 card card-border border-base-300 bg-base-100 mb-3'>

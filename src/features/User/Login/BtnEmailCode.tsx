@@ -1,6 +1,7 @@
 import {Dispatch, ReactNode, SetStateAction, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import {showToast} from "@/func";
 import {V3_USER_API} from "@/lib/config.ts";
 import {Button} from "@/component";
 
@@ -34,9 +35,16 @@ function CountdownTimer({initialTime, setIsDisable}: TimerProps): ReactNode {
   return timeLeft && <>{timeLeft}秒後重試</>
 }
 
+function getEmailCodeErrorMessage(error: unknown): string {
+  const status = axios.isAxiosError(error) ? error.response?.status : undefined;
+  const code = axios.isAxiosError(error) ? error.response?.data?.code : undefined;
+  return status === 422 ? '信箱格式或驗證碼請求錯誤' : status === 429 || code === 'email_code_too_frequent' ? '請稍後再重新寄送驗證碼' : status === 502 || code === 'email_delivery_failed' ? '驗證碼寄送失敗，請稍後再試。' : status === 503 || code === 'email_delivery_unknown' ? '寄送結果不明，請先檢查信箱，暫勿重複寄送' : '驗證碼寄送失敗，請稍後再試。';
+}
+
 export default function BtnEmailCode({email, setIsUser, size = null}: Props): ReactNode {
 
   const [isDisable, setIsDisable] = useState<boolean>(false);
+  const [isRequesting, setIsRequesting] = useState<boolean>(false);
   const isEmailCodeRequestInFlight = useRef(false);
 
   async function getEmailCode() {
@@ -46,15 +54,27 @@ export default function BtnEmailCode({email, setIsUser, size = null}: Props): Re
     }
     if (isEmailCodeRequestInFlight.current) return;
     isEmailCodeRequestInFlight.current = true;
+    setIsRequesting(true);
     try {
-      const res = await axios.post(`${V3_USER_API}/email-code`, {email});
-      if (typeof res.data?.is_user !== 'boolean') throw new Error('invalid_email_code_response');
-      setIsUser(res.data.is_user); setIsDisable(true); toast.success('驗證碼已寄出，請至信箱查看');
-    } catch (error) {
-      const status = axios.isAxiosError(error) ? error.response?.status : undefined;
-      const code = axios.isAxiosError(error) ? error.response?.data?.code : undefined;
-      toast.error(status === 422 ? '信箱格式或驗證碼請求錯誤' : status === 429 || code === 'email_code_too_frequent' ? '請稍後再重新寄送驗證碼' : status === 502 || code === 'email_delivery_failed' ? '驗證碼寄送失敗，請稍後再試。' : status === 503 || code === 'email_delivery_unknown' ? '寄送結果不明，請先檢查信箱，暫勿重複寄送' : '驗證碼寄送失敗，請稍後再試。'); setIsUser(null);
-    } finally { isEmailCodeRequestInFlight.current = false; }
+      const res = await showToast(
+        axios.post(`${V3_USER_API}/email-code`, {email}).then(res => {
+          if (typeof res.data?.is_user !== 'boolean') throw new Error('invalid_email_code_response');
+          return res;
+        }),
+        {
+          loading: '驗證碼寄送中…',
+          success: '驗證碼已寄出，請至信箱查看',
+          error: getEmailCodeErrorMessage,
+        },
+      );
+      setIsUser(res.data.is_user);
+      setIsDisable(true);
+    } catch {
+      setIsUser(null);
+    } finally {
+      setIsRequesting(false);
+      isEmailCodeRequestInFlight.current = false;
+    }
   }
 
   return (
@@ -63,7 +83,8 @@ export default function BtnEmailCode({email, setIsUser, size = null}: Props): Re
       type='button'
       size={size ?? 'md'}
       onClick={getEmailCode}
-      disabled={isDisable}
+      disabled={isDisable || isRequesting}
+      aria-busy={isRequesting}
       className='join-item'
     >
       {isDisable ? <CountdownTimer initialTime={60} setIsDisable={setIsDisable}/> : '取得驗證碼'}

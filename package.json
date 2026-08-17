@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test:errorlog-retirement": "node scripts/errorlog-retirement-contract.mjs"
+    "test:errorlog-retirement": "node scripts/errorlog-retirement-contract.mjs",
+    "test:email-code-v3": "node scripts/email-code-v3-contract.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

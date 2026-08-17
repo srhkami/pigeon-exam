@@ -11,6 +11,8 @@ export const MEDIA_IP = ROOT_IP;
 // 訪問API之IP，須以「/」開頭
 export const WEB_API = ROOT_IP + '/web';
 export const USER_API = ROOT_IP + '/user';
+export const V3_API = ROOT_IP + '/v3';
+export const V3_USER_API = V3_API + '/user';
 export const POLICE_API = ROOT_IP + '/police';
 export const EXAM_API = ROOT_IP + '/exam';
 export const EXAM_API_V2 = ROOT_IP + '/v2/exam';

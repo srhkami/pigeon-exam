@@ -10,7 +10,7 @@ scope:
 parent_state: ../STATE.md
 canonical: true
 governance_mode: project-state-v1
-last_reconciled: 2026-08-13
+last_reconciled: 2026-08-16
 parent_workstream: workstream.pigeon-exam.project-state-migration.2026-07-27
 legacy_sources:
   - path: docs/plans/2026-06-12-1124-p1b-permission-frontend-compat.md
@@ -38,6 +38,39 @@ legacy_sources:
     classification: historical-machine-evidence
     status: retained
 workstreams:
+  - id: email-v3
+    title: Exam EmailCode V3 切換
+    status: planned
+    affected_projects:
+      - pigeon-exam
+    affected_areas:
+      - src/lib/config.ts
+      - src/features/User/Login/BtnEmailCode.tsx
+      - EmailCode V3 contract probe
+    plans:
+      - id: plan.pigeon-exam.email-v3.2026-08-16
+        path: docs/plans/2026-08-16-email-v3-exam.md
+        role: implementation
+        execution_status: not_started
+        current_checkpoints:
+          - E0-E2 尚未執行；最終聚焦複審 `deleg_d95ba794` PASS，frontend source 仍關閉
+    approval_gates:
+      planning_docs: approved_consumed_2026-08-16
+      frontend_source_write: closed
+      api_runtime: closed
+      browser_uat: closed
+      frontend_cutover: closed
+      production_deploy: closed
+      commit: closed
+      push: closed
+    next_action: 計畫審查已通過；等待 frontend source 另行核准，branch ahead 1 維持原狀，不執行 Git。
+    shared_paths:
+      - STATE.md
+      - src/lib/config.ts
+      - src/features/User/Login/BtnEmailCode.tsx
+      - package.json
+    conflicts_with: []
+
   - id: frontend-chunk-optimization
     title: Exam 最小 chunk 效能優化
     status: scope_change_required

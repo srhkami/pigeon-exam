@@ -1,8 +1,7 @@
-import {Dispatch, ReactNode, SetStateAction, useEffect, useState} from "react";
+import {Dispatch, ReactNode, SetStateAction, useEffect, useRef, useState} from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {showToast, showUserFacingError} from "@/func";
-import {USER_API} from "@/lib/config.ts";
+import {V3_USER_API} from "@/lib/config.ts";
 import {Button} from "@/component";
 
 type TimerProps = {
@@ -38,31 +37,24 @@ function CountdownTimer({initialTime, setIsDisable}: TimerProps): ReactNode {
 export default function BtnEmailCode({email, setIsUser, size = null}: Props): ReactNode {
 
   const [isDisable, setIsDisable] = useState<boolean>(false);
+  const isEmailCodeRequestInFlight = useRef(false);
 
-  function getEmailCode() {
+  async function getEmailCode() {
     if (!email) {
       toast.error('請輸入您的信箱！');
       return;
     }
-    showToast(
-      axios({
-        method: 'POST',
-        url: USER_API + '/get_email_code/',
-        data: {
-          email: email
-        }
-      }), {success: '驗證碼已寄出，請至信箱查看'}
-    )
-      .then((res) => {
-        setIsUser(res.data.is_user);
-        setIsDisable(true);
-      })
-      .catch(err => {
-          showUserFacingError(err, {fallback: "驗證碼寄送失敗，請稍後再試。"})
-          setIsDisable(false);
-          setIsUser(null);
-        }
-      )
+    if (isEmailCodeRequestInFlight.current) return;
+    isEmailCodeRequestInFlight.current = true;
+    try {
+      const res = await axios.post(`${V3_USER_API}/email-code`, {email});
+      if (typeof res.data?.is_user !== 'boolean') throw new Error('invalid_email_code_response');
+      setIsUser(res.data.is_user); setIsDisable(true); toast.success('驗證碼已寄出，請至信箱查看');
+    } catch (error) {
+      const status = axios.isAxiosError(error) ? error.response?.status : undefined;
+      const code = axios.isAxiosError(error) ? error.response?.data?.code : undefined;
+      toast.error(status === 422 ? '信箱格式或驗證碼請求錯誤' : status === 429 || code === 'email_code_too_frequent' ? '請稍後再重新寄送驗證碼' : status === 502 || code === 'email_delivery_failed' ? '驗證碼寄送失敗，請稍後再試。' : status === 503 || code === 'email_delivery_unknown' ? '寄送結果不明，請先檢查信箱，暫勿重複寄送' : '驗證碼寄送失敗，請稍後再試。'); setIsUser(null);
+    } finally { isEmailCodeRequestInFlight.current = false; }
   }
 
   return (

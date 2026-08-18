@@ -6,7 +6,7 @@ import {type TypeAuthContext} from "@/types/auth-types.ts";
 import {useAxios} from "@/hooks";
 import {clearTokens, loadTokens} from "@/auth/handleUser.ts";
 import {Button} from "@/component";
-import {USER_API} from "@/lib/config.ts";
+import {V3_AUTH_ENDPOINTS, isUserTokenVerifyResponse} from "@/auth/authContract.ts";
 
 type Props = {
   children: ReactNode,
@@ -89,9 +89,11 @@ export const AuthProvider = ({children}: Props) => {
     try {
       const res = await api<UserInfo>({
         method: 'post',
-        url: USER_API + '/token/verify/',
+        url: V3_AUTH_ENDPOINTS.verify,
+        data: {},
       });
       const data = res.data;
+      if (!isUserTokenVerifyResponse(data)) throw new Error("auth_response_invalid");
       setUserInfo({ ...data }); // 建議簡化展開
       setIsAuthenticated(true);
       handleToast(data.expiry_days);

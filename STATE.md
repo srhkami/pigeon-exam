@@ -10,7 +10,7 @@ scope:
 parent_state: ../STATE.md
 canonical: true
 governance_mode: project-state-v1
-last_reconciled: 2026-08-16
+last_reconciled: 2026-08-17
 parent_workstream: workstream.pigeon-exam.project-state-migration.2026-07-27
 legacy_sources:
   - path: docs/plans/2026-06-12-1124-p1b-permission-frontend-compat.md
@@ -38,36 +38,40 @@ legacy_sources:
     classification: historical-machine-evidence
     status: retained
 workstreams:
-  - id: email-v3
-    title: Exam EmailCode V3 切換
-    status: planned
+  - id: auth-v3
+    title: Exam 完整認證 V3 遷移與三前端共通核心
+    status: completed_source_build_verified_review_pass_runtime_deferred
     affected_projects:
       - pigeon-exam
     affected_areas:
-      - src/lib/config.ts
-      - src/features/User/Login/BtnEmailCode.tsx
-      - EmailCode V3 contract probe
+      - src/auth
+      - src/hooks/useAxios.ts
+      - 登入表單 V3 錯誤接線
+      - 認證 V3 contract probe
     plans:
-      - id: plan.pigeon-exam.email-v3.2026-08-16
-        path: docs/plans/2026-08-16-email-v3-exam.md
+      - id: plan.pigeon-exam.auth-v3.2026-08-17
+        path: docs/plans/2026-08-17-auth-v3-exam.md
         role: implementation
-        execution_status: not_started
+        execution_status: completed_source_build_verified_review_pass_runtime_deferred
         current_checkpoints:
-          - E0-E2 尚未執行；最終聚焦複審 `deleg_d95ba794` PASS，frontend source 仍關閉
+          - E0-E3 已完成；source、contract probe、lint、typecheck、build 與聚焦複審已通過
     approval_gates:
-      planning_docs: approved_consumed_2026-08-16
-      frontend_source_write: closed
+      planning_docs: approved_consumed_2026-08-17
+      frontend_source_write: approved_consumed_2026-08-17
       api_runtime: closed
       browser_uat: closed
       frontend_cutover: closed
       production_deploy: closed
       commit: closed
       push: closed
-    next_action: 計畫審查已通過；等待 frontend source 另行核准，branch ahead 1 維持原狀，不執行 Git。
+    next_action: Runtime、browser、cutover、production 與 push 維持獨立關閉；既有 config/Vite dirty hunk 保持受保護；result 見 docs/result/2026-08-17-auth-v3-exam-result.md。
     shared_paths:
       - STATE.md
-      - src/lib/config.ts
-      - src/features/User/Login/BtnEmailCode.tsx
+      - src/auth/authContract.ts
+      - src/auth/refreshCoordinator.ts
+      - src/auth/handleUser.ts
+      - src/auth/AuthContext.tsx
+      - src/hooks/useAxios.ts
       - package.json
     conflicts_with: []
 

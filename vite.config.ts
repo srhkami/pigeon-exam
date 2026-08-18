@@ -49,7 +49,7 @@ export default defineConfig({
   ],
   server: {
     host: '0.0.0.0', // ✅ 關鍵設定
-    port: 5173        // 🔁 可以自訂 port
+    port: 5183        // 🔁 可以自訂 port
   },
   resolve: {
     alias: {

@@ -1,14 +1,10 @@
 import EmailForm from "@/features/User/Login/EmailForm.tsx";
 import PasswordForm from "@/features/User/Login/PasswordForm.tsx";
 import {Button} from "@/component";
-import {useNavigate} from "react-router";
 
 /* 登入的主體 */
-export default function Login(){
-
-  const navi = useNavigate();
-
-  return(
+export default function Login() {
+  return (
     <div>
       <div className="tabs tabs-lift">
         <input type="radio" name="tab_login" className="tab" aria-label="驗證碼登入" defaultChecked/>
@@ -22,7 +18,7 @@ export default function Login(){
       </div>
       <div className='text-xs flex justify-end items-center mt-1'>
         還沒有帳號？
-        <Button size='sm' style='link' onClick={()=>navi('/signup')}>
+        <Button size='sm' style='link' onClick={() => window.open('https://pigeonhand.tw/signup')}>
           點此註冊
         </Button>
       </div>

@@ -3,7 +3,15 @@ import {TVersion} from "@/types/about-types.ts";
 
 export const CHANGE_LOGS: Array<TVersion> = [
   {
-    version: '1.0.2',
+    version: '1.1.1',
+    date: '1150818',
+    logs: [
+      {type: 'info', text: '【會員】更換登入、驗證相關 API。'},
+      {type: 'fix', text: '【會員】修復註冊未能導向正確註冊頁面的問題。'},
+    ]
+  },
+  {
+    version: '1.1.0',
     date: '1150814',
     logs: [
       {type: 'info', text: '【全站】移除錯誤回報機制。'},

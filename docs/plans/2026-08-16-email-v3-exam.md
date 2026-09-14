@@ -2,12 +2,12 @@
 id: plan.pigeon-exam.email-v3.2026-08-16
 type: implementation-plan
 title: Exam EmailCode V3 切換
-status: completed
-execution_status: completed_source_contract_typecheck_build_review_pass
+historical_status: completed
+historical_execution_status: completed_source_contract_typecheck_build_review_pass
 canonical: true
 path_convention: project-root-relative
 created: 2026-08-16
-updated: 2026-08-16
+updated: 2026-09-14
 owner: pigeon-exam
 owner_state: STATE.md
 workstream: email-v3
@@ -18,11 +18,11 @@ producer_plan:
   id: plan.pigeon-hand-api.email-v3.2026-08-16
   path: ../pigeon-hand-api/docs/plans/2026-08-16-email-v3-api.md
 result_path: docs/result/2026-08-16-email-v3-exam-result.md
-review:
+historical_review:
   status: passed
   final_review_id: deleg_d95ba794
   result_path: ../docs/result/2026-08-16-email-v3-plan-sanity-review-result.md
-approval_gates:
+historical_approval_gates:
   planning_docs: approved_consumed_2026-08-16
   frontend_source_write: approved_consumed_2026-08-16
   package_install: prohibited_not_required
@@ -40,9 +40,25 @@ allowed_paths:
   - package.json
   - docs/plans/2026-08-16-email-v3-exam.md
   - docs/result/2026-08-16-email-v3-exam-result.md
+status: completed
+execution_status: completed_user_attested
+closure_date: 2026-09-14
+closure_basis: user_attested
+closure_result: ../docs/result/2026-09-14-completed-work-status-reconciliation-result.md
+followups: []
+approval_gates:
+  new_product_runtime_db_deploy_git_actions: closed_requires_new_explicit_approval
 ---
 
 # Exam EmailCode V3 切換實作計畫
+
+## 目前完成狀態（2026-09-14）
+
+使用者於 2026-09-14 明確確認本輪盤點所列相關工作及原延後驗收／啟用／發布事項已完成，要求停止追蹤；本文件生命週期改為完成，沒有待補驗或待發布清單。完成依據與跨專案處置見 `../docs/result/2026-09-14-completed-work-status-reconciliation-result.md`。本輪未重新執行資料庫、外部傳輸、正式部署或 Git；使用者確認不改寫原代理驗測結果，也不授權新的副作用。
+
+# 原計畫與歷史證據（截至本輪校正前）
+
+以下保留原交付時點的契約、核准及驗測紀錄；其未完成／延後敘述不再建立目前追蹤義務。
 
 ## 1. 目標
 

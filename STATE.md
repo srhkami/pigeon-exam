@@ -10,7 +10,7 @@ scope:
 parent_state: ../STATE.md
 canonical: true
 governance_mode: project-state-v1
-last_reconciled: 2026-08-17
+last_reconciled: 2026-09-14
 parent_workstream: workstream.pigeon-exam.project-state-migration.2026-07-27
 legacy_sources:
   - path: docs/plans/2026-06-12-1124-p1b-permission-frontend-compat.md
@@ -38,43 +38,6 @@ legacy_sources:
     classification: historical-machine-evidence
     status: retained
 workstreams:
-  - id: auth-v3
-    title: Exam 完整認證 V3 遷移與三前端共通核心
-    status: completed_source_build_verified_review_pass_runtime_deferred
-    affected_projects:
-      - pigeon-exam
-    affected_areas:
-      - src/auth
-      - src/hooks/useAxios.ts
-      - 登入表單 V3 錯誤接線
-      - 認證 V3 contract probe
-    plans:
-      - id: plan.pigeon-exam.auth-v3.2026-08-17
-        path: docs/plans/2026-08-17-auth-v3-exam.md
-        role: implementation
-        execution_status: completed_source_build_verified_review_pass_runtime_deferred
-        current_checkpoints:
-          - E0-E3 已完成；source、contract probe、lint、typecheck、build 與聚焦複審已通過
-    approval_gates:
-      planning_docs: approved_consumed_2026-08-17
-      frontend_source_write: approved_consumed_2026-08-17
-      api_runtime: closed
-      browser_uat: closed
-      frontend_cutover: closed
-      production_deploy: closed
-      commit: closed
-      push: closed
-    next_action: Runtime、browser、cutover、production 與 push 維持獨立關閉；既有 config/Vite dirty hunk 保持受保護；result 見 docs/result/2026-08-17-auth-v3-exam-result.md。
-    shared_paths:
-      - STATE.md
-      - src/auth/authContract.ts
-      - src/auth/refreshCoordinator.ts
-      - src/auth/handleUser.ts
-      - src/auth/AuthContext.tsx
-      - src/hooks/useAxios.ts
-      - package.json
-    conflicts_with: []
-
   - id: frontend-chunk-optimization
     title: Exam 最小 chunk 效能優化
     status: scope_change_required
@@ -108,41 +71,23 @@ workstreams:
       - src/lib/pages.tsx
     conflicts_with: []
 recent_results:
-  - id: result.pigeon-exam.errorlog-frontend-retirement.2026-08-12
-    path: docs/result/2026-08-12-errorlog-frontend-retirement-result.md
-    status: completed_source_build_verified_review_pass
-    completed_at: 2026-08-12
-  - id: result.pigeon-exam.project-state-migration.2026-07-27
-    path: docs/result/2026-07-27-pigeon-exam-project-state-migration-result.md
-    status: completed
-    implements: plan.pigeon-exam.project-state-migration.2026-07-27
+- id: result.completed-work-status-reconciliation.2026-09-14
+  path: ../docs/result/2026-09-14-completed-work-status-reconciliation-result.md
+  status: completed
+  completed_at: '2026-09-14'
+- id: result.pigeon-exam.errorlog-frontend-retirement.2026-08-12
+  path: docs/result/2026-08-12-errorlog-frontend-retirement-result.md
+  status: completed_source_build_verified_review_pass
+  completed_at: 2026-08-12
+- id: result.pigeon-exam.project-state-migration.2026-07-27
+  path: docs/result/2026-07-27-pigeon-exam-project-state-migration-result.md
+  status: completed
 ---
 
-# Project State
+# 目前狀態
 
-## 目前摘要
+本專案依 Project-State v1 管理；根目錄協調見 `../STATE.md`。前端效能優化（若列於上方）維持原狀；其餘仍列出的工作保持既有處置，不由本輪擴張或啟動。
 
-`pigeon-exam` 已由 `legacy` 原子切換至 Project-State v1。專案本身目前沒有已知的大型功能修改；既有 5 份 P1-B/P1-C 計畫保留為歷史來源，不重新啟動，也不在本次遷移中宣告為已完成或已失效。日後任何新工作都必須從本檔建立新的工作線與正式計畫。
+2026-09-14 使用者確認的驗收、啟用、發布、LINE 與法規擴充元件事項已完成，不再追蹤。AI 使用概況的現行來源核對與完成依據見 `../docs/result/2026-09-14-completed-work-status-reconciliation-result.md`。法規匯入第二階段已完成，不再沿用「只核准規劃」的過期摘要。
 
-`errorlog-retirement` 已完成來源／建置驗證與最終聚焦複審 PASS；舊錯誤上傳已退役，未執行 browser、正式切換或 Git。
-
-## 歷史來源分類
-
-既有計畫的共同主題是測驗前端與後端權限契約、作答紀錄 owner scope、申論建立端點與 authenticated smoke。它們涉及 `pigeon-hand-api` 的後端依賴，不能在沒有新的 child workstream、plan 與核准的情況下直接恢復執行。
-
-## 本地阻塞事項
-
-- 無目前 blocker。
-- 既有計畫引用但目前工作樹不存在的 result 不補造；若日後需要恢復相關工作，必須從目前 source 重新驗證。
-
-## 父層協調
-
-- Root STATE：`../STATE.md`
-- Root migration plan：`../docs/plans/2026-07-27-pigeon-exam-project-state-migration.md`
-- Root migration result：`../docs/result/2026-07-27-pigeon-exam-project-state-migration-result.md`
-
-## 導航
-
-- Legacy 架構快照：`docs/architecture/legacy-project-state-snapshot.md`
-- Child migration result：`docs/result/2026-07-27-pigeon-exam-project-state-migration-result.md`
-- Child-local 新計畫與結果應放在 `docs/plans/` 與 `docs/result/`；root coordination plan 僅引用，不複製。
+已完成計畫與結果原地保留，按任務需要讀取；歷史失敗或未執行紀錄不是目前待辦。使用者確認不改寫代理歷史驗測，也不授權新的資料庫、正式切換、部署、刪除或 Git 操作。既有手動功能與外部供應商常設授權依根目錄 AGENTS.md 維持。

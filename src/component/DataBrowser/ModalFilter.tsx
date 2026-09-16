@@ -73,10 +73,10 @@ export default function ModalFilter({filterConfigs, placeholder}: Props) {
             <input type="text" placeholder={placeholder} className="input input-sm w-50 join-item"
                    {...register('search')}/>
             {currentValues.search &&
-              <Button type='button' size='xs' shape='circle' style='outline' color='error' className='ml-2'
-                      onClick={() => setValue('search','')}>
-                ×
-              </Button>
+                <Button type='button' size='xs' shape='circle' style='outline' color='error' className='ml-2'
+                        onClick={() => setValue('search', '')}>
+                    ×
+                </Button>
             }
           </form>
           {/* 動態渲染篩選區塊 */}
@@ -90,7 +90,7 @@ export default function ModalFilter({filterConfigs, placeholder}: Props) {
                   <div className='label text-sm'>
                     {config.title}：
                   </div>
-                  <div className='flex flex-wrap items-center'>
+                  <div className='flex flex-wrap items-center gap-1'>
                     {/* 渲染選項按鈕 */}
                     {config.options.map((opt) => (
                       <input
@@ -103,12 +103,13 @@ export default function ModalFilter({filterConfigs, placeholder}: Props) {
                       />
                     ))}
                     {hasValue &&
-                      <Button size='xs' shape='circle' style='outline' color='error'
-                              type="button"
-                              onClick={() => handleClearField(config.fieldName)}
-                              aria-label={`清除${config.title}`}>
-                        ×
-                      </Button>
+                        <Button size='xs' shape='circle' style='outline' color='error'
+                                className='filter-reset'
+                                type="button"
+                                onClick={() => handleClearField(config.fieldName)}
+                                aria-label={`清除${config.title}`}>
+                            ×
+                        </Button>
                     }
                   </div>
                 </div>

@@ -3,6 +3,13 @@ import {TVersion} from "@/types/about-types.ts";
 
 export const CHANGE_LOGS: Array<TVersion> = [
   {
+    version: '1.1.2',
+    date: '未上線',
+    logs: [
+      {type: 'fix', text: '【全站】修復篩選元件無法使用的問題。'},
+    ]
+  },
+  {
     version: '1.1.1',
     date: '1150818',
     logs: [

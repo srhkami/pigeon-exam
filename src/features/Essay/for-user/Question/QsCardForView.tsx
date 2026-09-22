@@ -58,7 +58,7 @@ export default function QsCardForView({q, i, config}: Props) {
           config?.showLinks &&
           <div>
             <div className='divider m-0'></div>
-            <ArticleLink articleLink={q.article_link}/>
+            <ArticleLink questionType='essay' questionId={q.id}/>
             <FileLink fileLink={q.file_link}/>
           </div>
         }

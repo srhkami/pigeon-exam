@@ -59,7 +59,7 @@ export default function QsCardForView({q,a, i, config}: Props) {
       {
         config?.showLinks &&
         <div>
-          <ArticleLink articleLink={q.article_link}/>
+          <ArticleLink questionType='select' questionId={q.id}/>
           <FileLink fileLink={q.file_link}/>
         </div>
       }

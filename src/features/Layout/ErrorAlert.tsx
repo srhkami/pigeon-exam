@@ -1,5 +1,5 @@
 import {ReactNode} from "react";
-import {Link} from "react-router";
+import {HAND_ACCREDIT_URL} from "@/lib/config.ts";
 import {IoWarningOutline} from "react-icons/io5";
 import {Alert, Col, Row} from "@/component";
 import {Login} from "@/features";
@@ -58,7 +58,7 @@ export default function ErrorAlert({errorType = 'noPage', option}: Props) {
       color: 'warning',
       header: '您沒有瀏覽此頁面的權限',
       message: '此頁面包含非公開檔案，僅限特定人員瀏覽，請您前往認證，通過後即可使用本頁功能',
-      footer: <Link to='/user/accredit' className='btn btn-sm btn-outline btn-neutral'>前往認證</Link>,
+      footer: <a href={HAND_ACCREDIT_URL} target='_blank' rel='noopener noreferrer' className='btn btn-sm btn-outline btn-neutral'>前往認證</a>,
     }
   } else if (errorType === 'noAuth') {
     options = {
@@ -79,7 +79,7 @@ export default function ErrorAlert({errorType = 'noPage', option}: Props) {
       message: '您無須重新註冊，如需進行實名認證，請點選按鈕前往',
       footer:
         <div className='d-flex justify-content-end'>
-          <Link to='/user/accredit' className='btn btn-primary'>前往認證</Link>
+          <a href={HAND_ACCREDIT_URL} target='_blank' rel='noopener noreferrer' className='btn btn-primary'>前往認證</a>
         </div>,
     }
   }else if (errorType === 'comingSoon') {

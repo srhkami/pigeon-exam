@@ -1,11 +1,12 @@
 import {Dropdown, DropdownContent, DropdownToggle} from "@/component";
 import {Link} from "react-router";
-import {showToast, showUserFacingError} from "@/func";
+import {showToast} from "@/func";
 import {handleLogout} from "@/auth/handleUser.ts";
 import BadgeAccredit from "./BadgeAccredit.tsx";
 import AuthShow from "@/auth/AuthShow.tsx";
 import {useAuth} from "@/hooks";
 import {ModalLogin} from "@/features";
+import {HAND_ACCREDIT_URL} from "@/lib/config.ts";
 
 export default function MenuUser() {
 
@@ -15,7 +16,7 @@ export default function MenuUser() {
     showToast(
       handleLogout()
     )
-      .catch((err) => showUserFacingError(err, {fallback: "登出失敗，請稍後再試。"}))
+      .catch(() => undefined)
       .finally(() => onReload())
   }
 
@@ -28,10 +29,10 @@ export default function MenuUser() {
         <DropdownContent size='lg' className='z-1 mt-3 p-2 shadow font-semibold'>
           <ul className='menu w-full'>
             <li>
-              <Link to='/user/accredit' className='py-2 flex justify-between'>
+              <a href={HAND_ACCREDIT_URL} target='_blank' rel='noopener noreferrer' className='py-2 flex justify-between'>
                 實名認證
                 <BadgeAccredit user={userInfo}/>
-              </Link>
+              </a>
             </li>
             <li>
               <Link to='/user/profile' className='py-2'>

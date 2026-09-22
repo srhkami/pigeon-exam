@@ -44,7 +44,7 @@ export default function App() {
         client={queryClient}
         persistOptions={{
           persister: indexedDBPersister,
-          buster: 'v1', // 當你 API 格式大改時，更換此字串可清除使用者舊的緩存
+          buster: 'v2', // 當你 API 格式大改時，更換此字串可清除使用者舊的緩存
         }}
       >
         <RouterProvider router={routes}/>

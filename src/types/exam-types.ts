@@ -18,7 +18,6 @@ export interface SelectQuestionReadData {
 
 export interface SelectQuestionSimpleData extends SelectQuestionReadData {
   answer: Array<number>, // 解答
-  article_link: Array<[string, string]>,// 法條連結，是['法規名稱','法條']組成的清單
   file_link: Array<HappyFileLink>, // 檔案連結
   comment: JSONContent | null, // 註解
   record_count: number,
@@ -63,7 +62,6 @@ export type SelectQuestionForm = {
   category?: string, // 類科
   subject?: string, // 科目
   is_public?: boolean, // 是否公開
-  article_link?: Array<[string, string]>// 法條連結，是['法規名稱','法條']組成的清單
   file_link?: Array<HappyFileLink>, // 檔案連結
   comment?: JSONContent | null, // 註解
   remark?: string | null, // 備註
@@ -111,7 +109,6 @@ export interface EssayQuestionData extends EssayQuestionSimpleData {
   user_display: string,
   created_at: string,
   sample_answer: JSONContent | null,
-  article_link: Array<[string, string]>,
   file_link: Array<HappyFileLink>,
   is_public: boolean,
   records: Array<EssayRecordSimpleData>,
@@ -133,7 +130,6 @@ export type EssayQuestionForm = {
   category?: string,
   subject?: string,
   is_public?: boolean,
-  article_link?: Array<[string, string]>,
   file_link?: Array<HappyFileLink>,
 }
 

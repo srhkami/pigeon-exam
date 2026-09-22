@@ -10,7 +10,7 @@ scope:
 parent_state: ../STATE.md
 canonical: true
 governance_mode: project-state-v1
-last_reconciled: 2026-09-14
+last_reconciled: 2026-09-22
 parent_workstream: workstream.pigeon-exam.project-state-migration.2026-07-27
 legacy_sources:
   - path: docs/plans/2026-06-12-1124-p1b-permission-frontend-compat.md
@@ -71,6 +71,35 @@ workstreams:
       - src/lib/pages.tsx
     conflicts_with: []
 recent_results:
+- id: result.pigeon-exam.law-reference-list-refresh.2026-09-22
+  path: docs/result/2026-09-22-law-reference-list-refresh-result.md
+  status: completed
+  completed_at: 2026-09-22
+  acceptance: source_offline_contract_build_verified_browser_deferred
+  summary: 依使用者要求直接最小修正、不建計畫；兩題型編輯後同步刷新該題V3關聯，離線接線回歸、ESLint與建置通過，瀏覽器複驗未執行。未改後端、資料庫、部署或Git交付。
+- id: result.pigeon-exam.law-picker-manage-port.2026-09-21
+  path: docs/result/2026-09-21-law-picker-manage-port-result.md
+  status: completed
+  completed_at: 2026-09-21
+  acceptance: source_offline_contract_build_review_verified_browser_deferred
+  summary: Exam 加入關聯法條視窗已改用局部法規篩選、條文搜尋與結果卡片；20／10筆 V3 讀取契約、取消／序號晚到防護與既有儲存邊界已由離線合成契約、ESLint、建置及聚焦獨立複審驗證。未啟動服務或瀏覽器互動，未送真實 API／業務寫入、資料庫、部署或 Git 交付。
+- id: result.pigeon-exam.api-base-url-audit.2026-09-21
+  path: docs/result/2026-09-21-api-base-url-audit-result.md
+  status: completed
+  completed_at: 2026-09-21
+  acceptance: source_offline_contract_and_build_verified
+  summary: 共用 Axios 基底改用 ROOT_IP，修復兩題型法規關聯被串入 /user 的問題；來源盤點未發現其他隱含會員前綴依賴。57項離線情境、法規及認證契約、聚焦ESLint與建置通過；未執行真實業務請求、部署或Git交付。
+- id: result.exam-v3-improvement-reference.2026-09-18
+  path: ../docs/result/2026-09-18-exam-v3-improvement-reference-result.md
+  status: completed_with_local_runtime_validation_and_deferred_cutover
+  completed_at: 2026-09-18
+  acceptance: source_db_http_registry_verified_local_dev_cutover_deferred
+  summary: 選擇題與申論題關聯法條已改用 V3 provision／collection；兩階段保存、部分成功、未知 POST、讀取前置條件與競態護欄完成，契約、ESLint、建置、可拋棄 DB／authenticated HTTP 及 v5 複審 PASS。兩筆本機 registry 已精確套用；未做長駐 authenticated 業務操作、瀏覽器或正式切換。
+- id: result.pigeon-exam.hand-auth-parity.2026-09-18
+  path: docs/result/2026-09-18-hand-auth-parity-result.md
+  status: completed
+  completed_at: 2026-09-18
+  summary: B 方案完成；API 自動區分環境、登入與重送契約同步 Hand、註冊及認證導向 Hand。30 項離線回歸、既有認證檢查、三前端建置與獨立審查通過；共用 toast 既有差異保留。未做真實登入、資料庫、部署、提交或推送。
 - id: result.completed-work-status-reconciliation.2026-09-14
   path: ../docs/result/2026-09-14-completed-work-status-reconciliation-result.md
   status: completed
@@ -85,6 +114,12 @@ recent_results:
 ---
 
 # 目前狀態
+
+2026-09-21，Exam 法規選取介面移植已完成來源、離線合成契約、ESLint、建置與聚焦獨立複審；結果見 `docs/result/2026-09-21-law-picker-manage-port-result.md`。未啟動服務或瀏覽器互動，未送真實 API／業務寫入、資料庫、部署或 Git 交付；這些缺口不改寫為執行期驗收。
+
+2026-09-21，API 基底網址盤點修正已完成；共用 Axios 使用 API 主機根位址，法規關聯儲存不再誤加 `/user`。結果見 `docs/result/2026-09-21-api-base-url-audit-result.md`；驗證限原始碼、離線合成傳輸與建置，不取代長駐服務或瀏覽器驗收。
+
+2026-09-21，選擇題與申論題關聯法條已完成 V3 來源接線；兩階段保存、只重試 links、未知 POST 停止重送、既有關聯未讀回前禁止 PUT，以及搜尋競態護欄均已納入契約。前端契約、聚焦 ESLint、建置、可拋棄 PostgreSQL／authenticated HTTP 矩陣及 v5 最終獨立複審通過；兩筆 Exam operation 已精確套用本機開發 registry。結果見 `../docs/result/2026-09-18-exam-v3-improvement-reference-result.md` 及 `../pigeon-hand-api/docs/result/2026-09-21-exam-v3-runtime-registry-validation-result.md`。長駐 authenticated 業務操作、瀏覽器驗收、正式切換與部署未執行。
 
 本專案依 Project-State v1 管理；根目錄協調見 `../STATE.md`。前端效能優化（若列於上方）維持原狀；其餘仍列出的工作保持既有處置，不由本輪擴張或啟動。
 

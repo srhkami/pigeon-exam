@@ -6,6 +6,7 @@ import {Badge, RichTextShow} from "@/component";
 import {QsCard, QsCardOptionLabel, QsCardSource, QsCardTitle} from "@/features/Select/for-user/Question/QsCardBase.tsx";
 import {QuestionRating} from "@/features";
 import ModalSelectEdit from "@/features/Select/for-manager/Manage/Edit/ModalSelectEdit.tsx";
+import {useState} from "react";
 
 type Props = {
   readonly q: SelectQuestionData,
@@ -25,6 +26,11 @@ type Props = {
  * @constructor
  */
 export default function QsCardForEdit({q, a, i, config, onRefetch}: Props) {
+  const [referencesRefreshKey, setReferencesRefreshKey] = useState(0)
+  const handleRefetch = () => {
+    setReferencesRefreshKey(value => value + 1)
+    onRefetch?.()
+  }
 
   const title = q.question.length > 35 ? q.question.slice(0, 35) + "..." : q.question
 
@@ -32,7 +38,7 @@ export default function QsCardForEdit({q, a, i, config, onRefetch}: Props) {
     <QsCard is_correct={undefined}>
       {/*編輯按鈕*/}
       {onRefetch !== undefined &&
-        <ModalSelectEdit obj={q} onRefetch={onRefetch}/>
+        <ModalSelectEdit obj={q} onRefetch={handleRefetch}/>
       }
       <QsCardTitle i={i} title={config?.showOptions ? q.question : title}/>
       {
@@ -65,7 +71,7 @@ export default function QsCardForEdit({q, a, i, config, onRefetch}: Props) {
       {
         config?.showLinks &&
         <div>
-          <ArticleLink articleLink={q.article_link}/>
+          <ArticleLink questionType='select' questionId={q.id} refreshKey={referencesRefreshKey}/>
           <FileLink fileLink={q.file_link}/>
         </div>
       }

@@ -1,6 +1,6 @@
 import {Button} from "@/component";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {showFormError, showToast, showUserFacingError} from "@/func";
+import {showFormError, showToast} from "@/func";
 import {handleLogin} from "@/auth/handleUser.ts";
 import {UserLoginForm} from "@/types/user-types.ts";
 import toast from "react-hot-toast";
@@ -18,13 +18,15 @@ export default function PasswordForm() {
     )
       .then(() => onReload())
       .catch(err => {
-        const status = err.response.status;
+        const status = err?.response?.status;
         if (status === 400) {
           showFormError(err, setError)
+        } else if (status === 429) {
+          toast.error('請稍後再試');
         } else if (status === 500) {
           toast.error('伺服器臨時維護中，請稍後再試');
         } else {
-          showUserFacingError(err, {fallback: "登入失敗，請稍後再試。"})
+          toast.error('登入失敗，請稍後再試。');
         }
       })
   }

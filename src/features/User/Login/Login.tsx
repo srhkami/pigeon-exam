@@ -1,6 +1,6 @@
 import EmailForm from "@/features/User/Login/EmailForm.tsx";
 import PasswordForm from "@/features/User/Login/PasswordForm.tsx";
-import {Button} from "@/component";
+import {HAND_SIGNUP_URL} from "@/lib/config.ts";
 
 /* 登入的主體 */
 export default function Login() {
@@ -18,9 +18,9 @@ export default function Login() {
       </div>
       <div className='text-xs flex justify-end items-center mt-1'>
         還沒有帳號？
-        <Button size='sm' style='link' onClick={() => window.open('https://pigeonhand.tw/signup')}>
+        <a href={HAND_SIGNUP_URL} target='_blank' rel='noopener noreferrer' className='btn btn-sm btn-link'>
           點此註冊
-        </Button>
+        </a>
       </div>
     </div>
   )

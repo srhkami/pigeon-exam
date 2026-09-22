@@ -1,6 +1,6 @@
 import {createContext, type ReactNode, useCallback, useEffect, useMemo, useState} from "react";
 import toast from "react-hot-toast";
-import {Link} from "react-router";
+import {HAND_ACCREDIT_URL} from "@/lib/config.ts";
 import {type UserInfo} from "@/types/user-types.ts";
 import {type TypeAuthContext} from "@/types/auth-types.ts";
 import {useAxios} from "@/hooks";
@@ -58,9 +58,9 @@ const handleToast = (expiry_days: number | null) => {
         {tip[1]}
       </div>
       <div className='flex justify-end mt-2'>
-        <Link to='/user/accredit' className='btn btn-sm btn-accent me-2'>
+        <a href={HAND_ACCREDIT_URL} target='_blank' rel='noopener noreferrer' className='btn btn-sm btn-accent me-2'>
           前往認證
-        </Link>
+        </a>
         <Button size='sm' color='neutral' onClick={() => toast.dismiss(t.id)}>
           稍後再說
         </Button>

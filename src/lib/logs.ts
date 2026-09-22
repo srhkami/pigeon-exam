@@ -6,6 +6,7 @@ export const CHANGE_LOGS: Array<TVersion> = [
     version: '1.1.2',
     date: '未上線',
     logs: [
+      {type: 'info', text: '【法規】關聯法規功能改用新版。'},
       {type: 'fix', text: '【全站】修復篩選元件無法使用的問題。'},
     ]
   },

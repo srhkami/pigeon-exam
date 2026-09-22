@@ -5,6 +5,7 @@ import ModalEssayRecords from "@/features/Essay/for-manager/Question/ModalEssayR
 import ArticleLink from "@/features/Link/ArticleLink/ArticleLink.tsx";
 import FileLink from "@/features/Link/FileLink/FileLink.tsx";
 import ModalEssayQuestionEdit from "@/features/Essay/for-manager/Question/ModalEssayQuestionEdit.tsx";
+import {useState} from "react";
 
 type Props = {
   readonly q: EssayQuestionData,
@@ -22,13 +23,18 @@ type Props = {
  * @constructor
  */
 export default function QsCardForEdit({q, i, config, onRefetch}: Props) {
+  const [referencesRefreshKey, setReferencesRefreshKey] = useState(0)
+  const handleRefetch = () => {
+    setReferencesRefreshKey(value => value + 1)
+    onRefetch?.()
+  }
 
   const title = q.question.length > 50 ? q.question.slice(0, 50) + "..." : q.question
 
   return (
     <div className='hover:bg-base-200 card card-border border-base-300 my-1 relative'>
       {onRefetch !== undefined &&
-        <ModalEssayQuestionEdit q={q} onRefetch={onRefetch}/>
+        <ModalEssayQuestionEdit q={q} onRefetch={handleRefetch}/>
       }
       <div className='p-5'>
         <div className='font-bold'>
@@ -58,7 +64,7 @@ export default function QsCardForEdit({q, i, config, onRefetch}: Props) {
           config?.showLinks &&
           <div>
             <div className='divider m-0'></div>
-            <ArticleLink articleLink={q.article_link}/>
+            <ArticleLink questionType='essay' questionId={q.id} refreshKey={referencesRefreshKey}/>
             <FileLink fileLink={q.file_link}/>
           </div>
         }

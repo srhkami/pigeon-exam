@@ -76,7 +76,6 @@ export default function ArticleLinkEdit({questionType, questionId, items, onChan
       <p role='alert' className='text-sm text-error'>{error}</p>
       <Button type='button' size='xs' onClick={() => setReloadToken((value) => value + 1)}>重新讀取</Button>
     </div> : null}
-    {!loading && !error && items.length === 0 ? <p className='mt-2 text-sm text-base-content/70'>尚未設定關聯法條</p> : null}
     {!loading && !error ? <div className='mt-2'>
       {items.map((item, index) => <Button key={item.kind === 'existing' ? item.reference.id : item.provision.id} type='button' size='xs' color='accent' className='mr-1 mb-1 rounded-4xl' onClick={() => remove(index)}>
         <IoClose className='i-12'/>{label(item)}

@@ -21,8 +21,8 @@ const request = async (config) => {
 
 assert.deepEqual(
   controller.buildQuestionPayload({question: '題目', article_link: [['刑法', '第 1 條']], file_link: []}),
-  {question: '題目', file_link: []},
-  '題目 payload 必須明確排除 article_link',
+  {question: '題目'},
+  '題目送出欄位必須明確排除 article_link 與已停用的 file_link',
 )
 assert.equal(controller.examLawReferencesUrl('select', 37), '/v3/exam/questions/select/37/law-references')
 assert.equal(controller.examLawReferencesUrl('essay', 18), '/v3/exam/questions/essay/18/law-references')

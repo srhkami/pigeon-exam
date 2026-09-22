@@ -17,7 +17,6 @@ const retiredFiles = [
   "src/hooks/useCacheApi.tsx",
   "src/hooks/useDataBrowser.tsx",
   "src/features/Feedback/FeedbackWeb.tsx",
-  "src/features/Link/FileLink/ModalSelectFile.tsx",
   "src/features/Paper/for-manager/Manage/ModalQuestionToText.tsx",
   "src/features/User/Login/BtnEmailCode.tsx",
   "src/features/User/Login/EmailForm.tsx",
@@ -30,6 +29,7 @@ const retiredFiles = [
 for (const path of retiredFiles) {
   assert.doesNotMatch(source(path), /\berrorLogger\b/, `${path} must not call errorLogger`);
 }
+assert.equal(existsSync(resolve(root, "src/features/Link/FileLink/ModalSelectFile.tsx")), false, "檔案關聯搜尋元件應已退役，不得恢復舊入口");
 
 assert.match(apiError, /export\s+(?:default\s+)?function\s+getUserFacingErrorMessage/, "missing safe error helper");
 assert.match(apiError, /status.*key.*context.*value|status.*context.*key.*value/s, "server messages require four-part whitelist");

@@ -4,13 +4,11 @@ import {MdAddComment} from "react-icons/md"
 import {SelectQuestionData, SelectQuestionForm} from "@/types/exam-types.ts"
 import {FaEdit, FaSave} from "react-icons/fa"
 import ArticleLinkEdit from "@/features/Link/ArticleLink/ArticleLinkEdit.tsx"
-import FileLinkEdit from "@/features/Link/FileLink/FileLinkEdit.tsx"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {EXAM_API} from "@/lib/config.ts"
 import {showFormError} from "@/func"
 import {useRef, useState} from "react"
 import toast from "react-hot-toast"
-import {HappyFileLink} from "@/types/happywork-types.ts"
 import {JSONContent} from "@tiptap/react"
 import SelectOptions from "./SelectOptions.tsx"
 import {referenceItemsForPut, saveQuestionAndReferences, type LawReferenceItem, type LawReferenceLoadState} from "@/features/Link/ArticleLink/lawReferenceController.ts"
@@ -28,7 +26,6 @@ export default function ModalSelectEdit({obj, onRefetch}: Props) {
   const [questionUnknown, setQuestionUnknown] = useState(false)
   const [saving, setSaving] = useState(false)
   const savingRef = useRef(false)
-  const [fileLink, setFileLink] = useState<Array<HappyFileLink>>(obj ? obj.file_link : [])
   const [comment, setComment] = useState<JSONContent | null>(obj?.comment ?? null)
   const {register, handleSubmit, setError, setValue, watch, formState: {errors}} = useForm<SelectQuestionForm>({mode: 'onBlur', reValidateMode: 'onChange', defaultValues: obj})
   const [question] = watch(['question'])
@@ -41,7 +38,7 @@ export default function ModalSelectEdit({obj, onRefetch}: Props) {
 
   const save = async (formData: SelectQuestionForm, retryQuestionId?: number) => {
     if (questionUnknown) return
-    const questionPayload = {...formData, options, answer, file_link: fileLink, comment} as Record<string, unknown>
+    const questionPayload = {...formData, options, answer, comment} as Record<string, unknown>
     const result = await saveQuestionAndReferences({
       questionType: 'select',
       questionUrl: obj ? EXAM_API + `/select_questions/${obj.id}/` : EXAM_API + '/select_questions/',
@@ -107,7 +104,6 @@ export default function ModalSelectEdit({obj, onRefetch}: Props) {
         <FormInputCol xs={12} label='題目*' error={errors.question?.message}><input className='input input-sm w-full' {...register('question', {required: true, onBlur: onCheckRepeat})}/></FormInputCol>
         <Col xs={12}><SelectOptions options={options} setOptions={setOptions} answer={answer} setAnswer={setAnswer}/></Col>
         <ArticleLinkEdit questionType='select' questionId={obj?.id} items={referenceItems} onChange={setReferenceItems} onLoadStateChange={setLawReferencesState}/>
-        <FileLinkEdit fileLink={fileLink} setFileLink={setFileLink}/>
         <Col xs={12} className='divider m-0'></Col>
         <FormInputCol xs={12} label='註解（提供學生檢視）' error={errors.remark?.message}><ModalTextEditor content={comment} setContent={setComment}/></FormInputCol>
         <FormInputCol xs={12} label='管理員筆記' error={errors.remark?.message}><textarea className='textarea textarea-sm w-full' {...register('remark')}/></FormInputCol>

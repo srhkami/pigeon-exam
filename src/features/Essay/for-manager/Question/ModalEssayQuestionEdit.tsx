@@ -4,10 +4,8 @@ import {MdAddComment} from "react-icons/md"
 import {EssayQuestionData, EssayQuestionForm} from "@/types/exam-types.ts"
 import {FaEdit, FaSave} from "react-icons/fa"
 import ArticleLinkEdit from "@/features/Link/ArticleLink/ArticleLinkEdit.tsx"
-import FileLinkEdit from "@/features/Link/FileLink/FileLinkEdit.tsx"
 import {useRef, useState} from "react"
 import toast from "react-hot-toast"
-import {HappyFileLink} from "@/types/happywork-types.ts"
 import {JSONContent} from "@tiptap/react"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {EXAM_API} from "@/lib/config.ts"
@@ -25,13 +23,12 @@ export default function ModalEssayQuestionEdit({onRefetch, q}: Props) {
   const [questionUnknown, setQuestionUnknown] = useState(false)
   const [saving, setSaving] = useState(false)
   const savingRef = useRef(false)
-  const [fileLink, setFileLink] = useState<Array<HappyFileLink>>(q ? q.file_link : [])
   const [sample, setSample] = useState<JSONContent | null>(q?.sample_answer ?? null)
   const {register, handleSubmit, setError, setValue, formState: {errors}} = useForm<EssayQuestionForm>({mode: 'onBlur', reValidateMode: 'onChange', defaultValues: q})
 
   const save = async (formData: EssayQuestionForm, retryQuestionId?: number) => {
     if (questionUnknown) return
-    const questionPayload = {...formData, sample_answer: sample, file_link: fileLink} as Record<string, unknown>
+    const questionPayload = {...formData, sample_answer: sample} as Record<string, unknown>
     const result = await saveQuestionAndReferences({
       questionType: 'essay',
       questionUrl: q ? EXAM_API + `/essay_questions/${q.id}/` : EXAM_API + '/essay_questions/',
@@ -97,7 +94,6 @@ export default function ModalEssayQuestionEdit({onRefetch, q}: Props) {
         <FormInputCol xs={12} label='擬答' error=''><ModalTextEditor content={sample} setContent={setSample}/></FormInputCol>
         <Col xs={12} className='divider m-0'></Col>
         <ArticleLinkEdit questionType='essay' questionId={q?.id} items={referenceItems} onChange={setReferenceItems} onLoadStateChange={setLawReferencesState}/>
-        <FileLinkEdit fileLink={fileLink} setFileLink={setFileLink}/>
       </Row></ModalBody>
       <ModalFooter>
         <label className='label'><input type='checkbox' className='toggle toggle-sm checked:bg-success bg-error' {...register('is_public')}/>是否公開</label>

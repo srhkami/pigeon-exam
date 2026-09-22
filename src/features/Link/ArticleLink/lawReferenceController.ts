@@ -60,9 +60,11 @@ export function examLawReferencesUrl(questionType: ExamQuestionType, questionId:
   return `/v3/exam/questions/${questionType}/${questionId}/law-references`
 }
 
-export function buildQuestionPayload<T extends Record<string, unknown>>(payload: T): Omit<T, 'article_link'> {
+export function buildQuestionPayload<T extends Record<string, unknown>>(payload: T): Omit<T, 'article_link' | 'file_link'> {
   const questionPayload = {...payload}
   delete questionPayload.article_link
+  // 表單預設值可能含舊檔案關聯；省略欄位，避免編輯時覆寫或清空資料。
+  delete questionPayload.file_link
   return questionPayload
 }
 

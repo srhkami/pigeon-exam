@@ -1,7 +1,6 @@
 import {SelectCardConfig, SelectRecordData} from "@/types/exam-types.ts";
 import {FaRegStickyNote} from "react-icons/fa";
 import ArticleLink from "@/features/Link/ArticleLink/ArticleLink.tsx";
-import FileLink from "@/features/Link/FileLink/FileLink.tsx";
 import {Badge, RichTextShow} from "@/component";
 import {QsCard, QsCardOptionLabel, QsCardSource, QsCardTitle} from "@/features/Select/for-user/Question/QsCardBase.tsx";
 import {QuestionRating} from "@/features";
@@ -63,7 +62,6 @@ export default function QsCardForRecord({record, i, config}: Props) {
         config?.showLinks &&
         <div>
           <ArticleLink questionType='select' questionId={q.id}/>
-          <FileLink fileLink={q.file_link}/>
         </div>
       }
       {

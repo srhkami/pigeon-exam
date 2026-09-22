@@ -62,7 +62,6 @@ export type SelectQuestionForm = {
   category?: string, // 類科
   subject?: string, // 科目
   is_public?: boolean, // 是否公開
-  file_link?: Array<HappyFileLink>, // 檔案連結
   comment?: JSONContent | null, // 註解
   remark?: string | null, // 備註
 }
@@ -130,7 +129,6 @@ export type EssayQuestionForm = {
   category?: string,
   subject?: string,
   is_public?: boolean,
-  file_link?: Array<HappyFileLink>,
 }
 
 // 申論題卡片設定

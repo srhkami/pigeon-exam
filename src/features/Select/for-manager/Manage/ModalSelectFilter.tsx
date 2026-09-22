@@ -95,8 +95,8 @@ export default function ModalSelectFilter({detailMode = true}: Props) {
       title: '關聯',
       fieldName: 'link_is_null',
       options: [
-        {label: '無關聯物件', value: 'true'},
-        {label: '有關聯物件', value: 'false'},
+        {label: '無關聯法條', value: 'true'},
+        {label: '有關聯法條', value: 'false'},
       ]
     },
     {

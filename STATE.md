@@ -71,6 +71,18 @@ workstreams:
       - src/lib/pages.tsx
     conflicts_with: []
 recent_results:
+- id: result.exam-law-reference-filter-search.2026-09-22
+  path: ../docs/result/2026-09-22-exam-law-reference-filter-search-result.md
+  status: completed
+  completed_at: 2026-09-22
+  acceptance: source_offline_build_verified_preexisting_lint_errors_runtime_deferred
+  summary: 兩題型篩選選項改為有／無關聯法條，參數及分頁不變；17 項前端契約與建置通過。兩元件四個 ESLint 錯誤、兩個警告均已證明為既有，無新增診斷；未做瀏覽器、部署或 Git 交付。
+- id: result.pigeon-exam.file-link-frontend-retirement.2026-09-22
+  path: docs/result/2026-09-22-file-link-frontend-retirement-result.md
+  status: completed
+  completed_at: 2026-09-22
+  acceptance: source_offline_contract_build_review_verified_browser_deferred
+  summary: 五種題目卡片及兩題型編輯入口已移除檔案關聯，POST／PATCH 明確省略 file_link；15 項退役契約、既有法條及錯誤回報契約、ESLint、建置與聚焦複審通過。保留法條、混合搜尋／篩選、預覽路由及歷史資料；未做瀏覽器、資料庫、部署或 Git 交付。
 - id: result.pigeon-exam.law-reference-list-refresh.2026-09-22
   path: docs/result/2026-09-22-law-reference-list-refresh-result.md
   status: completed

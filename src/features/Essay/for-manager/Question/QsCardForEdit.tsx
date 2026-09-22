@@ -3,7 +3,6 @@ import {FaRegStickyNote} from "react-icons/fa";
 import {Badge, RichTextShow} from "@/component";
 import ModalEssayRecords from "@/features/Essay/for-manager/Question/ModalEssayRecords.tsx";
 import ArticleLink from "@/features/Link/ArticleLink/ArticleLink.tsx";
-import FileLink from "@/features/Link/FileLink/FileLink.tsx";
 import ModalEssayQuestionEdit from "@/features/Essay/for-manager/Question/ModalEssayQuestionEdit.tsx";
 import {useState} from "react";
 
@@ -65,7 +64,6 @@ export default function QsCardForEdit({q, i, config, onRefetch}: Props) {
           <div>
             <div className='divider m-0'></div>
             <ArticleLink questionType='essay' questionId={q.id} refreshKey={referencesRefreshKey}/>
-            <FileLink fileLink={q.file_link}/>
           </div>
         }
       </div>

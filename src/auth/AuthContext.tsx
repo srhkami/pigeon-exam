@@ -1,4 +1,5 @@
-import {createContext, type ReactNode, useCallback, useEffect, useMemo, useState} from "react";
+import {createContext, type ReactNode, useCallback, useEffect, useMemo, useRef, useState} from "react";
+import type {AxiosError} from 'axios';
 import toast from "react-hot-toast";
 import {HAND_ACCREDIT_URL} from "@/lib/config.ts";
 import {type UserInfo} from "@/types/user-types.ts";
@@ -26,6 +27,7 @@ const noLoginUser: UserInfo = {
 
 // 定義一個安全的初始 Context 狀態
 const initialContext: TypeAuthContext = {
+  isLoading: true,
   isAuthenticated: false,
   onReload: ()=>{},
   setIsAuthenticated: () => {},
@@ -35,6 +37,13 @@ const initialContext: TypeAuthContext = {
 
 const AuthContext = createContext(initialContext); //還未完全測試正確錯誤
 export default AuthContext;
+
+const authorizationToken = (headers: unknown) => {
+  const value = typeof (headers as {get?: unknown})?.get === 'function'
+    ? (headers as {get: (name: string) => unknown}).get('Authorization')
+    : (headers as {Authorization?: unknown} | undefined)?.Authorization;
+  return typeof value === 'string' ? value.replace(/^Bearer /, '') : '';
+};
 
 const handleToast = (expiry_days: number | null) => {
   let tip: Array<string> = []
@@ -82,33 +91,52 @@ export const AuthProvider = ({children}: Props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userInfo, setUserInfo] = useState<UserInfo>(noLoginUser);
+  const verificationRef = useRef<{sequence: number; controller: AbortController | null}>({sequence: 0, controller: null});
 
   // 1. 核心驗證邏輯：現在它只負責「抓取並同步狀態」
   const verifyToken = useCallback(async () => {
+    verificationRef.current.controller?.abort();
+    const sequence = ++verificationRef.current.sequence;
+    const controller = new AbortController();
+    verificationRef.current.controller = controller;
+    const isCurrent = () => sequence === verificationRef.current.sequence && !controller.signal.aborted;
+    let requestAccess = loadTokens()?.access;
+    const ownsCredentials = () => loadTokens()?.access === requestAccess;
     setIsLoading(true);
+    setIsAuthenticated(false);
+    setUserInfo(noLoginUser);
     try {
+      if (!requestAccess) return;
       const res = await api<UserInfo>({
         method: 'post',
         url: V3_AUTH_ENDPOINTS.verify,
         data: {},
+        timeout: 10000,
+        signal: controller.signal,
       });
+      requestAccess = authorizationToken(res.config.headers);
+      if (!isCurrent() || !requestAccess || !ownsCredentials()) return;
       const data = res.data;
       if (!isUserTokenVerifyResponse(data)) throw new Error("auth_response_invalid");
-      setUserInfo({ ...data }); // 建議簡化展開
+      setUserInfo({...data});
       setIsAuthenticated(true);
       handleToast(data.expiry_days);
     } catch (err) {
-      console.error('驗證失敗', err);
+      if (!isCurrent()) return;
+      requestAccess = authorizationToken((err as AxiosError).config?.headers) || requestAccess;
+      // 舊請求不可清除另一個登入流程剛寫入的憑證。
+      if (ownsCredentials()) clearTokens();
       setUserInfo(noLoginUser);
       setIsAuthenticated(false);
-      clearTokens();
     } finally {
-      setIsLoading(false);
+      if (isCurrent()) setIsLoading(false);
     }
   }, [api]);
 
   // 2. 登出邏輯：明確、簡單
   const logout = useCallback(() => {
+    verificationRef.current.controller?.abort();
+    verificationRef.current.sequence++;
     setUserInfo(noLoginUser);
     setIsAuthenticated(false);
     clearTokens();
@@ -117,29 +145,28 @@ export const AuthProvider = ({children}: Props) => {
 
   // 3. 初始化載入：只在組件掛載時執行一次
   useEffect(() => {
-    const t = loadTokens();
-    if (t?.access) {
-      verifyToken();
-    } else {
-      setIsLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // 這裡通常只需執行一次
+    void verifyToken();
+    const verification = verificationRef.current;
+    return () => {
+      verification.controller?.abort();
+      verification.sequence++;
+    };
+  }, [verifyToken]);
 
   // 4. 組合 Context Value
   const contextData = useMemo(() => ({
+    isLoading,
     isAuthenticated,
     userInfo,
     // 讓外部直接呼叫 verifyToken 來達到「reload」的效果
     onReload: verifyToken,
     // 提供一個統一的更新入口
     setIsAuthenticated: (val: boolean) => val ? verifyToken() : logout(),
-  }), [isAuthenticated, userInfo, verifyToken, logout]);
+  }), [isLoading, isAuthenticated, userInfo, verifyToken, logout]);
 
   return (
     <AuthContext.Provider value={contextData}>
-      {/* todo:建議：讀取中時顯示 Loading Spinner，而不是 null，體驗較好 */}
-      {isLoading ? null : children}
+      {children}
     </AuthContext.Provider>
   );
 };

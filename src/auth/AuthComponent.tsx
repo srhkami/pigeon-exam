@@ -13,7 +13,9 @@ type AppProps = {
 /* 傳入此組件的子組件，會驗證是否登入、有無權限  */
 export default function AuthComponent({ authType = 'L', isManager = false, children, errorContent = <></> }: AppProps) {
 
-  const { userInfo } = useAuth();
+  const { userInfo, isAuthenticated, isLoading } = useAuth();
+  if (isLoading) return null;
+  if (!isAuthenticated) return <>{errorContent}</>;
   let hasAuth: boolean = handleHasAuth(userInfo.auth, authType); // 確認是否有對應權限
 
   if (isManager) {

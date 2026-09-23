@@ -3,6 +3,7 @@ import {handleHasAuth} from "./handleHasAuth.ts";
 import {ErrorAlert} from "@/features";
 import {AuthType} from "@/types/auth-types.ts";
 import {useAuth} from "@/hooks";
+import Loading from '@/component/Loading/Loading.tsx';
 
 type Props = {
   readonly children: ReactNode, // 傳入的組件
@@ -14,9 +15,12 @@ type Props = {
  */
 export default function AuthLayout({children, authType = 'L'}: Props) {
 
-  const {userInfo, isAuthenticated} = useAuth();
+  const {userInfo, isAuthenticated, isLoading} = useAuth();
   const hasAuth: boolean = handleHasAuth(userInfo.auth, authType); // 確認特定位數是否有權限值
 
+  if (isLoading) {
+    return <div role='status' className='flex justify-center items-center gap-2 p-8'><Loading/><span>驗證中…</span></div>
+  }
   if (!isAuthenticated) {
     // 如果未登入
     return <ErrorAlert errorType='noLogin'/>

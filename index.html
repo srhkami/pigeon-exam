@@ -6,9 +6,63 @@
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>
+    try {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+    } catch {}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <style>
+    body { margin: 0; }
+    .startup-loading {
+      box-sizing: border-box;
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: grid;
+      place-content: center;
+      justify-items: center;
+      gap: 16px;
+      padding: 24px;
+      background: #f1f3f6;
+      color: #334155;
+      font: 500 16px/1.5 system-ui, -apple-system, sans-serif;
+    }
+    html[data-theme="dark"] .startup-loading { background: #353535; color: #f5f5f5; }
+    .startup-loading img { display: block; width: 64px; height: 64px; }
+    .startup-spinner {
+      box-sizing: border-box;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #cbd5e1;
+      border-top-color: #4f46e5;
+      border-radius: 50%;
+      transform: rotate(var(--exam-startup-angle, 0deg));
+    }
+    .startup-track {
+      width: min(200px, calc(100vw - 48px));
+      height: 4px;
+      overflow: hidden;
+      border-radius: 2px;
+      background: #cbd5e1;
+    }
+    .startup-progress {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: #4f46e5;
+      transform-origin: left;
+      transform: scaleX(var(--exam-startup-progress, 0));
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .startup-spinner { transform: none; }
+    }
+  </style>
   <title>小試鴿手</title>
 </head>
 <!-- Google tag (gtag.js) -->
@@ -20,8 +74,39 @@
   gtag('config', 'G-QMZ6EH22TN');
 </script>
 <body class="font-semibold">
-<div id="root" class="bg-base-200"></div>
+<div id="root" class="bg-base-200">
+  <div id="startup-loading" class="startup-loading" role="status" aria-label="小試鴿手載入中" aria-live="polite" aria-busy="true">
+    <img src="/Web_Logo.svg" width="64" height="64" alt="">
+    <span class="startup-spinner" aria-hidden="true"></span>
+    <div class="startup-track" aria-hidden="true"><span class="startup-progress"></span></div>
+  </div>
+</div>
 <div id="modal-root"></div>
+<script id="startup-progress-script">
+  (() => {
+    const style = document.documentElement.style;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let value = 0;
+    let frame = 0;
+    const stop = () => cancelAnimationFrame(frame);
+    const start = (limit) => {
+      stop();
+      const from = value;
+      const started = performance.now();
+      const tick = (now) => {
+        const fraction = Math.min(1, Math.max(0, (now - started) / 6000));
+        value = reducedMotion.matches ? limit : from + (limit - from) * (1 - (1 - fraction) ** 3);
+        style.setProperty('--exam-startup-progress', String(value));
+        style.setProperty('--exam-startup-angle', `${(now % 900) / 900 * 360}deg`);
+        if (!reducedMotion.matches && fraction < 1) frame = requestAnimationFrame(tick);
+      };
+      if (reducedMotion.matches) tick(started);
+      else frame = requestAnimationFrame(tick);
+    };
+    window.examStartupProgress = {start, stop};
+    start(0.5);
+  })();
+</script>
 <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>

@@ -5,14 +5,22 @@ import {Button} from "@/component";
 export default function ThemeToggle() {
 
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    // 初始化從 localStorage 讀取，或預設為 light
-    return localStorage.getItem("theme") as 'light' | 'dark' || "light";
+    // 儲存空間可能被停用；與 HTML 啟動階段採相同安全預設。
+    try {
+      return localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+    } catch {
+      return 'light';
+    }
   });
 
   useEffect(() => {
     // 每次主題變更時，更新 <html data-theme="">
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
+    try {
+      localStorage.setItem("theme", theme);
+    } catch {
+      // 私密模式仍可切換目前頁面的主題。
+    }
   }, [theme]);
 
   const toggleTheme = () => {

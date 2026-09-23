@@ -7,21 +7,22 @@ import AuthShow from "@/auth/AuthShow.tsx";
 import {useAuth} from "@/hooks";
 import {ModalLogin} from "@/features";
 import {HAND_ACCREDIT_URL} from "@/lib/config.ts";
+import {useRef} from "react";
+import Loading from "@/component/Loading/Loading.tsx";
 
 export default function MenuUser() {
 
-  const {onReload, userInfo, isAuthenticated} = useAuth();
+  const {setIsAuthenticated, userInfo, isAuthenticated, isLoading} = useAuth();
+  const memberRef = useRef<HTMLDivElement>(null);
 
   const logout = () => {
-    showToast(
-      handleLogout()
-    )
-      .catch(() => undefined)
-      .finally(() => onReload())
+    const request = handleLogout();
+    setIsAuthenticated(false);
+    showToast(request).catch(() => undefined);
   }
 
-  if (isAuthenticated) {
-    return (
+  return <div ref={memberRef} tabIndex={-1} aria-label='會員入口'>
+    {isLoading ? <div className='size-11 flex items-center justify-center' role='status' aria-label='載入中'><Loading size='sm'/></div> : isAuthenticated ? (
       <Dropdown aligns='end'>
         <DropdownToggle shape='circle' color='primary' dropdownIcon={false}>
           {userInfo.name ? userInfo.name.slice(0, 1) : '客'}
@@ -50,7 +51,7 @@ export default function MenuUser() {
           </ul>
         </DropdownContent>
       </Dropdown>
-    )
-  }
-  return <ModalLogin/>
+    ) : null}
+    <ModalLogin hideTrigger={isLoading || isAuthenticated} returnFocusRef={memberRef}/>
+  </div>
 }

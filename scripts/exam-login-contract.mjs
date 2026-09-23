@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const source = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
+const login = source('src/features/User/Login/Login.tsx');
+const modal = source('src/features/User/Login/ModalLogin.tsx');
+const menu = source('src/features/User/UserProfile/MenuUser.tsx');
+const shell = source('src/component/Modal/Modal.tsx');
+assert.match(login, /!isLoading\s*&&\s*isAuthenticated/, 'confirmed authentication closes both login forms');
+assert.match(login, /onHide\?\.\(\)/, 'embedded login without close callback stays embedded');
+assert.match(modal, /<Login\s+onHide=\{onHide\}/, 'modal passes its close callback');
+assert.match(modal, /focusManagement/, 'login requests opt-in focus management');
+assert.match(modal, /returnFocusRef/, 'return target belongs to surviving menu');
+assert.match(menu, /<ModalLogin[^>]*hideTrigger/, 'dialog owner survives auth branch changes');
+assert.match(menu, /isLoading/, 'menu does not show usable auth controls during verification');
+assert.match(shell, /event\.key === ['"]Escape['"]/, 'Escape closes focused login');
+assert.match(shell, /event\.key !== ['"]Tab['"]/, 'Tab is trapped within focused login');
+console.log('Exam 登入生命週期來源契約通過');

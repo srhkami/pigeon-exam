@@ -7,6 +7,7 @@ import {UserInfo} from "./user-types.ts";
 
 // 全域權限驗證
 export type TypeAuthContext = {
+  isLoading: boolean,
   isAuthenticated: boolean,
   setIsAuthenticated: (val: boolean) => void,
   onReload: ()=>void,

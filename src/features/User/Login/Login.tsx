@@ -1,9 +1,17 @@
 import EmailForm from "@/features/User/Login/EmailForm.tsx";
 import PasswordForm from "@/features/User/Login/PasswordForm.tsx";
 import {HAND_SIGNUP_URL} from "@/lib/config.ts";
+import {useEffect} from "react";
+import {useAuth} from "@/hooks";
+
+type Props = {readonly onHide?: () => void};
 
 /* 登入的主體 */
-export default function Login() {
+export default function Login({onHide}: Props) {
+  const {isLoading, isAuthenticated} = useAuth();
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) onHide?.();
+  }, [isLoading, isAuthenticated, onHide]);
   return (
     <div>
       <div className="tabs tabs-lift">

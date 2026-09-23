@@ -10,7 +10,7 @@ scope:
 parent_state: ../STATE.md
 canonical: true
 governance_mode: project-state-v1
-last_reconciled: 2026-09-22
+last_reconciled: 2026-09-23
 parent_workstream: workstream.pigeon-exam.project-state-migration.2026-07-27
 legacy_sources:
   - path: docs/plans/2026-06-12-1124-p1b-permission-frontend-compat.md
@@ -38,6 +38,86 @@ legacy_sources:
     classification: historical-machine-evidence
     status: retained
 workstreams:
+  - id: exam-logo-component-svg-source
+    title: Exam 導覽圖標改用統一 SVG
+    status: completed
+    affected_projects: [pigeon-exam]
+    affected_areas: [src/features/Logo/Logo.tsx]
+    plans:
+      - id: plan.pigeon-exam.logo-component-svg-source.2026-09-23
+        path: docs/plans/2026-09-23-exam-logo-component-svg-source.md
+        role: implementation
+        execution_status: logo_svg_source_lint_types_build_verified
+        current_checkpoints:
+          - 元件改讀現行 Web_Logo.svg；聚焦 ESLint、兩組型別檢查、隔離建置及資產一致性已驗證
+    blockers: []
+    approval_gates:
+      frontend_source_write: approved_2026-09-23
+      isolated_validation: approved_2026-09-23
+      frontend_cutover: closed
+      production: closed
+      commit: closed
+      push: closed
+    next_action: 本輪元件改接完成；若需處理分頁圖示的舊 SVG 引用，另行確認範圍。
+    shared_paths: [STATE.md, src/features/Logo/Logo.tsx]
+    conflicts_with: []
+  - id: exam-logo-raster-assets
+    title: Exam 雙色圖標衍生點陣資產
+    status: completed
+    affected_projects: [pigeon-exam]
+    affected_areas: [public/favicon.ico, public/icons/Logo192.png, public/icons/Logo512.png, public/icons/apple-touch-icon.png]
+    plans:
+      - id: plan.pigeon-exam.logo-raster-assets.2026-09-23
+        path: docs/plans/2026-09-23-exam-logo-raster-assets.md
+        role: implementation
+        execution_status: four_raster_assets_build_preview_verified
+        current_checkpoints:
+          - 四個圖檔的尺寸、底色、隔離建置產物與明暗背景預覽已驗證；頁面舊 SVG 引用未在本輪範圍變更
+    blockers: []
+    approval_gates:
+      frontend_source_write: approved_2026-09-23
+      isolated_validation: approved_2026-09-23
+      frontend_cutover: closed
+      production: closed
+      commit: closed
+      push: closed
+    next_action: 使用者若要求修復已失效的頁面 SVG 圖示引用，另行限定該變更範圍。
+    shared_paths: [STATE.md, public/favicon.ico, public/icons/Logo192.png, public/icons/Logo512.png, public/icons/apple-touch-icon.png]
+    conflicts_with: []
+  - id: exam-startup-improvement
+    title: Exam 啟動、模擬進度與登入互動改善
+    status: completed
+    affected_projects: [pigeon-exam]
+    affected_areas:
+      - HTML 至 React 載入銜接與模擬進度
+      - 公開外殼與認證等待分離
+      - 啟動依賴減量與登入視窗生命週期
+    plans:
+      - id: plan.pigeon-exam.startup-improvement.2026-09-23
+        path: docs/plans/2026-09-23-exam-startup-improvement.md
+        role: implementation
+        execution_status: source_isolated_browser_verified_review_pass
+        current_checkpoints:
+          - HTML／React 載入交接、認證與登入、動態邊界均經來源契約、隔離建置及合成瀏覽器驗證；修正登出時序後聚焦複審 PASS
+          - 入口加首頁必要模組 gzip 由 719812 降至 195054 位元組；未改媒體、未做真實 API 或正式切換
+    result: docs/result/2026-09-23-exam-startup-improvement-result.md
+    blockers: []
+    approval_gates:
+      planning_docs: approved_consumed_2026-09-23
+      frontend_source_write: approved_consumed_2026-09-23
+      isolated_validation: approved_consumed_2026-09-23
+      live_api_validation: closed
+      frontend_cutover: closed
+      production: closed
+      commit: closed
+      push: closed
+    next_action: 本輪範圍結案；真實帳號、Firefox／Safari、正式切換或部署如另有需求需分別確認範圍及核准，不恢復舊四前端效能計畫。
+    shared_paths:
+      - STATE.md
+      - src/routes/routes.tsx
+      - src/lib/pages.tsx
+      - vite.config.ts
+    conflicts_with: [frontend-chunk-optimization]
   - id: frontend-chunk-optimization
     title: Exam 最小 chunk 效能優化
     status: scope_change_required
@@ -71,6 +151,30 @@ workstreams:
       - src/lib/pages.tsx
     conflicts_with: []
 recent_results:
+- id: result.pigeon-exam.logo-component-svg-source.2026-09-23
+  path: docs/result/2026-09-23-exam-logo-component-svg-source-result.md
+  status: completed
+  completed_at: 2026-09-23
+  acceptance: logo_svg_source_lint_types_build_verified
+  summary: 導覽 Logo 元件改讀現行雙色 Web_Logo.svg，不再內嵌舊色；保留 28 像素尺寸與導覽文字。聚焦 ESLint、型別檢查、隔離建置和 SVG 一致性通過；未動其他圖檔、部署或 Git 交付。
+- id: result.pigeon-exam.logo-raster-assets.2026-09-23
+  path: docs/result/2026-09-23-exam-logo-raster-assets-result.md
+  status: completed
+  completed_at: 2026-09-23
+  acceptance: four_raster_assets_build_preview_verified
+  summary: 從新版雙色 SVG 重製透明三尺寸 favicon.ico、192／512 透明 PNG 與 180 白底觸控圖示；四檔尺寸、影格、讀回、隔離建置一致性及明暗背景預覽通過。未動頁面引用、提交或部署。
+- id: result.pigeon-exam.logo-two-tone-recolor.2026-09-23
+  path: docs/result/2026-09-23-exam-logo-two-tone-recolor-result.md
+  status: completed
+  completed_at: 2026-09-23
+  acceptance: svg_xml_build_browser_preview_verified
+  summary: 使用者另行核准 Exam 圖標試色；`public/Web_Logo.svg` 兩處填色改為青綠與琥珀，原已暫存版本不變。SVG XML、精確差異、隔離建置及明暗背景預覽通過；未修改介面主題、部署或提交。
+- id: result.pigeon-exam.startup-improvement.2026-09-23
+  path: docs/result/2026-09-23-exam-startup-improvement-result.md
+  status: completed
+  completed_at: 2026-09-23
+  acceptance: source_isolated_browser_verified_review_pass
+  summary: Exam 已完成 HTML 至 React 載入與模擬進度、認證隔離、啟動分包及登入生命週期；合成瀏覽器、契約、型別、隔離建置和登出時序聚焦複審通過。入口加首頁 gzip 由 719812 降至 195054 位元組；未做真實 API、跨瀏覽器、部署或 Git 交付。
 - id: result.exam-law-reference-filter-search.2026-09-22
   path: ../docs/result/2026-09-22-exam-law-reference-filter-search-result.md
   status: completed
@@ -126,6 +230,10 @@ recent_results:
 ---
 
 # 目前狀態
+
+2026-09-23，使用者另行選定 Exam 圖標[雙色試色計畫](docs/plans/2026-09-23-exam-logo-two-tone-recolor.md)，`public/Web_Logo.svg` 已改成青綠與琥珀；[結果](docs/result/2026-09-23-exam-logo-two-tone-recolor-result.md)記錄精確差異與明暗預覽。此試色是前述啟動改善結案後的新範圍，並未回寫舊計畫或將已暫存版本改色。
+
+2026-09-23，Exam 啟動改善[計畫](docs/plans/2026-09-23-exam-startup-improvement.md)已完成原始碼、合成瀏覽器與聚焦複審，[結果](docs/result/2026-09-23-exam-startup-improvement-result.md)保留實測與未做事項。載入畫面沿用現有 `public/Web_Logo.svg`，不改色、不統一既有品牌資產；假進度條已交付。舊四前端效能計畫保持停止，不並行執行；真實 API、Firefox／Safari 與正式切換未執行。
 
 2026-09-21，Exam 法規選取介面移植已完成來源、離線合成契約、ESLint、建置與聚焦獨立複審；結果見 `docs/result/2026-09-21-law-picker-manage-port-result.md`。未啟動服務或瀏覽器互動，未送真實 API／業務寫入、資料庫、部署或 Git 交付；這些缺口不改寫為執行期驗收。
 

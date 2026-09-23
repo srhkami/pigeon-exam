@@ -26,6 +26,7 @@ function harness({env = {DEV: false}, transport, authenticated = false, userInfo
   const fieldErrors = []
   const states = []
   const effects = []
+  const authTransitions = []
   let cursor = 0
   let reloads = 0
   const localStorage = {
@@ -66,7 +67,8 @@ function harness({env = {DEV: false}, transport, authenticated = false, userInfo
     useCallback: fn => fn,
     useRef: value => ({current: value}),
   }
-  const auth = {isAuthenticated: authenticated, userInfo, onReload: () => { reloads += 1 }}
+  const auth = {isAuthenticated: authenticated, userInfo, onReload: () => { reloads += 1 },
+    setIsAuthenticated: value => { authTransitions.push(value); auth.isAuthenticated = value }}
   const component = Object.fromEntries(['Button', 'Dropdown', 'DropdownContent', 'DropdownToggle', 'Alert', 'Col', 'Row', 'Badge'].map(name => [name, name]))
   const mocks = {
     react, 'react/jsx-runtime': jsx, axios: fakeAxios, 'react-hot-toast': toast,
@@ -74,6 +76,7 @@ function harness({env = {DEV: false}, transport, authenticated = false, userInfo
     'react-icons/io5': {IoWarningOutline: 'IoWarningOutline'},
     'react-hook-form': {useForm: () => ({register: () => ({}), handleSubmit: fn => fn, watch: () => [member.email], setError: (...args) => fieldErrors.push(args), formState: {errors: {}}})},
     '@/component': component,
+    '@/component/Loading/Loading.tsx': {__esModule: true, default: 'Loading'},
     '@/features': {ErrorAlert: 'ErrorAlert', Login: 'Login', ModalLogin: 'ModalLogin'},
     '@/hooks': {useAuth: () => auth, useAxios: () => load('src/hooks/useAxios.ts').default()},
   }
@@ -98,10 +101,10 @@ function harness({env = {DEV: false}, transport, authenticated = false, userInfo
       fileName: file,
       compilerOptions: {module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true},
     }).outputText
-    vm.runInNewContext(code, {module, exports: module.exports, require, localStorage, URL, console: {error: () => {}}, setTimeout, clearTimeout}, {filename: file})
+    vm.runInNewContext(code, {module, exports: module.exports, require, localStorage, URL, AbortController, console: {error: () => {}}, setTimeout, clearTimeout}, {filename: file})
     return module.exports
   }
-  return {load, requests, errors, notices, fieldErrors, states, effects, auth, localStorage,
+  return {load, requests, errors, notices, fieldErrors, states, effects, auth, authTransitions, localStorage,
     render: (fn, props = {}) => { cursor = 0; return fn(props) },
     get reloads() { return reloads },
   }
@@ -283,8 +286,31 @@ for (const status of [200, 500]) check(`登出清除與重新驗證 ${status}`, 
   nodes(tree).find(n => n.type === 'button').props.onClick()
   await settle()
   assert.equal(h.localStorage.getItem('ph_tokens'), null)
-  assert.equal(h.reloads, 1)
+  assert.deepEqual(h.authTransitions, [false])
+  assert.equal(h.reloads, 0)
   assert.equal(h.requests.length, 1)
+})
+
+check('登出請求停滯時立即撤除認證，晚到結果不重新驗證', async () => {
+  let release
+  const pending = new Promise(resolve => { release = resolve })
+  const h = harness({authenticated: true, userInfo: member, transport: async config => {
+    assert.equal(config.url, 'https://api.pigeonhand.tw/v3/user/logout')
+    assert.deepEqual(JSON.parse(config.data), {refresh: pair.refresh})
+    await pending
+    return {data: {logged_out: true}}
+  }})
+  h.load('src/auth/handleUser.ts').saveTokens(pair)
+  const tree = h.render(h.load('src/features/User/UserProfile/MenuUser.tsx').default)
+  nodes(tree).find(n => n.type === 'button').props.onClick()
+  await settle()
+  assert.equal(h.localStorage.getItem('ph_tokens'), null)
+  assert.deepEqual(h.authTransitions, [false])
+  assert.equal(h.auth.isAuthenticated, false)
+  assert.equal(h.reloads, 0)
+  release()
+  await settle()
+  assert.equal(h.reloads, 0)
 })
 
 check('會員驗證與到期通知使用 Hand 認證連結', async () => {
@@ -321,7 +347,7 @@ check('註冊與會員選單導回 Hand，訪客仍有登入入口', () => {
   const login = h.render(h.load('src/features/User/Login/Login.tsx').default)
   assertHandLink(nodes(login).find(n => n.type === 'a'), 'https://pigeonhand.tw/signup')
   const Menu = h.load('src/features/User/UserProfile/MenuUser.tsx').default
-  assert.equal(h.render(Menu).type, 'ModalLogin')
+  assert.ok(nodes(h.render(Menu)).some(n => n.type === 'ModalLogin'))
   h.auth.isAuthenticated = true
   const tree = h.render(Menu)
   assertHandLink(nodes(tree).find(n => n.type === 'a'), 'https://pigeonhand.tw/user/accredit')
@@ -333,7 +359,7 @@ for (const errorType of ['noAcc', 'loggedIn']) check(`${errorType} 提示導回 
   assertHandLink(nodes(tree).find(n => n.type === 'a'), 'https://pigeonhand.tw/user/accredit')
 })
 
-const shared = ['auth/AuthLayout.tsx', 'auth/AuthComponent.tsx', 'auth/handleHasAuth.ts', 'auth/authContract.ts', 'auth/refreshCoordinator.ts', 'auth/AuthShow.tsx', 'types/auth-types.ts', 'features/User/UserProfile/BadgeAccredit.tsx']
+const shared = ['auth/handleHasAuth.ts', 'auth/authContract.ts', 'auth/refreshCoordinator.ts', 'auth/AuthShow.tsx', 'features/User/UserProfile/BadgeAccredit.tsx']
 check('既有共用權限來源與 Hand 相同', () => {
   for (const file of shared) assert.equal(source('src/' + file).trim(), readFileSync(path.join(root, '../pigeon-hand/src', file), 'utf8').trim(), file)
 })

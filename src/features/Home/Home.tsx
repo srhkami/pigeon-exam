@@ -2,13 +2,15 @@ import {Link} from "react-router";
 import {MEDIA_IP,} from "@/lib/config.ts";
 import Announcement from "@/features/Home/Announcement.tsx";
 import Info from "@/features/Home/Info.tsx";
+import {useAuth} from "@/hooks";
 
 export default function Home() {
+  const {isLoading} = useAuth();
   return (
     <div>
       <img src={MEDIA_IP + '/media/image/小試鴿手.jpg'} alt='無法載入' className='w-full rounded-xl mb-3'/>
       <Announcement/>
-      <Info/>
+      {isLoading ? null : <Info/>}
       <img src={MEDIA_IP + '/media/image/小試鴿手_03.JPG'} alt='無法載入' className='w-full rounded-xl mb-3'/>
       <img src={MEDIA_IP + '/media/image/小試鴿手_04.JPG'} alt='無法載入' className='w-full rounded-xl mb-3'/>
       <img src={MEDIA_IP + '/media/image/小試鴿手_05.JPG'} alt='無法載入' className='w-full rounded-xl mb-3'/>

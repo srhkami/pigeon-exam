@@ -5,10 +5,26 @@ import {test} from 'node:test'
 import {fileURLToPath} from 'node:url'
 import {runInNewContext} from 'node:vm'
 import ts from 'typescript'
-import {buildQuestionPayload, referenceItemsForPut, saveQuestionAndReferences} from '../src/features/Link/ArticleLink/lawReferenceController.ts'
+import {buildQuestionPayload} from '../src/features/LawReferenceEditor/lawReferenceEditorController.ts'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const source = path => readFileSync(resolve(root, path), 'utf8')
+for (const name of ['FileLink.tsx', 'FileLinkEdit.tsx', 'ModalSelectFile.tsx']) {
+  assert.equal(existsSync(resolve(root, 'src/features/Link/FileLink', name)), false, `${name} 必須維持退役`)
+}
+for (const path of readdirSync(resolve(root, 'src'), {recursive: true}).filter(path => /\.(ts|tsx)$/.test(path))) {
+  assert.doesNotMatch(source(`src/${path}`), /features\/Link\/FileLink\/|happywork\/sop_search\//, `${path} 不得復活檔案關聯`)
+}
+for (const path of [
+  'src/features/Select/for-manager/Manage/Edit/ModalSelectEdit.tsx',
+  'src/features/Essay/for-manager/Question/ModalEssayQuestionEdit.tsx',
+]) {
+  const text = source(path)
+  assert.doesNotMatch(text, /file_link|article_link|saveQuestionAndReferences/, `${path} 不得以正文串存檔案或法條關聯`)
+  assert.match(text, /LawReferenceEditor/, `${path} 法條保存必須是獨立操作`)
+}
+assert.match(source('src/features/LawReferenceEditor/lawReferenceEditorController.ts'), /delete result\.file_link/, '正文 payload 必須防禦性排除已退役檔案欄位')
+
 const legacyFiles = [{id: '17', title: '合成作業程序舊檔案', url: '/f/synthetic'}]
 const question = {
   id: 37, question: '合成題目', options: ['選項甲'], answer: [0],
@@ -27,11 +43,9 @@ const modals = [
   ['select', 'src/features/Select/for-manager/Manage/Edit/ModalSelectEdit.tsx'],
   ['essay', 'src/features/Essay/for-manager/Question/ModalEssayQuestionEdit.tsx'],
 ]
-const retired = ['FileLink.tsx', 'FileLinkEdit.tsx', 'ModalSelectFile.tsx']
-  .map(name => `src/features/Link/FileLink/${name}`)
 const plain = value => JSON.parse(JSON.stringify(value))
 
-// 執行實際元件與送出事件；只替換掛鉤、表單邊界與外部傳輸，不連線真實 API。
+// 執行既有卡片與正文送出事件；法條編輯器及外部傳輸以合成邊界替代。
 function harness(path, formValues = {}) {
   const cells = []
   const requests = []
@@ -40,13 +54,11 @@ function harness(path, formValues = {}) {
   const navigations = []
   let cursor = 0
   const react = {
-    useEffect() {}, // 篩選畫面的焦點計時器不屬於本次離線契約。
+    useEffect() {},
     useState(initial) {
       const index = cursor++
       if (!(index in cells)) cells[index] = typeof initial === 'function' ? initial() : initial
-      return [cells[index], value => {
-        cells[index] = typeof value === 'function' ? value(cells[index]) : value
-      }]
+      return [cells[index], value => { cells[index] = typeof value === 'function' ? value(cells[index]) : value }]
     },
     useRef(initial) {
       const index = cursor++
@@ -55,7 +67,7 @@ function harness(path, formValues = {}) {
   }
   const api = async config => {
     requests.push(plain(config))
-    return {data: config.method === 'POST' ? {id: 37} : {items: []}}
+    return {data: config.method === 'POST' ? {id: 37} : {}}
   }
   const module = {exports: {}}
   const output = ts.transpileModule(source(path), {
@@ -71,11 +83,11 @@ function harness(path, formValues = {}) {
       }
       if (name === 'react-hook-form') return {
         useForm: ({defaultValues}) => {
-          // 保留 defaultValues 中未註冊的舊欄位，覆蓋本次表單輸入。
           const values = {...defaultValues, ...formValues}
           return {
             register: field => ({name: field}),
             handleSubmit: callback => () => callback(values),
+            reset: () => {},
             setError: (...args) => errors.push(args),
             setValue: (field, value) => { values[field] = value },
             watch: fields => fields ? fields.map(field => values[field]) : values,
@@ -97,9 +109,7 @@ function harness(path, formValues = {}) {
       }}
       if (name === '@/func') return {showFormError: error => errors.push(error)}
       if (name === '@/lib/config.ts' || name === '@/lib/config') return {EXAM_API: '/exam', EXAM_API_V2: '/v2/exam'}
-      if (name.endsWith('/lawReferenceController.ts')) return {
-        saveQuestionAndReferences, referenceItemsForPut,
-      }
+      if (name.endsWith('/lawReferenceEditorController.ts')) return {buildQuestionPayload}
       return new Proxy({__esModule: true, default: name}, {
         get: (target, key) => target[key] ?? `${name}:${String(key)}`,
       })
@@ -123,7 +133,7 @@ const hasFileControl = tree => nodes(tree).some(node =>
   String(node.type).includes('/FileLink/') || node.props?.href === '/f/synthetic' || node.props?.to === '/f/synthetic')
 
 for (const [kind, path] of cards) {
-  test(`${path}：舊檔案不顯示，關聯法條保留`, () => {
+  test(`${path}：舊檔案不顯示，關聯法條一般顯示保留`, () => {
     const {render} = harness(path)
     const props = {
       q: question, record: {question, answer: [0], created_at: '2026-09-22'}, a: [0], i: 0,
@@ -139,41 +149,34 @@ for (const [kind, path] of cards) {
 }
 
 for (const [kind, path] of modals) {
-  test(`${kind}：新增與編輯表單皆無檔案操作入口`, () => {
+  test(`${kind}：新增與編輯表單皆無檔案入口，法條改為獨立編輯器`, () => {
     for (const editing of [false, true]) {
       const {render} = harness(path)
       const tree = render({[kind === 'select' ? 'obj' : 'q']: editing ? question : undefined, onRefetch() {}})
       assert.equal(hasFileControl(tree), false, '表單不得掛載檔案搜尋或編輯元件')
-      assert.ok(bySuffix(tree, '/ArticleLinkEdit.tsx'), '仍須提供關聯法條編輯器')
+      assert.ok(bySuffix(tree, '/LawReferenceEditor.tsx'), '必須提供獨立關聯法條編輯器')
     }
   })
 
   for (const method of ['POST', 'PATCH']) {
-    test(`${kind} ${method}：實際儲存事件不送舊檔案欄位，也不清空原資料`, async () => {
+    test(`${kind} ${method}：正文儲存不送舊關聯欄位，也不自動串存法條`, async () => {
       const before = plain(question)
-      const h = harness(path, {question: '本次修改題目', file_link: legacyFiles})
+      const h = harness(path, {question: '本次修改題目', file_link: legacyFiles, article_link: [['刑法', '第 1 條']]})
       let refreshes = 0
       const props = {
         [kind === 'select' ? 'obj' : 'q']: method === 'PATCH' ? question : undefined,
         onRefetch() { refreshes += 1 },
       }
-      let tree = h.render(props)
-      const editor = bySuffix(tree, '/ArticleLinkEdit.tsx')
-      if (method === 'PATCH') assert.equal(saveButton(tree).props.disabled, true, '舊法條載入前不可儲存')
-      editor.props.onChange([{kind: 'provision', provision: {id: 9}}])
-      editor.props.onLoadStateChange('ready')
-      tree = h.render(props)
-      assert.equal(saveButton(tree).props.disabled, false)
+      const tree = h.render(props)
       saveButton(tree).props.onClick()
-      // 同一繪製結果重複觸發，確認原有同步防重入仍有效。
       saveButton(tree).props.onClick()
       await new Promise(resolve => setImmediate(resolve))
       assert.deepEqual(h.errors, [])
-      assert.equal(h.requests.length, 2, '只能有題目保存及 V3 法條保存，不得搜尋檔案或重複送出')
+      assert.equal(h.requests.length, 1, '正文按鈕只能發送一次題目請求，不得自動送出關聯 PUT')
       const request = h.requests[0]
       assert.equal(request.method, method)
       assert.equal(request.url, `/exam/${kind === 'select' ? 'select' : 'essay'}_questions/${method === 'PATCH' ? '37/' : ''}`)
-      assert.equal(Object.hasOwn(request.data, 'file_link'), false, '即使 defaultValues 含舊關聯，POST／PATCH 也不得送出 file_link')
+      assert.equal(Object.hasOwn(request.data, 'file_link'), false)
       assert.equal(Object.hasOwn(request.data, 'article_link'), false)
       assert.equal(request.data.question, '本次修改題目')
       if (kind === 'select') {
@@ -181,31 +184,27 @@ for (const [kind, path] of modals) {
         assert.deepEqual(request.data.answer, method === 'PATCH' ? question.answer : [])
         assert.equal(request.data.comment, null)
       } else assert.equal(request.data.sample_answer, null)
-      assert.deepEqual(h.requests[1], {
-        method: 'PUT', url: `/v3/exam/questions/${kind}/37/law-references`, data: {items: [{provision_id: 9}]},
-      })
-      assert.deepEqual(question, before, '原始題目及檔案集合不得被送出流程改寫')
+      assert.deepEqual(question, before, '原始題目及檔案集合不得被正文送出流程改寫')
       assert.equal(refreshes, 1)
-      assert.deepEqual(h.notifications, ['儲存成功'])
+      assert.deepEqual(h.notifications, [method === 'POST' ? '題目已儲存；可另外儲存關聯法條。' : '題目已儲存'])
+      if (method === 'POST') {
+        const reboundTree = h.render(props)
+        saveButton(reboundTree).props.onClick()
+        await new Promise(resolve => setImmediate(resolve))
+        assert.equal(h.requests.length, 2)
+        assert.equal(h.requests[1].method, 'PATCH', '取得新題目 ID 後，後續正文儲存不得再次 POST 建題')
+        assert.equal(h.requests[1].url, `/exam/${kind === 'select' ? 'select' : 'essay'}_questions/37/`)
+      }
     })
   }
 }
 
-test('送出邊界排除非空、空陣列與 null 檔案欄位且不修改輸入', () => {
+test('送出邊界排除非空、空陣列與 null 關聯欄位且不修改輸入', () => {
   for (const value of [legacyFiles, [], null]) {
     const input = Object.freeze({question: '合成題目', file_link: value, article_link: [], is_public: false})
     const result = buildQuestionPayload(input)
     assert.deepEqual(result, {question: '合成題目', is_public: false})
     assert.equal(input.file_link, value)
-  }
-})
-
-test('專用元件已移除且產品來源不再匯入或搜尋檔案', () => {
-  for (const path of retired) assert.equal(existsSync(resolve(root, path)), false, `${path} 應已移除`)
-  const files = readdirSync(resolve(root, 'src'), {recursive: true}).filter(path => /\.(ts|tsx)$/.test(path))
-  for (const path of files) {
-    const text = source(`src/${path}`)
-    assert.doesNotMatch(text, /features\/Link\/FileLink\/|happywork\/sop_search\//, `${path} 不得保留檔案關聯使用路徑`)
   }
 })
 
@@ -224,7 +223,7 @@ test('僅移除表單欄位，保留後端回應型別及法條顯示設定', ()
   }
 })
 
-test('退役檢查已登錄套件指令', () => {
+test('退役檢查仍登錄於套件指令', () => {
   const pkg = JSON.parse(source('package.json'))
   assert.equal(pkg.scripts['test:file-link-retirement'], 'node --experimental-strip-types scripts/exam-file-link-retirement-contract.mjs')
 })
@@ -257,3 +256,4 @@ for (const path of [
     }
   })
 }
+console.log('exam file link retirement contract: PASS')

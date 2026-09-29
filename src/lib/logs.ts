@@ -3,6 +3,13 @@ import {TVersion} from "@/types/about-types.ts";
 
 export const CHANGE_LOGS: Array<TVersion> = [
   {
+    version: '1.1.3',
+    date: '未上線',
+    logs: [
+      {type: 'info', text: '【全站】改善關聯法條樣式。'},
+    ]
+  },
+  {
     version: '1.1.2',
     date: '1150923',
     logs: [

@@ -1,140 +1,93 @@
 import assert from 'node:assert/strict'
 import {execFileSync} from 'node:child_process'
-import {readFileSync} from 'node:fs'
-import {fileURLToPath} from 'node:url'
+import {existsSync, readFileSync} from 'node:fs'
 import {dirname, resolve} from 'node:path'
+import {fileURLToPath} from 'node:url'
 import {runInNewContext} from 'node:vm'
 import ts from 'typescript'
 
-const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const controllerPath = resolve(repo, 'src/features/Link/ArticleLink/lawReferenceController.ts')
-const controller = await import(`${controllerPath}?contract=${Date.now()}`)
-const pickerApiPath = resolve(repo, 'src/features/Link/ArticleLink/lawPickerApi.ts')
-const pickerApi = await import(`${pickerApiPath}?contract=${Date.now()}`)
-
-const requestLog = []
-const request = async (config) => {
-  requestLog.push(config)
-  if (config.method === 'POST') return {data: {id: 37}}
-  return {data: {items: []}}
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const source = path => readFileSync(resolve(root, path), 'utf8')
+const required = path => {
+  assert.ok(existsSync(resolve(root, path)), `缺少正式 DEMO 樣式元件：${path}`)
+  return source(path)
 }
+const editor = await import(`${resolve(root, 'src/features/LawReferenceEditor/lawReferenceEditorController.ts')}?contract=${Date.now()}`)
+const pickerApi = await import(`${resolve(root, 'src/features/Link/ArticleLink/lawPickerApi.ts')}?contract=${Date.now()}`)
 
-assert.deepEqual(
-  controller.buildQuestionPayload({question: '題目', article_link: [['刑法', '第 1 條']], file_link: []}),
-  {question: '題目'},
-  '題目送出欄位必須明確排除 article_link 與已停用的 file_link',
-)
-assert.equal(controller.examLawReferencesUrl('select', 37), '/v3/exam/questions/select/37/law-references')
-assert.equal(controller.examLawReferencesUrl('essay', 18), '/v3/exam/questions/essay/18/law-references')
-assert.deepEqual(controller.referenceItemsForPut([
-  {kind: 'existing', reference: {id: 12, target_provision: {id: 9}}},
-  {kind: 'provision', provision: {id: 9}},
-  {kind: 'provision', provision: {id: 10}},
-]), [
-  {reference_link_id: 12},
-  {provision_id: 10},
-], '既有關聯與新選條文必須以 provision id 跨型別去重')
+assert.equal(editor.lawReferenceEditorUrl('select', 37), '/law/reference-editor/37/exam-select')
+assert.equal(editor.lawReferenceEditorUrl('essay', 18), '/law/reference-editor/18/exam-essay')
+assert.deepEqual(editor.buildQuestionPayload({question: '題目', article_link: [], file_link: []}), {question: '題目'})
+for (const path of [
+  'src/features/Select/for-manager/Manage/Edit/ModalSelectEdit.tsx',
+  'src/features/Essay/for-manager/Question/ModalEssayQuestionEdit.tsx',
+]) {
+  const text = source(path)
+  assert.match(text, /LawReferenceEditor/, `${path} 必須使用新的獨立關聯編輯器`)
+  assert.match(text, /createdQuestionId/, `${path} 新建成功後必須綁定回傳題目 ID`)
+  assert.match(text, /buildQuestionPayload/, `${path} 正文請求必須排除 article_link 與 file_link`)
+  assert.match(text, /savingRef\.current/, `${path} 正文保存必須有同步 in-flight 護欄`)
+  assert.match(text, /questionUnknown/, `${path} 正文結果未知必須停止重建`)
+  assert.doesNotMatch(text, /saveQuestionAndReferences|referenceItemsForPut|ArticleLinkEdit/, `${path} 不得把正文與關聯自動串存`)
+  assert.doesNotMatch(text, /article_link|file_link/, `${path} 不得把舊關聯欄位送入正文表單`)
+}
+const component = source('src/features/LawReferenceEditor/LawReferenceEditor.tsx')
+const formalPicker = required('src/features/LawReferenceEditor/LawReferenceEditorPicker.tsx')
+const formalResultCard = required('src/features/LawReferenceEditor/LawReferenceEditorResultCard.tsx')
+const formalDetailDialog = required('src/features/LawReferenceEditor/LawReferenceEditorDetailDialog.tsx')
+assert.match(component, /loadLawReferenceEditor/, '編輯器必須以新的 GET 讀取權威集合')
+assert.match(component, /saveLawReferenceEditor/, '編輯器必須以新的 PUT 獨立儲存')
+assert.match(component, /url: V3_API \+ config\.url/, 'Exam 必須只由 V3_API 補一次 /v3 前綴')
+assert.match(component, /LawReferenceEditorPicker/, 'Exam 必須使用與 DEMO 同結構的正式搜尋介面')
+assert.match(component, /batch-resolve/, '編輯器預覽必須沿用條文 batch-resolve')
+assert.match(component, /LawReferenceEditorDetailDialog/, 'Exam 預覽必須使用與 DEMO 同可見結構的詳情對話框')
+assert.doesNotMatch(component, /ModalBody|ModalHeader|ModalTitle|LawProvisionNodes/, 'Exam 主編輯器不得自建偏離 DEMO 的預覽 Modal')
+assert.match(component, /草稿已保留/, '一般錯誤必須保留草稿')
+assert.match(component, /duration: Infinity/, '關聯衝突必須持續通知')
+assert.match(component, /load\(true\)/, '關聯衝突只能由使用者直接重新 GET')
+assert.match(component, /new AbortController\(\)/, '權威集合 GET 必須可取消')
+assert.match(component, /onSaved\?\.\(\)/, '關聯成功後必須刷新既有讀取摘要')
+assert.match(component, /className='card border border-base-300 bg-base-100'/, 'Exam 必須沿用確認版卡片結構')
+assert.match(component, /<ul className='list'/, 'Exam 已選集合必須沿用確認版清單結構')
+assert.match(component, /link_status === 'NEEDS_REVIEW'/, '待確認狀態必須使用後端正式列舉值')
+assert.match(component, /!dirty \|\| conflict/, '未變更或衝突時不得送出整批 PUT')
+assert.match(component, /放棄變更/, 'Exam 必須保留 DEMO 的放棄變更操作')
+assert.match(component, /待新增/, 'Exam 必須保留 DEMO 的待新增標籤')
+assert.doesNotMatch(component, /ModalAddArticleLink|FaEye|loadState === 'error' \? <div|conflict \? <div/, 'Exam 不得保留舊 Modal 搜尋、額外眼睛按鈕或行內狀態 alert')
+assert.match(component, /toast\.error\(<div[\s\S]*重新載入/, 'Exam 衝突必須沿用 DEMO 的 toast 內重新載入操作')
+assert.match(component, /\{saving \? <span className='loading loading-spinner loading-xs'\/> : null\}儲存關聯法條/, 'Exam 儲存中必須與 DEMO 維持相同按鈕文案')
+for (const label of ['法規名稱', '搜尋範圍', '條款關鍵字']) assert.match(formalPicker, new RegExp(label))
+assert.match(formalPicker, /LawReferenceEditorResultCard/)
+assert.doesNotMatch(formalPicker + formalResultCard, /搜尋法規名稱 \/ code|font-mono|document_code\s*\?\s*<span/, 'Exam 正式可見介面不得顯示法規 code')
+assert.match(formalPicker, /onPreview/, 'Exam 搜尋結果必須沿用 DEMO 的預覽操作')
+assert.match(formalResultCard, /FaEye/)
+assert.match(formalResultCard, /document_title} \| \{provision\.ordinal_code}/, 'Exam 結果卡標題格式必須與 DEMO 共用卡一致')
+assert.match(formalResultCard, /flex items-center gap-1 font-semibold/)
+assert.match(formalResultCard, /btn btn-ghost btn-xs/)
+assert.doesNotMatch(formalResultCard, /FaCirclePlus/, 'Exam 結果卡不得多出 DEMO 沒有的加號圖示')
+assert.doesNotMatch(formalPicker, /搜尋中…|input input-bordered input-sm w-full' aria-label='條號或內容關鍵字'/, 'Exam 搜尋控制項不得偏離 DEMO 的可見樣式')
+for (const text of ['條文詳情', '條文資訊', '條文類型', '所屬章節', '完整條文內容', '原始文字']) assert.match(formalDetailDialog, new RegExp(text))
+assert.match(formalDetailDialog, /max-h-\[70vh\] space-y-5 overflow-y-auto pr-1/, 'Exam 預覽 body 必須對齊 DEMO 共用詳情樣式')
+assert.match(formalDetailDialog, /className='min-w-0 space-y-1'/, 'Exam 完整條文節點結構必須對齊 DEMO／Manage')
+assert.match(formalDetailDialog, /node\.marker/, 'Exam 完整條文不得漏掉 DEMO／Manage 顯示的節點標記')
+assert.match(source('src/features/Link/ArticleLink/ArticleLink.tsx'), /\/exam\/questions\//, '一般只讀 ArticleLink 保留既有舊 API')
 
-const createResult = await controller.saveQuestionAndReferences({
-  questionType: 'select',
-  questionUrl: '/exam/select_questions/',
-  questionMethod: 'POST',
-  questionPayload: {question: '題目', article_link: [['刑法', '第 1 條']]},
-  referenceItems: [{provision_id: 9}],
-  request,
-})
-assert.deepEqual(createResult, {kind: 'saved', questionId: 37})
-assert.deepEqual(requestLog, [
-  {method: 'POST', url: '/exam/select_questions/', data: {question: '題目'}},
-  {method: 'PUT', url: '/v3/exam/questions/select/37/law-references', data: {items: [{provision_id: 9}]}},
-], '新增題目成功後才保存 V3 關聯')
-
-const retryLog = []
-const retryResult = await controller.saveQuestionAndReferences({
-  questionType: 'essay',
-  questionUrl: '/exam/essay_questions/44/',
-  questionMethod: 'PATCH',
-  questionPayload: {question: '不應重送'},
-  referenceItems: [{reference_link_id: 12}],
-  retryQuestionId: 44,
-  request: async (config) => {
-    retryLog.push(config)
-    return {data: {items: []}}
-  },
-})
-assert.deepEqual(retryResult, {kind: 'saved', questionId: 44})
-assert.deepEqual(retryLog, [
-  {method: 'PUT', url: '/v3/exam/questions/essay/44/law-references', data: {items: [{reference_link_id: 12}]}},
-], '部分成功重試只能保存關聯，不能重送題目')
-
-const failedLinks = await controller.saveQuestionAndReferences({
-  questionType: 'select',
-  questionUrl: '/exam/select_questions/',
-  questionMethod: 'POST',
-  questionPayload: {question: '題目'},
-  referenceItems: [{provision_id: 9}],
-  request: async (config) => {
-    if (config.method === 'POST') return {data: {id: 38}}
-    throw new Error('references failed')
-  },
-})
-assert.deepEqual(failedLinks, {kind: 'links_failed', questionId: 38})
-
-let blockedUnknownCalls = 0
-const blockedUnknown = await controller.saveQuestionAndReferences({
-  questionType: 'select',
-  questionUrl: '/exam/select_questions/',
-  questionMethod: 'POST',
-  questionPayload: {question: '不可重送'},
-  referenceItems: [],
-  questionOutcomeUnknown: true,
-  request: async () => {
-    blockedUnknownCalls += 1
-    return {data: {id: 99}}
-  },
-})
-assert.deepEqual(blockedUnknown, {kind: 'question_unknown'})
-assert.equal(blockedUnknownCalls, 0, '題目結果未知後不得重送任何題目或關聯請求')
-
-const networkUnknown = await controller.saveQuestionAndReferences({
-  questionType: 'select',
-  questionUrl: '/exam/select_questions/',
-  questionMethod: 'POST',
-  questionPayload: {question: '網路結果未知'},
-  referenceItems: [],
-  request: async () => { throw new Error('network unavailable') },
-})
-assert.deepEqual(networkUnknown, {kind: 'question_unknown'})
-
-await assert.rejects(
-  controller.saveQuestionAndReferences({
-    questionType: 'select',
-    questionUrl: '/exam/select_questions/',
-    questionMethod: 'POST',
-    questionPayload: {question: '伺服器明確拒絕'},
-    referenceItems: [],
-    request: async () => { throw {response: {status: 400}} },
-  }),
-  '有 HTTP 回應的題目失敗必須交回表單錯誤處理，不得誤報結果未知',
-)
-
-const source = (path) => readFileSync(resolve(repo, path), 'utf8')
 const articleSource = source('src/features/Link/ArticleLink/ArticleLink.tsx')
-assert.match(articleSource, /V3_API.*\/exam\/questions/, '顯示元件必須讀取 Exam V3 關聯')
-assert.match(articleSource, /batch-resolve/, '預覽必須使用 batch-resolve')
-assert.ok((articleSource.match(/new AbortController\(\)/g) ?? []).length >= 2, '關聯清單與條文預覽都必須可取消晚到請求')
-assert.doesNotMatch(articleSource, /POLICE_API|article_text|dangerouslySetInnerHTML/, '顯示元件不得保留 PoliceLaw／HTML live path')
+assert.match(articleSource, /V3_API.*\/exam\/questions/, '一般顯示元件必須保留 Exam V3 關聯讀取')
+assert.match(articleSource, /batch-resolve/, '一般顯示預覽必須使用 batch-resolve')
+assert.ok((articleSource.match(/new AbortController\(\)/g) ?? []).length >= 2, '一般關聯清單與條文預覽都必須可取消晚到請求')
+assert.doesNotMatch(articleSource, /POLICE_API|article_text|dangerouslySetInnerHTML/, '一般顯示元件不得復活 PoliceLaw／HTML live path')
 
 for (const path of [
   'src/features/Link/ArticleLink/Articles.tsx',
   'src/features/Link/ArticleLink/ModalAddArticleLink.tsx',
 ]) {
   const text = source(path)
-  assert.doesNotMatch(text, /POLICE_API|PoliceLawData|dangerouslySetInnerHTML/, `${path} 不得保留舊 PoliceLaw 依賴`)
+  assert.doesNotMatch(text, /POLICE_API|PoliceLawData|dangerouslySetInnerHTML/, `${path} 不得復活舊 PoliceLaw 依賴`)
 }
 const searchModalSource = source('src/features/Link/ArticleLink/ModalAddArticleLink.tsx')
-assert.match(searchModalSource, /LawProvisionSearchPicker/, '選取 Modal 必須接入局部法規選取介面')
-assert.doesNotMatch(searchModalSource, /\/law\/search|law\/search|searchLaw/, '選取 Modal 不得保留第二套搜尋實作')
+assert.match(searchModalSource, /LawProvisionSearchPicker/, '選取 Modal 必須接入既有局部法規選取介面')
+assert.doesNotMatch(searchModalSource, /\/law\/search|law\/search|searchLaw/, '選取 Modal 不得另建第二套搜尋實作')
 
 assert.equal(
   pickerApi.lawDocumentsUrl('刑法'),
@@ -154,7 +107,7 @@ assert.equal(
 assert.deepEqual(
   pickerApi.normalizeLawProvisionHits({items: [{id: 9, document_title: '刑法', ordinal_code: '277', provision_type: 'article', md_content: '傷害他人者'}]}),
   [{provision: {id: 9, document_title: '刑法', ordinal_code: '277', provision_type: 'article', md_content: '傷害他人者'}, search_text_preview: '傷害他人者'}],
-  '合成條文回應必須正規化為結果卡片可用的資料',
+  '合成條文回應必須正規化為結果卡片可用資料',
 )
 
 for (const path of [
@@ -183,12 +136,12 @@ assert.match(pickerSource, /V3_API/, '條文搜尋必須使用 Exam 的 V3 主�
 const resultCardSource = source('src/features/Link/ArticleLink/LawProvisionResultCard.tsx')
 assert.match(resultCardSource, /第 .*條|第 .*點/, '結果卡片必須使用 Exam 的中文條次標示')
 assert.match(resultCardSource, /已加入|選取/, '結果卡片必須標示已選取狀態並禁止重複加入')
-assert.match(source('src/features/Link/ArticleLink/Articles.tsx'), /LawProvisionResultCard/, '結果集合必須只使用新的結果卡片')
+assert.match(source('src/features/Link/ArticleLink/Articles.tsx'), /LawProvisionResultCard/, '結果集合必須只使用既有結果卡片')
 
 const types = source('src/types/exam-types.ts')
-assert.doesNotMatch(types, /article_link/, 'Exam 型別不得再公開 article_link')
-assert.match(source('src/lib/config.ts'), /V3_EXAM_API/, 'config 必須提供 V3 Exam API 根位址')
-assert.match(source('src/App.tsx'), /buster: 'v2'/, '持久快取 buster 必須升版')
+assert.doesNotMatch(types, /article_link/, 'Exam 公開型別不得復活 article_link')
+assert.match(source('src/lib/config.ts'), /V3_EXAM_API/, 'config 必須保留 V3 Exam API 根位址')
+assert.match(source('src/App.tsx'), /buster: 'v2'/, '持久快取 buster 必須維持已核准版本')
 
 for (const path of [
   'src/features/Select/for-user/Question/QsCardForRecord.tsx',
@@ -203,40 +156,7 @@ for (const path of [
   assert.doesNotMatch(text, /article_link/, `${path} 不得再讀取 article_link`)
 }
 
-for (const path of [
-  'src/features/Select/for-manager/Manage/Edit/ModalSelectEdit.tsx',
-  'src/features/Essay/for-manager/Question/ModalEssayQuestionEdit.tsx',
-]) {
-  const text = source(path)
-  assert.match(text, /saveQuestionAndReferences/, `${path} 必須以兩次保存 controller 處理部分成功`)
-  assert.doesNotMatch(text, /article_link/, `${path} 題目保存不得送 article_link`)
-  assert.match(text, /if \(questionUnknown\) return/, `${path} 結果未知後必須阻止盲目重送`)
-  assert.match(text, /if \(saving\) return/, `${path} 保存中必須阻止重複送出`)
-  assert.match(text, /onLoadStateChange=\{setLawReferencesState\}/, `${path} 必須接收既有關聯載入狀態`)
-  assert.match(
-    text,
-    /disabled=\{saving \|\| questionUnknown \|\| Boolean\(pendingQuestionId\) \|\| lawReferencesState !== 'ready'\}/,
-    `${path} 保存中、結果未知、部分成功或既有關聯未成功載入時必須停用主儲存`,
-  )
-}
-
-const articleEditSource = source('src/features/Link/ArticleLink/ArticleLinkEdit.tsx')
-assert.match(articleEditSource, /onLoadStateChange: \(state: LawReferenceLoadState\) => void/, '關聯編輯器必須向父層回報載入狀態')
-assert.match(articleEditSource, /onLoadStateChange\('error'\)/, '既有關聯讀取失敗必須 fail closed')
-assert.match(articleEditSource, /onLoadStateChange\('ready'\)/, '只有成功同步關聯集合後才能允許題目保存')
-assert.match(articleEditSource, /重新讀取/, '既有關聯讀取失敗必須提供可實際重試的操作')
-assert.match(
-  source('src/features/Select/for-manager/Manage/Edit/ModalSelectEdit.tsx'),
-  /questionId=\{obj\?\.id\}/,
-  '選擇題新增部分成功後必須保留待存 collection，不得用新 id 觸發重載覆蓋',
-)
-assert.match(
-  source('src/features/Essay/for-manager/Question/ModalEssayQuestionEdit.tsx'),
-  /questionId=\{q\?\.id\}/,
-  '申論題新增部分成功後必須保留待存 collection，不得用新 id 觸發重載覆蓋',
-)
-
-// 執行真實元件的接線與 effect；僅替換 React 掛鉤及外部依賴，不發送網路請求。
+// 驗既有一般顯示的刷新接線；只替換 React 掛鉤與傳輸，不連線真實 API。
 function componentHarness(path, api = () => {}) {
   const cells = []
   let cursor = 0
@@ -244,9 +164,7 @@ function componentHarness(path, api = () => {}) {
     useState(initial) {
       const index = cursor++
       if (!(index in cells)) cells[index] = initial
-      return [cells[index], (value) => {
-        cells[index] = typeof value === 'function' ? value(cells[index]) : value
-      }]
+      return [cells[index], value => { cells[index] = typeof value === 'function' ? value(cells[index]) : value }]
     },
     useRef(initial) {
       const index = cursor++
@@ -279,17 +197,14 @@ function componentHarness(path, api = () => {}) {
       return new Proxy({__esModule: true, default: name}, {get: (target, key) => target[key] ?? `${name}:${String(key)}`})
     },
   })
-  return (props) => {
-    cursor = 0
-    return module.exports.default(props)
-  }
+  return props => { cursor = 0; return module.exports.default(props) }
 }
 
 function childProps(node, suffix) {
   if (!node || typeof node !== 'object') return undefined
   if (typeof node.type === 'string' && node.type.endsWith(suffix)) return node.props
   const children = Array.isArray(node.props?.children) ? node.props.children : [node.props?.children]
-  return children.map((child) => childProps(child, suffix)).find(Boolean)
+  return children.map(child => childProps(child, suffix)).find(Boolean)
 }
 
 for (const [kind, modal] of [['Select', 'ModalSelectEdit.tsx'], ['Essay', 'ModalEssayQuestionEdit.tsx']]) {
@@ -300,27 +215,27 @@ for (const [kind, modal] of [['Select', 'ModalSelectEdit.tsx'], ['Essay', 'Modal
     config: {showLinks: true}, onRefetch: () => { listRefreshes += 1 },
   }
   const requests = []
-  const renderLinks = componentHarness('src/features/Link/ArticleLink/ArticleLink.tsx', (config) => {
+  const renderLinks = componentHarness('src/features/Link/ArticleLink/ArticleLink.tsx', config => {
     requests.push(config)
     return Promise.resolve({data: {items: []}})
   })
   let tree = renderCard(props)
   renderLinks(childProps(tree, '/ArticleLink.tsx'))
-  assert.equal(requests.length, 1, `${kind} 首次顯示必須讀取關聯`)
+  assert.equal(requests.length, 1, `${kind} 首次一般顯示必須讀取關聯`)
   renderLinks(childProps(renderCard({...props, q: {...props.q}}), '/ArticleLink.tsx'))
   assert.equal(requests.length, 1, `${kind} 一般重繪不可重複讀取關聯`)
   childProps(tree, modal).onRefetch()
   tree = renderCard(props)
   renderLinks(childProps(tree, '/ArticleLink.tsx'))
   assert.equal(listRefreshes, 1, `${kind} 必須保留原列表刷新`)
-  assert.equal(requests.length, 2, `${kind} 儲存後不切換顯示開關也必須重新讀取關聯`)
+  assert.equal(requests.length, 2, `${kind} 儲存後不切換顯示開關也必須重新讀取一般關聯摘要`)
   assert.equal(requests[0].signal.aborted, true, `${kind} 刷新必須取消舊關聯讀取`)
   childProps(tree, modal).onRefetch()
   renderLinks(childProps(renderCard(props), '/ArticleLink.tsx'))
-  assert.equal(requests.length, 3, `${kind} 再次儲存仍必須刷新`)
+  assert.equal(requests.length, 3, `${kind} 再次儲存仍必須刷新一般顯示`)
   assert.equal(listRefreshes, 2)
   assert.ok(requests.every(({method, url}) => method === 'GET' && url.endsWith(`/exam/questions/${kind.toLowerCase()}/37/law-references`)))
 }
 
-execFileSync('node', ['--check', 'scripts/exam-law-reference-contract.mjs'], {cwd: repo, stdio: 'inherit'})
+execFileSync('node', ['--check', 'scripts/exam-law-reference-contract.mjs'], {cwd: root, stdio: 'inherit'})
 console.log('exam law reference contract: PASS')

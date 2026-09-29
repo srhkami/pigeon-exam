@@ -2,6 +2,13 @@ import {TVersion} from "@/types/about-types.ts";
 
 
 export const CHANGE_LOGS: Array<TVersion> = [
+   {
+    version: '1.1.4',
+    date: '未上線',
+    logs: [
+      {type: 'delete', text: '【全站】移除舊的檔案預覽頁面。'},
+    ]
+  },
   {
     version: '1.1.3',
     date: '1150929',

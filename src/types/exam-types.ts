@@ -1,5 +1,11 @@
 import {JSONContent} from "@tiptap/react";
-import {HappyFileLink} from "@/types/happywork-types.ts";
+
+// 後端歷史題目回應仍可能含 file_link；只保留讀取相容型別，不恢復檔案功能。
+export type HappyFileLink = {
+  id: string,
+  title: string,
+  url: string,
+}
 
 /*===============*/
 /* 選擇題 */

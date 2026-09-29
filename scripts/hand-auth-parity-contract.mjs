@@ -196,20 +196,6 @@ for (const [label, env, origin] of [
     ])
     assert.equal(h.requests[2].headers.get('Authorization'), 'Bearer synthetic-new')
   })
-  check(`${label} 檔案網址保持同源且不混入會員前綴`, async () => {
-    const h = harness({env, transport: () => ({data: '合成檔案'})})
-    const api = h.load('src/hooks/useAxios.ts').default()
-    const {fetchHappyWorkFileBlob} = h.load('src/features/FilePreview/api/fetchHappyWorkFileBlob.ts')
-    for (const url of ['/v3/happywork/files/45/download', `${origin}/v3/happywork/files/45/download`]) {
-      await fetchHappyWorkFileBlob(api, url)
-      assert.equal(axios.getUri(h.requests.at(-1)), `${origin}/v3/happywork/files/45/download`)
-    }
-    const before = h.requests.length
-    for (const url of ['https://outside.example.invalid/file', '//outside.example.invalid/file', 'relative/file']) {
-      await assert.rejects(fetchHappyWorkFileBlob(api, url), /檔案網址/)
-    }
-    assert.equal(h.requests.length, before, '不允許的檔案網址不得送出請求')
-  })
 }
 
 for (const kind of ['Password', 'Email']) {

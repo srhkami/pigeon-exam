@@ -9,6 +9,16 @@ import {buildQuestionPayload} from '../src/features/LawReferenceEditor/lawRefere
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const source = path => readFileSync(resolve(root, path), 'utf8')
+assert.equal(existsSync(resolve(root, 'src/features/FilePreview')), false, 'Exam FilePreview 功能目錄必須退役')
+assert.equal(existsSync(resolve(root, 'src/types/happywork-types.ts')), false, 'Exam 不得保留 HappyWork 專用型別檔')
+const routesSource = source('src/routes/routes.tsx')
+assert.doesNotMatch(routesSource, /FilePreview|path:\s*['"](?:f|l)['"]/, 'Exam 不得保留 /f 或 /l 短網址預覽路由')
+const examTypesSource = source('src/types/exam-types.ts')
+assert.match(examTypesSource, /(?:export\s+)?type\s+HappyFileLink\s*=/, '舊題目回應仍須保留本地 HappyFileLink 相容型別')
+assert.doesNotMatch(examTypesSource, /happywork-types/, 'Exam 題目型別不得再依賴 HappyWork 專用型別檔')
+const packageSource = source('package.json')
+assert.doesNotMatch(packageSource, /@react-pdf-viewer/, 'Exam 不得保留 PDF 預覽專用依賴')
+assert.doesNotMatch(source('pnpm-lock.yaml'), /@react-pdf-viewer/, 'Exam 鎖定檔不得保留 PDF 預覽專用套件')
 for (const name of ['FileLink.tsx', 'FileLinkEdit.tsx', 'ModalSelectFile.tsx']) {
   assert.equal(existsSync(resolve(root, 'src/features/Link/FileLink', name)), false, `${name} 必須維持退役`)
 }

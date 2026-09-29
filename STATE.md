@@ -151,6 +151,18 @@ workstreams:
       - src/lib/pages.tsx
     conflicts_with: []
 recent_results:
+- id: result.pigeon-exam.short-url-preview-retirement.2026-09-29
+  path: docs/result/2026-09-29-exam-short-url-preview-retirement-result.md
+  status: completed
+  completed_at: 2026-09-29
+  acceptance: source_contract_type_build_and_browser_route_retirement_verified
+  summary: Exam 已移除 /f、/l 短網址 route、FilePreview 五檔、HappyWork 專用型別及 PDF viewer 依賴；16項退役契約、55項認證回歸、錯誤回報契約、ESLint、型別、隔離建置與雙路由404通過。後端API／資料、部署與Git交付未變。
+- id: result.download-filename-consistency.2026-09-29
+  path: ../docs/result/2026-09-29-download-filename-consistency-result.md
+  status: completed_user_attested
+  completed_at: 2026-09-29
+  acceptance: source_build_isolated_browsers_and_user_uat_complete
+  summary: 檔名解析、預覽與 PDF 工具列名稱接線完成；行為、來源、ESLint、型別、隔離建置與雙瀏覽器下載通過，使用者亦回報人工驗收全部通過。未部署或 Git 交付。
 - id: result.unified-law-reference-editor.2026-09-26
   path: ../docs/result/2026-09-26-unified-law-reference-editor-result.md
   status: completed

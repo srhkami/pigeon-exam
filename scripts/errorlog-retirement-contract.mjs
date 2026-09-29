@@ -23,7 +23,6 @@ const retiredFiles = [
   "src/features/User/Login/PasswordForm.tsx",
   "src/features/User/UserProfile/MenuUser.tsx",
   "src/features/User/UserProfile/UserProfile.tsx",
-  "src/features/FilePreview/FilePreview.tsx",
 ];
 
 for (const path of retiredFiles) {

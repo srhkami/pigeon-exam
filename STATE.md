@@ -38,32 +38,6 @@ legacy_sources:
     classification: historical-machine-evidence
     status: retained
 workstreams:
-  - id: unified-law-reference-editor
-    title: 選擇題／申論題共用關聯編輯器
-    status: in_progress
-    affected_projects: [pigeon-exam]
-    affected_areas: [兩題型編輯, 關聯法條獨立儲存, 確認版 DEMO 樣式]
-    plans:
-      - id: plan.unified-law-reference-editor.2026-09-26
-        path: ../docs/plans/2026-09-26-unified-law-reference-editor.md
-        role: implementation
-        execution_status: c4_exam_v3_prefix_fix_review_pass_waiting_user_retest
-        current_checkpoints: [樣式校正複審 PASS；`/v3/v3` 雙重前綴已修正，RED／GREEN 契約、16 項退役互動、ESLint、型別、建置、差異格式、live module 探測及聚焦複審均 PASS]
-    result_path: ../docs/result/2026-09-26-unified-law-reference-editor-result.md
-    blockers: []
-    approval_gates:
-      source_write: approved_consumed_2026-09-27_execute_plan_c3_complete
-      style_remediation_source: approved_consumed_2026-09-29_user_directive
-      registry_apply: approved_consumed_2026-09-28_exact_12_created_no_orphan_disable
-      local_runtime: approved_consumed_2026-09-28_service_retained_for_user_uat
-      frontend_cutover: closed
-      production: closed
-      legacy_deletion: closed
-      commit: closed
-      push: closed
-    next_action: 由使用者重新整理 Exam 並重測選擇題／申論題關聯讀取。
-    shared_paths: [src/features/Link/ArticleLink, STATE.md]
-    conflicts_with: []
   - id: exam-logo-component-svg-source
     title: Exam 導覽圖標改用統一 SVG
     status: completed
@@ -177,6 +151,12 @@ workstreams:
       - src/lib/pages.tsx
     conflicts_with: []
 recent_results:
+- id: result.unified-law-reference-editor.2026-09-26
+  path: ../docs/result/2026-09-26-unified-law-reference-editor-result.md
+  status: completed
+  completed_at: 2026-09-29
+  acceptance: user_attested_complete
+  summary: 選擇題／申論題已接統一獨立關聯編輯器，正文與關聯分離、歷史重複保留、DEMO 樣式校正及 `/v3` 雙重前綴修正均完成驗證與複審；使用者宣告整體計畫完成。正式切換與 Git 發布未納入。
 - id: result.pigeon-exam.logo-component-svg-source.2026-09-23
   path: docs/result/2026-09-23-exam-logo-component-svg-source-result.md
   status: completed

@@ -2,12 +2,14 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import axios from "axios";
 import {useNavigate, useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
-import {WEB_API} from "@/lib/config.ts";
+import {ROOT_IP} from "@/lib/config.ts";
 import {showToast, showUserFacingError} from "@/func";
 import {Button, Col, FormInputCol, Row} from "@/component";
 import {FaCircleCheck} from "react-icons/fa6";
 import ModalLine from "@/features/Feedback/ModalLine.tsx";
 import {useAuth} from "@/hooks";
+
+const V3_WEB_API = ROOT_IP + '/v3/web';
 
 type FormValues = {
   name: string,
@@ -72,7 +74,7 @@ export default function FeedbackWeb() {
     showToast(
       axios({
         method: 'POST',
-        url: WEB_API + '/feedback/web/send/',
+        url: V3_WEB_API + '/feedback',
         data: formData,
       }), {success: '您的回報已成功送出'}
     )

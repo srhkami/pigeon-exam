@@ -1,13 +1,15 @@
 import {DetailRow} from "@/component";
 import {useAxios} from "@/hooks";
 import {useEffect, useState} from "react";
-import {USER_API} from "@/lib/config.ts";
+import {ROOT_IP} from "@/lib/config.ts";
 import {showToast, showUserFacingError} from "@/func";
 import BadgeAccredit from "./BadgeAccredit.tsx";
 import ModalChangePassword from "./ModalChangePassword.tsx";
 import {UserDetailData} from "@/types/user-types.ts";
 import PageHeader from "@/features/Layout/PageHeader.tsx";
 import AuthShow from "@/auth/AuthShow.tsx";
+
+const V3_USER_API = ROOT_IP + '/v3/user';
 
 export default function UserProfile() {
 
@@ -18,7 +20,7 @@ export default function UserProfile() {
   const requestData = async () => {
     const res = await api({
       method: 'GET',
-      url: USER_API + '/get_self_detail/',
+      url: V3_USER_API + '/me',
     })
     return res.data as UserDetailData
   }

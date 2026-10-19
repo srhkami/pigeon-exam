@@ -1,10 +1,12 @@
 import {useState} from "react";
 import axios from "axios";
-import {USER_API} from "@/lib/config.ts";
+import {ROOT_IP} from "@/lib/config.ts";
 import {ManagerInfoData} from "@/types/user-types.ts";
 import {Button, Modal, ModalBody, ModalHeader, ModalTitle} from "@/component";
 import {useModal} from "@/hooks";
 import {showToast} from "@/func";
+
+const V3_USER_API = ROOT_IP + '/v3/user';
 
 /** 顯示管理員名冊的對話框 */
 export default function ModalManagers() {
@@ -16,7 +18,7 @@ export default function ModalManagers() {
     showToast(
       axios({
         method: 'GET',
-        url: USER_API + '/managers/',
+        url: V3_USER_API + '/managers',
       }),{label:'載入'}
     )
       .then(res => {

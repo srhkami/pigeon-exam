@@ -1,5 +1,5 @@
-import {USER_API} from "@/lib/config.ts";
-import {SubmitHandler, useForm} from "react-hook-form";
+import {ROOT_IP} from "@/lib/config.ts";
+import {SubmitHandler, type UseFormSetError, useForm} from "react-hook-form";
 import {useAxios, useModal} from "@/hooks";
 import {showFormError, showToast} from "@/func";
 import {Button, FormInputCol, Modal, ModalBody, ModalHeader, ModalTitle, Row} from "@/component";
@@ -8,6 +8,32 @@ import {FaEdit} from "react-icons/fa";
 type FormValues = {
   password: string,
   password_confirm: string,
+}
+
+type V3GatewayError = {
+  response?: {
+    data?: {
+      details?: {
+        fields?: Partial<Record<keyof FormValues, unknown>>,
+      },
+    },
+  },
+}
+
+const V3_USER_API = ROOT_IP + '/v3/user';
+
+function applyV3PasswordFieldErrors(error: unknown, setError: UseFormSetError<FormValues>): boolean {
+  const fields = (error as V3GatewayError).response?.data?.details?.fields;
+  let hasFieldError = false;
+
+  for (const field of ['password', 'password_confirm'] as const) {
+    const message = fields?.[field];
+    if (typeof message !== 'string') continue;
+    setError(field, {type: 'server', message});
+    hasFieldError = true;
+  }
+
+  return hasFieldError;
 }
 
 /* 更改密碼頁面 */
@@ -37,7 +63,7 @@ export default function ModalChangePassword() {
     showToast(
       api({
         method: "POST",
-        url: USER_API + '/change_pwd/',
+        url: V3_USER_API + '/me/password',
         data: formData,
       }), {label: '處理', success: '重設成功'}
     )
@@ -45,7 +71,11 @@ export default function ModalChangePassword() {
         onHide();
         reset();
       })
-      .catch(err => showFormError(err, setError))
+      .catch(err => {
+        if (!applyV3PasswordFieldErrors(err, setError)) {
+          showFormError(err, setError)
+        }
+      })
   };
 
   return (
@@ -70,7 +100,7 @@ export default function ModalChangePassword() {
                          {...register('password', {
                            required: '此欄位為必填',
                            pattern: {
-                             value: /(?=.*[A-Za-z])(?=.*\d).{8,32}/,
+                             value: /^(?=.*[A-Za-z])(?=.*\d).{8,32}$/,
                              message: '請輸入8-32位英文與數字'
                            }
                          })}/>

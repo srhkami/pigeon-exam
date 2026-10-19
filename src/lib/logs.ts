@@ -6,6 +6,7 @@ export const CHANGE_LOGS: Array<TVersion> = [
     version: '1.1.4',
     date: '未上線',
     logs: [
+      {type: 'info', text: '【全站】部分通用 API 改為V3版。'},
       {type: 'delete', text: '【全站】移除舊的檔案預覽頁面。'},
     ]
   },

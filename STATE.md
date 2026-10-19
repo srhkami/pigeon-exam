@@ -10,7 +10,7 @@ scope:
 parent_state: ../STATE.md
 canonical: true
 governance_mode: project-state-v1
-last_reconciled: 2026-09-29
+last_reconciled: 2026-10-19
 parent_workstream: workstream.pigeon-exam.project-state-migration.2026-07-27
 legacy_sources:
   - path: docs/plans/2026-06-12-1124-p1b-permission-frontend-compat.md
@@ -151,6 +151,13 @@ workstreams:
       - src/lib/pages.tsx
     conflicts_with: []
 recent_results:
+- id: result.api-v3-legacy-retirement-batches-1-3.2026-10-19
+  path: ../docs/result/2026-10-19-api-v3-legacy-retirement-batches-1-3-result.md
+  status: partial
+  completed_at: 2026-10-19
+  frontend_acceptance: user_attested
+  frontend_accepted_at: 2026-10-19
+  summary: 本人資料、密碼、管理員名單與回報改接 V3；契約、型別、建置與密碼修正複審通過。使用者確認 E1–E4 人工驗收全通過；考試主流程不變。代理未做真實登入／瀏覽器、部署或 Git；其餘執行階段驗證依根待辦另核准。
 - id: result.pigeon-exam.short-url-preview-retirement.2026-09-29
   path: docs/result/2026-09-29-exam-short-url-preview-retirement-result.md
   status: completed

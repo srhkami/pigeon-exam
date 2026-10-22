@@ -4,9 +4,9 @@ import {TVersion} from "@/types/about-types.ts";
 export const CHANGE_LOGS: Array<TVersion> = [
    {
     version: '1.1.4',
-    date: '未上線',
+    date: '1151022',
     logs: [
-      {type: 'info', text: '【全站】部分通用 API 改為V3版。'},
+      {type: 'info', text: '【全站】遷移多個 API 至 V3 版。'},
       {type: 'delete', text: '【全站】移除舊的檔案預覽頁面。'},
     ]
   },

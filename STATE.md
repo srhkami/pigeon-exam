@@ -10,7 +10,7 @@ scope:
 parent_state: ../STATE.md
 canonical: true
 governance_mode: project-state-v1
-last_reconciled: 2026-10-19
+last_reconciled: 2026-10-22
 parent_workstream: workstream.pigeon-exam.project-state-migration.2026-07-27
 legacy_sources:
   - path: docs/plans/2026-06-12-1124-p1b-permission-frontend-compat.md
@@ -151,6 +151,12 @@ workstreams:
       - src/lib/pages.tsx
     conflicts_with: []
 recent_results:
+- id: result.member-web-v3-remaining-migration.2026-10-20
+  path: ../docs/result/2026-10-20-member-web-v3-remaining-migration-result.md
+  status: completed_local_retirement_with_validation_gaps
+  completed_at: 2026-10-22
+  manual_acceptance: completed_user_attested_c1_c4
+  summary: 公告與共用註冊V3承接完成，保留既有人工作業證據；C5後端舊入口本機退役、隔離16例與22項HTTP通過。本端來源及測驗核心未變，未啟動或正式切換前端、部署或Git交付；完整後端測試缺口見根結果。
 - id: result.api-v3-legacy-retirement-batches-1-3.2026-10-19
   path: ../docs/result/2026-10-19-api-v3-legacy-retirement-batches-1-3-result.md
   status: partial

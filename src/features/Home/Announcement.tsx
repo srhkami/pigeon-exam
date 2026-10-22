@@ -1,13 +1,13 @@
 import {Link} from "react-router";
 import {useCacheApi} from "@/hooks";
 import {type Notice} from "@/types/media-types.ts";
-import {MEDIA_IP, WEB_API} from "@/lib/config.ts";
+import {MEDIA_IP, V3_API} from "@/lib/config.ts";
 
 export default function Announcement(){
 
-  const {data} = useCacheApi<Array<Notice>>({url: WEB_API +'/cache/get/?key=pigeon-exam-notice'})
+  const {data} = useCacheApi<{key: string; value: Notice[]}>({url: V3_API +'/web/cache?key=pigeon-exam-notice'})
 
-  const items = data?.map((item) => {
+  const items = data?.value.map((item) => {
     return(
       <Link to={item.link} key={item.id} className='list-row hover:bg-base-200 flex items-center'>
         <div className="list-col-grow font-semibold w-full">

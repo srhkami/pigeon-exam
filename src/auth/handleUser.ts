@@ -1,5 +1,5 @@
 import axios from "axios";
-import {USER_API} from "@/lib/config.ts";
+import {ROOT_IP} from "@/lib/config.ts";
 import {isLogoutResponse, isTokenPair, type Tokens, V3_AUTH_ENDPOINTS} from "@/auth/authContract.ts";
 import {EmailLoginForm, UserLoginForm, UserSignUpNormalForm} from "@/types/user-types.ts";
 
@@ -32,8 +32,19 @@ export async function handleEmailLogin(formData: EmailLoginForm) {
 }
 
 export async function handleSignUp(formData: UserSignUpNormalForm) {
-  const res = await axios({method: 'POST', url: USER_API + '/signup/', data: formData});
-  return res.data.email;
+  const payload = {
+    email: formData.email,
+    password: formData.password,
+    code: formData.code,
+    name: formData.name,
+    ...(formData.remark === undefined ? {} : {remark: formData.remark}),
+  };
+  const res = await axios<{email?: unknown}>({method: 'POST', url: ROOT_IP + '/v3/user/signup', data: payload});
+  const email = res.data?.email;
+  if (typeof email !== 'string' || !email.trim() || email.trim().toLowerCase() !== formData.email.trim().toLowerCase()) {
+    throw new Error('signup_response_invalid');
+  }
+  return email;
 }
 
 export async function handleLogout() {
